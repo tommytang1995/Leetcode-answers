@@ -1,0 +1,16 @@
+public class Solution {
+    public int nthUglyNumber(int n) {
+        int factor2 = 0 ; 
+        int factor3 = 0 ;
+        int factor5 = 0 ;
+        int[] k = new int[n];
+        k[0]=1;
+        for(int i = 1 ; i < n ; i++){
+            k[i]=Math.min(k[factor2]*2,Math.min(k[factor3]*3,k[factor5]*5));
+            if(k[i]==k[factor2]*2)factor2++;
+            if(k[i]==k[factor3]*3)factor3++;
+            if(k[i]==k[factor5]*5)factor5++;
+        }
+        return k[n-1];
+    }
+}
