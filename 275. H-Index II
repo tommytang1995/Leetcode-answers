@@ -1,0 +1,29 @@
+public class Solution {
+    public int hIndex(int[] citations) {
+        int n=citations.length;
+        int l=0, h=citations.length;
+        while(l<h){
+            int m=l+h>>>1;
+            if(citations[m]==n-m)
+                return n-m;
+            else if(citations[m]<n-m){
+                l=m+1;
+            }else{
+                h=m;
+            }
+        }
+        return n-l;
+    }
+}
+
+We use two pinter to solve this problem: pointer l (low) and pointer h (high).
+
+Say n = citations.length.
+Because the range of H-index is [0,n], at the beginning we must point high pointer after the last element of the array: h = n. In this way we can generate all possible value without worrying about annoying corner case.
+
+The rest is standard binary search, we find middle point m and compare citations[m] with n-m (n-m means number of papers has at least citations[m] citations.)
+
+citations[m] == n-m : we find the answer
+citations[m] < n-m : more papers has at least this number of citations we should raise the bar of citations so we go to the right part: l = m+1.
+citations[m] > n-m : we should lower the bar so we go to the left part: h = m.
+In the end l == r and the H-index is n-l.
