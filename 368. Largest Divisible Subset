@@ -1,3 +1,8 @@
+1. Sort
+2. Find the length of longest subset
+3. Record the largest element of it.
+4. Do a loop from the largest element to nums[0], add every element belongs to the longest subset.
+
 public static List<Integer> largestDivisibleSubset(int[] nums) {
     List<Integer> res = new ArrayList<Integer>();
     if (nums == null || nums.length == 0) return res;
