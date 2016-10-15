@@ -1,0 +1,22 @@
+by Tommy:
+public class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        for(int i = 0 ; i < gas.length ; i++){
+            int lastRemain = 0;
+            int j = i;
+            for(; j < i+gas.length ; j++){
+                if(gas[j%gas.length]+lastRemain<cost[j%gas.length]){
+                    break;
+                }
+                lastRemain=gas[j%gas.length]+lastRemain-cost[j%gas.length];
+            }
+            if(j==i+gas.length){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+by others:
+https://discuss.leetcode.com/topic/5088/my-ac-is-o-1-space-o-n-running-time-solution-does-anybody-have-posted-this-solution
