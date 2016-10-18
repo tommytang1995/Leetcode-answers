@@ -54,3 +54,5 @@ public List<Integer> majorityElement(int[] nums) {
         if (cnt2 > nums.length / 3) result.add(major2);
         return result;
     }
+https://discuss.leetcode.com/topic/32510/java-easy-version-to-understand/5
+https://discuss.leetcode.com/topic/29390/concise-java-solution-based-on-moore-s-voting-algorithm
