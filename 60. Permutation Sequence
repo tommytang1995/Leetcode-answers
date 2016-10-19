@@ -22,3 +22,4 @@ public class Solution {
         return String.valueOf(sb);
     }
 }
+https://discuss.leetcode.com/topic/17348/explain-like-i-m-five-java-solution-in-o-n
