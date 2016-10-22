@@ -1,0 +1,25 @@
+public class Solution {
+    public int coinChange(int[] coins, int amount) {
+        Arrays.sort(coins);
+        int start = -1;
+        int sum = 0;
+        for(int i = coins.length-1; i>=0 ; i--){
+            if(coins[i]<=amount){
+                start = i;
+                break;
+            }
+        }
+        if(start==-1) return start;
+        while(start>=0){
+            sum = sum + amount/coins[start];
+            amount = amount%coints[start];
+            if(amount==0){
+                return sum;
+            }
+            if(start==0){
+                return -1;
+            }
+            
+        }
+    }
+}
