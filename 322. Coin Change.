@@ -1,0 +1,27 @@
+The problem is typical Knapsack problem.
+
+https://en.wikipedia.org/wiki/Knapsack_problem
+
+The idea is, each coin can be used infinitely. So the inner loop of dp is ascending. If one coin can only be used once, the inner loop should be descending.
+
+//  Recurrence formular 
+//  dp(i) - minimum coins needed to form i  
+//  dp(c) = min( dp(c - coins[0]), dp(c - coins[1]), dp(c - coins[2]), 
+//               ..., dp(c - coins[coins.length - 1]) ) + 1; 
+//             - we can find the minimum coins needed by choosing among sub-problmes.
+
+public class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount+1];
+        Arrays.fill(dp,Integer.MAX_VALUE);
+        dp[0]=0;
+        for(int coin : coins){
+            for(int i = coin ; i <= amount ; i++){
+                if(dp[i-coin]!=Integer.MAX_VALUE){
+                    dp[i]=Math.min(dp[i],dp[i-coin]+1);
+                }
+            }
+        }
+        return dp[amount]==Integer.MAX_VALUE?-1:dp[amount];
+    }
+}
