@@ -17,7 +17,7 @@ public class Solution {
         dp[0]=0;
         for(int coin : coins){
             for(int i = coin ; i <= amount ; i++){
-                if(dp[i-coin]!=Integer.MAX_VALUE){
+                if(dp[i-coin]!=Integer.MAX_VALUE){ //如果等于的话，说明i-coin不能由此coin组成，那么i就也不可能由此coin组成。
                     dp[i]=Math.min(dp[i],dp[i-coin]+1);
                 }
             }
