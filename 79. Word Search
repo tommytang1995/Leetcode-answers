@@ -1,0 +1,34 @@
+public class Solution {
+    public boolean exist(char[][] board, String word) {
+        if(word==null||word.length()==0){
+            return true;
+        }
+        char[] wd = word.toCharArray();
+        for(int i = 0 ; i < board.length ; i++){
+            for(int j = 0 ; j < board[0].length ; j++){
+                if(dfs(i,j,board,wd,0)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean dfs(int i, int j, char[][] board, char[] wd, int level){
+        if(level==wd.length){
+            return true;
+        }
+        if(i<0||i==board.length||j<0||j==board[0].length){
+            return false;
+        }
+        if(board[i][j]!=wd[level]){
+            return false;
+        }
+        char temp = board[i][j];
+        board[i][j] = '0';
+        boolean exist = dfs(i+1,j,board,wd,level+1)||dfs(i,j+1,board,wd,level+1)||
+                        dfs(i-1,j,board,wd,level+1)||dfs(i,j-1,board,wd,level+1);
+        board[i][j] = temp;
+        return exist;
+    }
+}
