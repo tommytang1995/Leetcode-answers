@@ -1,0 +1,21 @@
+public class Solution {
+    public int maxProduct(int[] nums) {
+        if(nums.length==0) return 0;
+        
+        int maxpre = nums[0];
+        int minpre = nums[0];
+        int maxnow = 0;
+        int minnow = 0;
+        int maxSofar = nums[0];
+        
+        for(int i = 1 ; i < nums.length ; i++){
+            maxnow = Math.max(Math.max(maxpre*nums[i],minpre*nums[i]),nums[i]);
+            minnow = Math.min(Math.min(minpre*nums[i],maxpre*nums[i]),nums[i]);
+            maxSofar = Math.max(maxnow,maxSofar);
+            maxpre = maxnow ;
+            minpre = minnow ;
+        }
+        
+        return maxSofar;
+    }
+}
