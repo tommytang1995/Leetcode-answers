@@ -19,3 +19,22 @@ public class Solution {
         return len==s.length()?len:len+1;
     }
 }
+
+
+public class Solution {
+    public int longestPalindrome(String s) {
+        HashSet<Character> set = new HashSet<>();
+        int len = 0;
+        for(int i = 0 ; i < s.length() ; i++){
+            if(set.contains(s.charAt(i))){
+                set.remove(s.charAt(i));
+                len++;
+            }
+            else{
+                set.add(s.charAt(i));
+            }
+        }
+        
+        return 2*len==s.length()?2*len:2*len+1;
+    }
+}
