@@ -1,0 +1,20 @@
+public class Solution {
+    public int arrangeCoins(int n) {
+        if(n==0)return 0;
+        int i = 1;
+        int result = 0;
+        while(true){
+            n-=i;
+            i++;
+            if(n==i){
+                result=i;
+                break;
+            }
+            if(n<i){
+                result=i-1;
+                break;
+            }
+        }
+        return result;
+    }
+}
