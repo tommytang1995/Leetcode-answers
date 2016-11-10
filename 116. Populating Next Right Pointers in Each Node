@@ -1,0 +1,54 @@
+/**
+ * Definition for binary tree with next pointer.
+ * public class TreeLinkNode {
+ *     int val;
+ *     TreeLinkNode left, right, next;
+ *     TreeLinkNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        if(root==null){
+            return;
+        }
+        Queue<TreeLinkNode> queue = new LinkedList<>();
+        queue.offer(root);
+        TreeLinkNode pre = null;
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            for(int i = 0 ; i < size ; i++){
+                TreeLinkNode temp = queue.poll();
+                if(temp.left!=null){
+                    queue.offer(temp.left);
+                }
+                if(temp.right!=null){
+                    queue.offer(temp.right);
+                }
+                if(i==0){              //when i==0, pre==null, so we have to assign the temp to the pre.
+                    pre=temp;
+                }
+                else{                  //when i!=0, pre is not equal to null, it can be the previous node of temp node.
+                    pre.next=temp;
+                    pre=temp;
+                } 
+                if(i==size-1){        //when i==size-1, this level has been finished, temp.next should be assigned to null.
+                    temp.next=null;
+                }
+            }
+        }
+    }
+}
+
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        while(root!=null&&root.left!=null){
+            TreeLinkNode temp = root;
+            while(temp!=null){               //this loop is traversing the level where temp is at and connect every node in the next level 
+                temp.left.next=temp.right;
+                temp.right.next=temp.next==null?null:temp.next.left;
+                temp=temp.next;
+            }
+            root=root.left;
+        }
+    }
+}
