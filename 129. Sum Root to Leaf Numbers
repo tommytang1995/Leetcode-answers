@@ -1,0 +1,62 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int sumNumbers(TreeNode root) {
+        if(root==null)return 0;
+        return helper(root,0);
+    }
+    
+    public int helper(TreeNode node, int num){
+        if(node==null)return 0;
+        if(node.left==null&&node.right==null){
+            num=num*10+node.val;
+            return num;
+        }
+        num=num*10+node.val;
+        return helper(node.left,num)+helper(node.right,num);
+    }
+}
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int sumNumbers(TreeNode root) {
+        if(root==null)return 0;
+        Queue<TreeNode> queue1 = new LinkedList<>();
+        int sum = 0;
+        queue1.offer(root);
+        
+        while(!queue1.isEmpty()){
+            TreeNode temp = queue1.poll();
+            
+            if(temp.left!=null){
+                temp.left.val=temp.val*10+temp.left.val;
+                queue1.offer(temp.left);
+            }
+            
+            if(temp.right!=null){
+                temp.right.val=temp.val*10+temp.right.val;
+                queue1.offer(temp.right);
+            }
+            
+            if(temp.left==null&temp.right==null){
+                sum = sum + temp.val;
+            }
+        }
+        return sum;
+    }
+}
