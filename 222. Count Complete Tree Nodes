@@ -7,6 +7,9 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+ 
+////////O(log(n)^2)/////////
+
 public class Solution {
     public int countNodes(TreeNode root) {
         int leftDepth = leftDepth(root);
