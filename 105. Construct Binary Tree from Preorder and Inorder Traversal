@@ -1,0 +1,34 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ 
+//In preorder, the first one must be the value of root. So we search the value in the inorder. Say the index of the value in the inorder is
+//5, it means that 0~4 are all the left children of root and 6~~end are all the right childer of root. Do this recursively.
+public class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        Map<Integer, Integer> map = new HashMap<>();  //Using this is because search in hashmap only consumes o(1) time.
+        for(int i = 0 ; i < inorder.length ; i++){
+            map.put(inorder[i],i);
+        }
+        return helper(0,0,inorder.length-1,preorder,inorder,map);
+    }
+    
+    public TreeNode helper(int preStart, int inStart, int inEnd, int[] preorder, int[] inorder, Map<Integer, Integer> map){
+        if(preStart > preorder.length-1 || inStart > inEnd){
+            return null;
+        }
+        TreeNode root = new TreeNode(preorder[preStart]);
+        int inIndex = map.get(preorder[preStart]);
+        
+        root.left = helper(preStart+1,inStart,inIndex-1,preorder,inorder,map);
+        root.right = helper(preStart+inIndex-inStart+1,inIndex+1,inEnd,preorder,inorder,map);
+        
+        return root;
+    }
+}
