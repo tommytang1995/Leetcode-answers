@@ -1,0 +1,32 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ 
+ 注意与112题的区别，这一题是要判断和是否等于某个值，所以是backtrack，每一次都要删除最后一个元素。
+public class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> list = new ArrayList<>();
+        if(root==null)return list;
+        helper(root,sum,0,new ArrayList<>(),list);
+        return list;
+    }
+    
+    public void helper(TreeNode node, int sum, int num, List<Integer> temp, List<List<Integer>> list){
+        if (node==null)return;
+        temp.add(node.val);
+        if(node.left==null&&node.right==null&&num+node.val==sum){
+            list.add(new ArrayList<>(temp));
+        }
+        else{
+            helper(node.left,sum,num+node.val,temp,list);
+            helper(node.right,sum,num+node.val,temp,list);
+        }
+        temp.remove(temp.size()-1);
+    }
+}
