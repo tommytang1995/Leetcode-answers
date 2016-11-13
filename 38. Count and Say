@@ -1,0 +1,32 @@
+public class Solution {
+    public String countAndSay(int n) {
+        StringBuilder cur = new StringBuilder("1");
+        StringBuilder pre = new StringBuilder();
+        
+        for(int i = 1 ; i < n ; i++){
+            pre = cur;
+            cur = new StringBuilder();
+            int count = 1;
+            char say = pre.charAt(0);
+            
+            for(int j = 1 ; j < pre.length() ; j++){
+                if(say!=pre.charAt(j)){
+                    cur.append(count);
+                    cur.append(say);
+                    count = 1;
+                    say = pre.charAt(j);
+                }
+                else{
+                    count++;
+                }
+            }
+            cur.append(count);     //这是为了存第j-1个元素，因为当count=1, say=pre.charAt(j-1)之后，j=length，不会执行下面的代码，若
+            cur.append(say);       //没有这两行，第j-1个元素会被直接无视。
+        }
+        
+        return cur.toString();
+    }
+}
+
+因为是层层递进的关系，所以肯定要两个StringBruilder来存上一个和现在的，下一轮将现在的赋给上一个，然后现在的成为一个新的空的StringBuilder。
+关系到符号的具体数值和个数，所以需要两个变量来分别存储。
