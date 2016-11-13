@@ -1,0 +1,21 @@
+public class Solution {
+      public int lengthOfLongestSubstring(String s) {
+        if(s==null||s.length()==0)return 0;
+        Map<Character, Integer> map = new HashMap<>();
+        int max = 0;
+        
+        for(int i = 0, j = 0 ; i < s.length() ; i++){
+            if(map.containsKey(s.charAt(i))){
+                j = Math.max(j,map.get(s.charAt(i))+1);
+            }
+            map.put(s.charAt(i),i);
+            max = Math.max(max,i-j+1);
+        }
+        
+        return max;
+    }
+}
+
+有点难理解，基本思路就是，j是最大字符串的起点，i则是终点。一旦i位置上的字符之前出现过，那么j就要移到这个字符的右边，当然j只能往前移，所以要取较大的值。
+这是为了避免包含其他重复字符的情况。比如adbccba这个字符串，当i指到第二个c的时候，j就移到了第一个c的旁边，是第二个c的位置。然后i到了第二个b，如果不取
+较大值，将会导致j倒退到第一个b的右边，就是第一个c的位置。那么从j到i这个字符串会包括两个c。这是不对的。
