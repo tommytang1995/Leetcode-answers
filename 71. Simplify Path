@@ -1,0 +1,20 @@
+public class Solution {
+    public String simplifyPath(String path) {
+        if(path==null)return null;
+        Stack<String> stack = new Stack<>();
+        for(String str : path.split("/")){
+            if(str.isEmpty()||str.equals("."))continue;
+            if(str.equals("..")){
+                if(!stack.isEmpty())stack.pop();
+            }
+            else{
+                stack.push(str);
+            }
+        }
+        String st = "";
+        for(String str : stack){    //从栈底开始从下往上输出
+            st = st + "/" + str ;
+        }
+        return st.isEmpty() ? "/" : st;
+    }
+}
