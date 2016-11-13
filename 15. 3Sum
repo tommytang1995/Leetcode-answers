@@ -1,0 +1,63 @@
+//////////////////////////////////TLE//////////////////////////////////////////////////////
+public class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> list = new ArrayList<>();
+        Arrays.sort(nums);
+        backtrack(list,new ArrayList<>(),0,nums,0);
+        return list;
+    }
+    
+    public void backtrack(List<List<Integer>> list, List<Integer> res, int level, int[] nums, int sum){
+        if(res.size()==3){
+             Collections.sort(res);
+             if(!list.contains(res)&&sum==0){
+                 list.add(new ArrayList<>(res));
+             }
+             return;
+        }
+        for(int i = level ; i < nums.length ; i++){
+            res.add(nums[i]);
+            backtrack(list,res,i+1,nums,sum+nums[i]);
+            res.remove(res.size()-1);
+        }
+    }
+}
+
+///////////////////////////////////////////////Accepted////////////////////////////////////////////////////
+public class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> list = new ArrayList<>();
+        if(nums.length<3)return list;
+        Arrays.sort(nums);
+        
+        for(int i = 0 ; i < nums.length-2 ; i++){
+            if(i==0||(i>0&&nums[i]!=nums[i-1])){
+                int start = i+1;
+                int end = nums.length-1;
+                int sum = 0-nums[i];
+                while(start<end){
+                    if(nums[start]+nums[end]==sum){
+                        list.add(Arrays.asList(nums[i],nums[start],nums[end]));
+                        while(start<end&&nums[start]==nums[start+1])start++;
+                        while(start<end&&nums[end]==nums[end-1])end--;
+                        start++;
+                        end--;
+                    }
+                    else if(nums[start]+nums[end]<sum){
+                        start++;
+                    }
+                    else{
+                        end--;
+                    }
+                }
+            }
+        }
+        return list;
+    }
+}
+
+重点是排序，必须要排序，原因如下两点：
+1.排序后，可以避免重复元素。比如说nums[i]==nums[i-1]==1，等于1的情况已经在i-1的时候全部考虑完全了，这个时候应该跳过i。还有就是在内部循环中，如果
+nums[start]==nums[start+1]==1的话，因为内部循环中两个元素的值是固定的常数，假如不跳过这个重复元素start+1，那么得出的另一个元素也会是的重复的，结果
+就是list当中有两个重复的一模一样的子list。
+2.在内部循环中，排序后才可以决定下一步是start++还是end--。
