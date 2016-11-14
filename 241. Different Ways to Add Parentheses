@@ -35,7 +35,7 @@ public class Solution {
     }
 }
 
-用hashmap来存储某一步的之前几步的运算结果，速度更快。
+很多recursion的问题都可以用hashmap来存储这一步之前的值，以快速提高效率。见337题。
 public class Solution {
     public List<Integer> diffWaysToCompute(String input) {
         return dfs(input, new HashMap<String, List<Integer>>());
