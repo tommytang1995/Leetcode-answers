@@ -1,0 +1,36 @@
+recursion!!!!!!!!!!!!!!!!!!!!!!!!!!!!循环，一碰到符号，就将左边和右边的分别求值，recur直到左右两边都只剩下数值，然后根据中间的符号进行相应的运算，
+最后将这个运算结果返回给上一层的recursion.
+
+public class Solution {
+    public List<Integer> diffWaysToCompute(String input) {
+        List<Integer> list = new ArrayList<>();
+        if(input==null||input.length()==0)return list;
+        if(!input.contains("+")&&!input.contains("*")&&!input.contains("-")){
+            list.add(Integer.valueOf(input));
+            return list;
+        }
+        
+        for(int i = 0 ; i < input.length() ; i++){
+            char ch = input.charAt(i);
+            if(ch=='+'||ch=='-'||ch=='*'){
+                List<Integer> left = diffWaysToCompute(input.substring(0,i));
+                List<Integer> right = diffWaysToCompute(input.substring(i+1,input.length()));
+                for(Integer le : left){
+                    for(Integer rg : right){
+                        if(ch=='+'){
+                            list.add(le+rg);
+                        }
+                        else if(ch=='*'){
+                            list.add(le*rg);
+                        }
+                        else{
+                            list.add(le-rg);
+                        }
+                    }
+                }
+            }
+        }
+        
+        return list;
+    }
+}
