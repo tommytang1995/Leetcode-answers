@@ -1,0 +1,24 @@
+public class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> list = new ArrayList<>();
+        backtrack(list,new StringBuilder(),0,0,n);
+        return list;
+    }
+    
+    public void backtrack(List<String> list, StringBuilder sb, int open, int close, int num){
+        if(open==num&&close==num){
+            list.add(new StringBuilder(sb).toString());
+            return;
+        }
+        if(open<num){
+            sb.append("(");
+            backtrack(list,sb,open+1,close,num);
+            sb.setLength(sb.length()-1);
+        }
+        if(close<open){
+            sb.append(")");
+            backtrack(list,sb,open,close+1,num);
+            sb.setLength(sb.length()-1);
+        }
+    }
+}
