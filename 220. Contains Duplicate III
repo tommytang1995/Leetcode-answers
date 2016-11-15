@@ -1,0 +1,30 @@
+public class Solution {
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        if(nums.length==0||nums==null)return false;
+        if (k < 1 || t < 0) return false;
+        Map<Long, Long> map = new HashMap<>();
+        
+        for(int i = 0 ; i < nums.length ; i++){
+            long num = (long)nums[i]-Integer.MIN_VALUE; //照顾负数
+            long bucket = num/((long)t+1); //表示有t+1个数可以进入同一个桶（不是同时进入，每个桶只能有一个数存在）
+                                           //如果是只取t的话，假设t=3, 0,1,2,3这四个数都满足它们的差最多是3，但是只能有3个数能进入一个桶。
+            if(map.containsKey(bucket)||(map.containsKey(bucket-1)&&num-map.get(bucket-1)<=t)||
+            (map.containsKey(bucket+1)&&map.get(bucket+1)-num<=t)){  //假设k是4，t是3，得到的bucket是5，num是23，现在map里没有这个
+                                                                     //bucket，但是有bucket6，它对应的num是25。可以看出25和23只差了2，小于
+                                                                     //t=3，然后由于map里只能有k个bucket存在，所以它们的序号之差不可能大于
+                                                                     //k，所以这种情况也是对的。同理bukcet-1。
+                return true;
+            }
+            
+            if(map.entrySet().size()>=k){ //map里的bucket数量大于或者等于k，如果要再加bucket，只能删除最老的那个。因为就算不删那个，下一个
+                                          //加入的num对应的序号与最老bucket对应的num对应的序号之差必定大于k。
+                long oldest =((long)nums[i-k]-Integer.MIN_VALUE)/((long)t+1);
+                map.remove(oldest);
+            }
+            
+            map.put(bucket,num);
+        }
+        
+        return false;
+    }
+}
