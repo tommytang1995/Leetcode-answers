@@ -1,0 +1,36 @@
+https://discuss.leetcode.com/topic/29536/clean-c-solution-and-explaination-o-mn-space-with-o-1-time/2
+
+这里要注意，算matrix中第i行第j列的元素的时候，它的左上角元素之和，是sum[i+1][j+1]，而不是sum[i][j]，因为sum矩阵中多了一列和一行，分别存储第一列和第一
+行元素的左上角元素之和，即都是0。
+
+第二个函数中，为什么是sum[row2+1][col1]而不是sum[row2+1][col+1]，因为如果是col+1的话，会将第col的元素包括进去，这样会导致这一列的数据被重复加入sum中。
+同理sum[row1][col2+1]和sum[row1+1][col2+1]。
+
+public class NumMatrix {
+    
+    int[][] sum;
+
+    public NumMatrix(int[][] matrix) {
+        if(   matrix           == null
+       || matrix.length    == 0
+       || matrix[0].length == 0   ){
+        return;   
+    }
+        sum = new int[matrix.length+1][matrix[0].length+1];
+        for(int i = 1 ; i < sum.length ; i++){
+            for(int j = 1 ; j < sum[0].length ; j++){
+                sum[i][j] = sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1] + matrix[i-1][j-1];
+            }
+        }
+    }
+
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        return sum[row2+1][col2+1]-sum[row2+1][col1]-sum[row1][col2+1]+sum[row1][col1];
+    }
+}
+
+
+// Your NumMatrix object will be instantiated and called as such:
+// NumMatrix numMatrix = new NumMatrix(matrix);
+// numMatrix.sumRegion(0, 1, 2, 3);
+// numMatrix.sumRegion(1, 2, 3, 4);
