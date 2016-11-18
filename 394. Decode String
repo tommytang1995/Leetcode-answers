@@ -1,0 +1,41 @@
+public class Solution {
+    public String decodeString(String s) {
+        String res = "";
+        if(s==null||s.length()==0){
+            return res;
+        }
+        Stack<Integer> count = new Stack<>();
+        Stack<String> ch = new Stack<>();
+        int index = 0;
+        
+        while(index<s.length()){
+            if(s.charAt(index)>='0'&&s.charAt(index)<='9'){
+                int num = 0;
+                while(s.charAt(index)>='0'&&s.charAt(index)<='9'){
+                    num = 10*num+(s.charAt(index)-'0');
+                    index++;
+                }
+                count.push(num);
+            }
+            else if(s.charAt(index)=='['){
+                ch.push(res);
+                res = "";
+                index++;
+            }
+            else if(s.charAt(index)==']'){
+                StringBuilder temp = new StringBuilder(ch.pop());
+                int times = count.pop();
+                for(int i = 0 ; i < times ; i++){
+                    temp.append(res);
+                }
+                res=temp.toString();
+                index++;
+            }
+            else{
+                res+=s.charAt(index++);
+            }
+        }
+        
+        return res;
+    }
+}
