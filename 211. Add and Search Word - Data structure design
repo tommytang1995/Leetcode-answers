@@ -1,0 +1,49 @@
+////////////////////////////////////Trie见208题。////////////////////////////////////////////
+
+public class WordDictionary {
+    class TrieNode{
+        boolean isWord;
+        TrieNode[] child = new TrieNode[26];
+    }
+    TrieNode root = new TrieNode();
+    // Adds a word into the data structure.
+    public void addWord(String word) {
+        TrieNode temp = root;
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
+            if(temp.child[ch-'a']==null){
+                temp.child[ch-'a'] = new TrieNode();
+            }
+            temp = temp.child[ch-'a'];
+        }
+        temp.isWord = true;
+    }
+
+    // Returns if the word is in the data structure. A word could
+    // contain the dot character '.' to represent any one letter.
+    public boolean search(String word) {
+        return helper(word,0,root);
+    }
+    
+    public boolean helper(String word, int index, TrieNode parent){
+        if(index==word.length())return parent.isWord;
+        char ch = word.charAt(index);
+        if(ch=='.'){                                //如果是'.'，那么随便哪个字母都对，于是就看parent下的大小为26的child数组，一找到不是null的
+                                                    //位置，说明这个位置对应的字母是有的，然后就继续把这个字母当成parent进行检查。
+            for(int i = 0; i < 26; i++){
+                if(parent.child[i]!=null&&helper(word,index+1,parent.child[i])){
+                    return true;
+                }
+            }
+            return false;
+        }
+        else{
+            return parent.child[ch-'a']!=null&&helper(word,index+1,parent.child[ch-'a']);
+        }
+    }
+}
+
+// Your WordDictionary object will be instantiated and called as such:
+// WordDictionary wordDictionary = new WordDictionary();
+// wordDictionary.addWord("word");
+// wordDictionary.search("pattern");
