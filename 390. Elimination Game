@@ -1,0 +1,39 @@
+public class Solution {
+    public int lastRemaining(int n) {
+        int remain = n;
+        int head = 1;
+        int step = 1;
+        boolean left = true;
+        
+        while(remain > 1){
+            if(left || remain % 2 == 1){
+                head = head + step;
+            }
+            remain = remain / 2;
+            step = step * 2;
+            left = !left;
+        }
+        
+        return head;
+    }
+}
+
+https://discuss.leetcode.com/topic/59293/java-easiest-solution-o-logn-with-explanation
+
+public int lastRemaining(int n) {
+        return n == 1 ? 1 : 2 * (1 + n / 2 - lastRemaining(n / 2));
+    }
+    
+for example:
+1,2,3,4,...n
+if you start from the left to right, the result is i
+then, if you start from right to left, the result is n+1-i
+for n numbers, after one pass, there are n/2 left, each number is two times of the original,
+1,2,3,4,5,6,7,8,9
+after one pass
+2,4,6,8
+assume the result of 1,2,3,4 from left to right is f(4)
+then the result of 1,2,3,4 from right to left is 5-f(4)
+then the result of 2,4,6,8 from right to left is 2*(5-f(4))
+this is the formula
+f(n)=2(1+n/2-f(n/2))* when n is 1, of course the result is 1
