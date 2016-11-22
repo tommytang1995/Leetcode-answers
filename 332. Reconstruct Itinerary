@@ -1,0 +1,31 @@
+
+//用map存from和to的关系，一个from可能有很多to，而且只能选择顺序最小的那个to，所以这个to是一个priorityqueue（如果是数字，存进去之后，是按数字顺序排，
+如果是字母，存进去之后，是按字典顺序排。）
+public class Solution {
+    
+    public Map<String, PriorityQueue<String>> map;
+    public List<String> path;
+    
+    public List<String> findItinerary(String[][] tickets) {
+        map = new HashMap<>();
+        path = new ArrayList<>();
+        
+        for(String[] ticket : tickets){
+            if(!map.containsKey(ticket[0])){
+                map.put(ticket[0],new PriorityQueue<String>());
+            }
+            map.get(ticket[0]).add(ticket[1]);
+        }
+        
+        dfs("JFK");
+        return path;
+    }
+    
+    public void dfs(String from){
+        PriorityQueue<String> to = map.get(from);
+        while(to!=null&&!to.isEmpty()){
+            dfs(to.poll());
+        }
+        path.add(0,from);
+    }
+}
