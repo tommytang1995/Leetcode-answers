@@ -1,0 +1,31 @@
+public class Solution {
+    public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        PriorityQueue<Haha> pq = new PriorityQueue<>();
+        int m = nums1.length;
+        int n = nums2.length;
+        List<int[]> list = new ArrayList<>();
+        if(nums1==null||nums2==null||nums1.length==0||nums2.length==0||k<=0)return list;
+        for(int i = 0 ; i < m ; i++) pq.offer(new Haha(i,0,nums1[i]+nums2[0]));
+        for(int j = 0 ; j < Math.min(k,m*n) ; j++){
+            Haha temp = pq.poll();
+            list.add(new int[]{nums1[temp.x],nums2[temp.y]});
+            if(temp.y==n-1)continue;
+            pq.offer(new Haha(temp.x,temp.y+1,nums1[temp.x]+nums2[temp.y+1]));
+        }
+        return list;
+    }
+    
+    class Haha implements Comparable<Haha>{    //注意这个的创建方法！！！！！！
+        int x, y, val;
+        public Haha(int x, int y, int val){
+            this.x = x;
+            this.y = y;
+            this.val = val;
+        }
+        @Override
+        public int compareTo(Haha that){
+            return this.val-that.val;
+        }
+    }
+    
+}
