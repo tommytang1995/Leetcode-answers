@@ -1,0 +1,24 @@
+public class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        int start = 0;
+        int end = numbers.length-1;
+        int[] ha = new int[2];
+        while(start<end){
+            if(numbers[start]+numbers[end]==target){
+                ha[0]=start+1;ha[1]=end+1;break;
+            }
+            else if(numbers[start]+numbers[end]<target){
+                start++;
+            }
+            else{
+                end--;
+            }
+        }
+        return ha;
+    }
+}
+
+Using the binary search and two pointers.
+
+Time complexity: o(n)
+Space complexity: o(1)
