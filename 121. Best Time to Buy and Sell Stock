@@ -1,0 +1,17 @@
+public class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices.length<2)return 0;
+        int[] diff = new int[prices.length-1];
+        for(int i = 1 ; i < prices.length ; i++){
+            diff[i-1]=prices[i]-prices[i-1];
+        }
+        
+        int current = 0;
+        int sofar = 0;
+        for(int i = 0 ; i < diff.length ; i++){
+            current = Math.max(0,current+diff[i]);
+            sofar = Math.max(current,sofar);
+        }
+        return sofar;
+}
+}
