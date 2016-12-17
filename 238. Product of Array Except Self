@@ -1,0 +1,37 @@
+public class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int[] res = new int[nums.length];
+        res[0] = 1;
+        
+        int left = 1;
+        for(int i = 0; i < nums.length; i++){
+            if(i>0){
+                left = left*nums[i-1];
+            }
+            res[i] = left;
+        }
+        
+        int right = 1;
+        for(int i = nums.length-1; i >= 0; i--){
+            if(i<nums.length-1){
+                right = right*nums[i+1];
+            }
+            res[i] *= right;
+        }
+        
+        return res;
+    }
+}
+
+
+To achieve this, we have to find each element's product of left elements and product of right elements. First of all, we should find the 
+product of left elements for each element. We use a variable 'left' to store and update each element's left elements' product. For the first
+element, its left element should be 1. Then the 2nd element, its left product is left*1st element. In this way, we can get a formula. Each 
+left product is equal the last left product times the last element. Every time we get a new left, we store it in the ith place in the result
+array.
+Then we go through another round from right to left to find each element's right products. For the last one, its right product is 1. The 
+next process is the same with the from left to right process. Except that this time, every right product should times its corresponding left
+product in the specific position. The product is exactly the result.
+
+Time complexity: o(n)
+Space complexity: o(1)
