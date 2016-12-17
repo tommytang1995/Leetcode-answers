@@ -1,0 +1,20 @@
+public class Solution {
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0; i < nums.length; i++){
+            nums[(nums[i]-1)%nums.length]+=nums.length;
+        }
+        for(int i = 0; i < nums.length; i++){
+            if(nums[i]<=nums.length)list.add(i+1);
+        }
+        return list;
+    }
+}
+
+Go throught the array and check the elements one by one. For example, the first element is 4. This means 4 has appeared. To mark this, we
+can go to the (4-1) position and plus its element with the length of the array. In this way, we can mark every appeared number. Then, we 
+go through the array again. If we found any elements that are less than the length, we can say that the corresponding indexes+1 don't appear 
+in the array.
+
+Time complexity: o(n)
+Space complexity: o(1)
