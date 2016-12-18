@@ -11,7 +11,7 @@ public List<List<Integer>> combinationSum3(int k, int n) {
         res.add(new ArrayList(me));
         return;
     }
-    else if(sum>n||k<=0)return;
+    else if(sum>n||k<0)return;  //极大地提高了运行效率
     
     for(int i = level ; i <= 9 ; i++){
         me.add(i);
@@ -19,3 +19,6 @@ public List<List<Integer>> combinationSum3(int k, int n) {
         me.remove(me.size()-1);
     }
     }
+
+Time: o(9^k)
+Space: o(9^k)
