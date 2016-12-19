@@ -1,0 +1,30 @@
+当相等元素较少时：
+public class Solution {
+    public int removeElement(int[] nums, int val) {
+        int n = nums.length;
+        int i = 0;
+        while(i < n){
+            if(nums[i]==val){
+                nums[i]=nums[n-1];  //当发现有相等元素时，将最后一个元素调到这个位置。
+                n--;
+            }
+            else{
+                i++;
+            }
+        }
+        return n;
+    }
+}
+当相等元素较多时：
+public class Solution {
+    public int removeElement(int[] nums, int val) {
+        int begin = 0;
+        for(int i = 0; i < nums.length; i++){
+            if(nums[i] != val)nums[begin++]=nums[i]; //将不相等的元素全都排到前面去。
+        }
+        return begin;
+    }
+}
+
+Time: o(n)
+Space: o(1)
