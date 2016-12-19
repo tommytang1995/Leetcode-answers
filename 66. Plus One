@@ -1,0 +1,20 @@
+public class Solution {
+    public int[] plusOne(int[] digits) {
+        int last = digits.length-1;
+        for(int i = last; i >= 0; i--){
+            if(digits[i] < 9){   //两种情况，要么小于9，直接+1，然后返回；要么等于9，此位设为0，继续看前一位。
+                digits[i]++;
+                return digits;
+            }
+            else{
+                digits[i] = 0;
+            }
+        }
+        int[] special = new int[last+2];  //这三行都是为了一种特殊情况，所有的位置上都是9，那么最后的结果应该是1开头，然后后面跟着一串0.
+        special[0] = 1;
+        return special;
+    }
+}
+
+Time: o(n)
+Space: o(1)
