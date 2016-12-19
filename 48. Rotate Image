@@ -18,6 +18,8 @@ public class Solution {
     }
 }
 
-To rotate a matrix, a good way is to get its transport matrix first and then reverse every row.
+To rotate a matrix, a good way is to get its transport matrix first and then reverse every row. (clockwise)
+To rotate a matrix, a good way is to get its transport matrix. (anticlockwise)
+
 Time: o(n^2)
 Space: o(1)
