@@ -10,14 +10,20 @@ if a[mid] > a[right], go right; if a[mid] < a[right], go left.
 
 public class Solution {
     public int findMin(int[] nums) {
-        if (nums==null || nums.length==0) { return Integer.MIN_VALUE; } 
-        int left = 0, right = nums.length-1;
-        while (left < right-1) {  // while (left < right-1) is a useful technique
-            int mid = left + (right-left)/2;
-            if (nums[mid] > nums[right]) { left = mid; }
-            else { right = mid; }
+        int start = 0;
+        int end = nums.length-1;
+        while(start<end){
+            int mid = start + (end-start)/2;
+            if(nums[mid]>nums[end]){
+                start = mid + 1;  //mid不可能是最小的点。
+            }
+            else{
+                end = mid;  //不能是mid-1，有可能这一点就是最小的点。
+            }
         }
-        if (nums[left] > nums[right]) { return nums[right]; }
-        return nums[left];
+        return nums[start]; //此时start==end
     }
 }
+
+Time: o(n)
+Space: o(1)
