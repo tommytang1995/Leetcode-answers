@@ -14,3 +14,7 @@ public class Solution {
         }
     }
 }
+全排列组合的这种backtrack不需要判断条件return！
+Time: In this case i think T(n) = T(n-1) + T(n-2) + ... + T(1) = (T(n-2) + T(n-1) + ...) + T(n-2) + T(n - 1) + … = 2T(n-2),
+so on and so forth, T(n) = 2T(n-1) = 4T(n-2) = … = 2^nT(1), where I think T(1) is O(1).
+Space: o(2^n)
