@@ -50,3 +50,6 @@ public class Solution {      //第二种方法，用low表示最后一个0的位
         }
     }
 }
+
+Time: o(n)
+Space: o(1)
