@@ -1,25 +1,32 @@
+Area = min(left, right) * length
+if(height[left] < height[right]) and we move the right pointer. Say the next value is smaller than before, then area must be smaller because
+the length is smaller as well. If the value is larger than before, then the area still is smaller because the height is still left and 
+the length has been smaller. So we have to move the smaller pointer.
+The same reason for if(height[right] < height[left])
+
 public class Solution {
     public int maxArea(int[] height) {
-        int max = 0;
         int left = 0;
-        int right = height.length-1;
-        while(left<right){
-            max = Math.max(max,(right-left)*Math.min(height[left],height[right]));
-            if(height[left]<height[right]){
-                int k = left+1;
-                while(k<right&&height[k]<=height[left]){
-                    ++k;
-                }
-                left=k;
+        int right = height.length - 1;
+        int max = 0;
+        
+        while(left < right){
+            max = Math.max(max, (right - left) * Math.min(height[left],height[right]));
+            if(height[left] < height[right]){
+                int k = left;
+                while(k < right && height[k] <= height[left])k++;   //To find the next possible larger area
+                left = k;
             }
             else{
-                int k = right-1;
-                while(k>left&&height[k]<=height[right]){
-                    --k;
-                }
-                right=k;
+                int k = right;
+                while(k > left && height[k] <= height[right])k--;   //To find the next possible larger area
+                right = k;
             }
         }
+        
         return max;
     }
 }
+
+Time: o(n) Because when left>=right, all the while loops will stop.
+Space: o(1)
