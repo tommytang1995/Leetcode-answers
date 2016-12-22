@@ -26,5 +26,5 @@ public class Solution {
     }
 }
 
-Time: o(logn)
+Time: o(nlogn)
 Space: o(1)
