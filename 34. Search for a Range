@@ -1,34 +1,37 @@
 public class Solution {
     public int[] searchRange(int[] nums, int target) {
-        int[] res = {-1,-1};
-        int start = 0 ;
-        int end = nums.length-1;
-        while(start<end){
-            int mid = start+(end-start)/2;
-            if(nums[mid]<target){
+        int[] res = {-1, -1};
+        if(nums==null||nums.length==0)return res;
+        int start = 0;
+        int end = nums.length - 1;
+        while(start < end){   //To find the most left target so when nums[mid] == target it means the most left is mid or its left.
+            int mid = start + (end - start) / 2;
+            if(nums[mid] < target){
                 start = mid + 1;
             }
-            else{
+            else{       //when nums[mid] > target it means end = mid - 1 and merge it with the equal situation
                 end = mid;
             }
         }
-        if(nums[start]!=target){
+        if(nums[start] != target){
             return res;
         }
-        res[0]=start;
-        
-        end = nums.length-1;
-        while(start<end){
-            int mid = (start + end) /2 + 1;
-            if(nums[mid]>target){
-                end = mid -1 ;
-            }
-            else{
+        res[0] = start;
+        end = nums.length - 1;
+        while(start < end){  //To find the most right target so when nums[mid] == target it means the most right is mid or its right.
+            int mid = start + (end - start + 1) / 2;  //mid is always biased towards the left. say this situation [5,7], target is 5.
+                                                      //nums[mid] is 5, so start = mid, which is useless because they are equal already.
+            if(nums[mid] > target){
+                end = mid - 1;;
+            } 
+            else{       //when nums[mid] < target it means start = mid + 1 and merge it with the equal situation
                 start = mid;
             }
         }
-        res[1]=end;
-        return res; 
+        res[1] = end;
+        return res;
     }
 }
-https://discuss.leetcode.com/topic/5891/clean-iterative-solution-with-two-binary-searches-with-explanation
+
+Time: o(logn)
+Space: o(1)
