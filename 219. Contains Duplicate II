@@ -26,7 +26,7 @@ public class Solution {
         Set<Integer> set = new HashSet<>();
         for(int i = 0; i < nums.length; i++){
             if(i > k)set.remove(nums[i-k-1]);     //一个sliding window, 其中包含了k+1个元素。如果超过了k+1，则把窗口的第一个减去。
-            if(!set.add(nums[i]))return true;
+            if(!set.add(nums[i]))return true;   //该方法返回false时，表示set里已经有此元素，又因为set里只包含i-k到i的元素，所以返回true.
         }
         return false;
     }
