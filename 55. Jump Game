@@ -1,11 +1,13 @@
 public class Solution {
     public boolean canJump(int[] nums) {
-        int mostLeftIndex = nums.length-1;
-        for(int i = nums.length - 1 ; i >= 0 ; i--){
-            if(i+nums[i] >= mostLeftIndex){
-                mostLeftIndex = i;
-            }
+        int reachable = 0;
+        for(int i = 0; i < nums.length; i++){
+            if(i > reachable)return false;
+            reachable = Math.max(reachable,i+nums[i]);
         }
-        return mostLeftIndex==0;
+        return true;
     }
 }
+
+Time: o(n)
+Space: o(1)
