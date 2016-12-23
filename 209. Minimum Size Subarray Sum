@@ -38,7 +38,7 @@ public class Solution {
         int sum = 0;
         int from = 0;
         int window = nums.length + 1;
-        int[] sums = new int[nums.length];   //把每个元素之前的所有元素（包括此元素）之和存起来
+        int[] sums = new int[nums.length];   //把每个元素之前的所有元素（包括此元素）之和存起来，这个数组是递增的，所以可用binary search
         for(int i = 0; i < nums.length; i++){
             if(i == 0){
                 sums[i] = 0 + nums[i];
