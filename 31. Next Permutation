@@ -1,0 +1,32 @@
+public class Solution {
+    public void nextPermutation(int[] nums) {
+        int i = nums.length - 1;
+        for(; i >= 1; i--){   //从尾到头，找到第一个满足后一个元素second大于前一个元素first
+            if(nums[i] > nums[i-1]){
+                break;
+            }
+        }
+        if(i != 0){        //若等于零，说明这是最大的一种排列，下一个就是最小的排列，也就是这个if后面的翻转数组
+            for(int j = nums.length - 1; j > i - 1; j-- ){    //若不等于零，则从尾向前找，第一个大于first的元素，将其与first调换
+                if(nums[j] > nums[i-1]){
+                    int temp = nums[j];
+                    nums[j] = nums[i-1];
+                    nums[i-1] = temp;
+                    break;
+                }
+            }
+        }
+        int start = i;   //完成上一步之后，要对second及之后的元素进行翻转，至此完成。
+        int end = nums.length - 1;
+        while(start < end){
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+}
+
+Time: o(n)
+Space: o(1)
