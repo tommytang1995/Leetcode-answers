@@ -1,0 +1,25 @@
+public class Solution {
+    public void rotate(int[] nums, int k) {
+        if(nums == null || nums.length == 0 ){
+            return;
+        }
+        int n = nums.length;
+        k %= n;
+        reverse(nums,0,n-1);
+        reverse(nums,0,k-1);
+        reverse(nums,k,n-1);
+    }
+    
+    public void reverse(int[] nums, int start, int end){   //记得反转数组的时候都是用start和end这种方法！！而不是for
+        while(start < end){
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;    //千万不要忘记！！！！
+            end--;
+        }
+    }
+}
+
+Time: o(n)
+Space: o(1)
