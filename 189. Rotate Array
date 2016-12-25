@@ -23,3 +23,26 @@ public class Solution {
 
 Time: o(n)
 Space: o(1)
+
+public class Solution {
+    public void rotate(int[] nums, int k) {
+        if(nums == null || nums.length == 0 ){
+            return;
+        }
+        int n = nums.length;
+        k %= n;
+        for(int start = 0; start<nums.length && k!=0; k%=n){
+            for(int i = 0; i < k; i++){
+                swap(nums,start+i,nums.length-k+i);
+            }
+            n -= k;
+            start += k;
+        }
+    }
+    
+    public void swap(int[] nums, int start, int end){
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+    }
+}
