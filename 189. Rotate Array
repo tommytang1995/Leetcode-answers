@@ -46,3 +46,4 @@ public class Solution {
         nums[end] = temp;
     }
 }
+https://discuss.leetcode.com/topic/9406/3-lines-of-c-in-one-pass-using-swap/17
