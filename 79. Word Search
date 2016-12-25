@@ -32,3 +32,6 @@ public class Solution {
         return exist;
     }
 }
+
+Time: o(m*n*(4^k))
+Space: o(1)
