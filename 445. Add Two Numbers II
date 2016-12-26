@@ -1,0 +1,39 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        Stack<Integer> stack1 = new Stack<>();
+        Stack<Integer> stack2 = new Stack<>();
+        while(l1 != null){
+            stack1.push(l1.val);
+            l1 = l1.next;
+        }
+        while(l2 != null){
+            stack2.push(l2.val);
+            l2 = l2.next;
+        }
+        ListNode list = new ListNode(0);
+        int sum = 0;
+        while(!stack1.empty() || !stack2.empty()){
+            if(!stack1.empty()) sum += stack1.pop();
+            if(!stack2.empty()) sum += stack2.pop();
+            list.val = sum % 10;   
+            ListNode head = new ListNode(sum / 10);   //之所以等于sum/10，是因为这样可以避免999+001这样的情况，这种情况下，链表头正好1，循环也结束。
+                                                      //如果让它等于默认值0的话，对其他情况都可以满足，唯独这个Corner case不行，如果等于0,999+001
+                                                      //算出来就是0000.切记。
+            head.next = list;
+            list = head;
+            sum /= 10;
+        }
+        return list.val == 0 ? list.next : list;  //当list.val==0时，说明是普通的情况，最高位没有升位，因为只有在sum<10的时候，sum/10才等于0，所以
+                                                  //没有升位。如果list.val!=0，说明是类似999+001的情况，有升位。
+    }
+}
+Time: o(m+n)
+Space: o(m+n)
