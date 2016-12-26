@@ -1,0 +1,42 @@
+public class Solution {
+    public int findDuplicate(int[] nums) {
+        int start = 0;
+        int end = nums.length-1;
+        while(start < end){
+            int mid = start + (end - start) / 2;
+            int count = 0;
+            for(int i = 0; i < nums.length; i++){
+                if(nums[i] <= mid){    
+                    count++;
+                }
+            }
+            if(count > mid){   //说明[1,mid]中有多于mid个数，说明有一个数肯定是重复的，在左侧
+                end = mid;
+            }
+            else{   //反之右侧
+                start = mid + 1;
+            }
+        }
+        return start;
+    }
+}
+Time: o(nlogn)
+Space: o(1)
+public class Solution {
+    public int findDuplicate(int[] nums) {
+        int slow = 0;
+        int fast = 0;
+        do{
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }while(slow != fast);  //找到快慢相遇的位置
+        fast = 0;
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[fast];
+        }    //找到环开始的地方（重复的位置）
+        return slow;
+    }
+}
+Time: o(n)
+Space: o(1)
