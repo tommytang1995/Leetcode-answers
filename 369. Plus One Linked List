@@ -1,0 +1,51 @@
+ public ListNode plusOne(ListNode head) {
+     ListNode dummy = new ListNode(0); // start with 0. If need to update dummy, then check if dummy is modified to 1
+     dummy.next = head;
+     ListNode cur = dummy, lastnot9 = null;
+     
+     while(cur != null){
+        if(cur.val != 9){
+            lastnot9 = cur;
+        }
+        cur = cur.next;
+     }
+     
+     lastnot9.val += 1;
+     cur = lastnot9.next;
+     while(cur != null){
+        cur.val = 0;
+        cur = cur.next;
+     }
+     if(dummy.val == 1) return dummy;
+     return dummy.next;
+}
+
+/*  Go to the last one, if == 9, then put 0 and remember a carry
+ *  Remember the node before the last 9 in front of the end node. 
+ * ==> Remeber last node not 9!
+ *  ** Corner case: head should also be modified and add a new node as a head.
+ */
+ public ListNode plusOne(ListNode head) {
+     ListNode dummy = new ListNode(0); // start with 0. If need to update dummy, then check if dummy is modified to 1
+     dummy.next = head;
+     ListNode cur = dummy, lastnot9 = null;
+     
+     while(cur != null){
+        if(cur.val != 9){
+            lastnot9 = cur;
+        }
+        cur = cur.next;
+     }
+     
+     lastnot9.val += 1;
+     cur = lastnot9.next;
+     while(cur != null){
+        cur.val = 0;
+        cur = cur.next;
+     }
+     if(dummy.val == 1) return dummy;
+     return dummy.next;
+}
+
+Time: o(n)
+Space: o(1)
