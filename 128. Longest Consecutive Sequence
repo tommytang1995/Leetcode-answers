@@ -6,7 +6,7 @@ public class Solution {
             }
             int best = 0;
             for(int n : set) {
-                if(!set.contains(n - 1)) {  // only check for one direction
+                if(!set.contains(n - 1)) {  // only check for one direction, look for the start of the other independent sequence
                     int m = n + 1;
                     while(set.contains(m)) {
                         m++;
@@ -17,3 +17,5 @@ public class Solution {
             return best;
     }
 }
+Time: o(n) because we only check each streak(consecutive sequence)
+Space: o(n)
