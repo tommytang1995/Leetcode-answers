@@ -1,0 +1,47 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if(head == null || head.next == null) return head;
+        ListNode dummy = new ListNode(0);  //这个在链表中非常常用，记得！
+        dummy.next = head;
+        ListNode cur = dummy;
+        while(cur.next != null && cur.next.next != null){
+            ListNode first = cur.next;
+            ListNode second = cur.next.next;
+            first.next = second.next;
+            cur.next = second;
+            cur.next.next = first;
+            cur = cur.next.next;
+        }
+        return dummy.next;
+    }
+}
+Time: o(n)
+Space: o(1)
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode swapPairs(ListNode head) {   
+        if(head == null || head.next == null) return head;
+        ListNode n = head.next;
+        head.next = swapPairs(head.next.next);
+        n.next = head;
+        return n;
+    }
+}
+Time: o(n)
+Space: o(n)
+//1->2->3->4 首先head=1,n=2,调用递推,1后面接的是3和4,head=3,n=4,然后再调用递推,此时返回的是null，然后再返回4->3->null，然后就是2143
