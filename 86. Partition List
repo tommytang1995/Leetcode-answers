@@ -18,3 +18,5 @@ public ListNode partition(ListNode head, int x) {
     curr1.next = dummy2.next;
     return dummy1.next;
 }
+Time: o(n)
+Space: o(n)
