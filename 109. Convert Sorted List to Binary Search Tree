@@ -17,17 +17,18 @@
  */
 public class Solution {
     public TreeNode sortedListToBST(ListNode head) {
-        if(head==null){
+        if(head == null){
             return null;
         }
         return helper(head,null);
     }
-    
     public TreeNode helper(ListNode head, ListNode end){
-        if(head==end)return null;
+        if(head == end){
+            return null;
+        }
         ListNode slow = head;
         ListNode fast = head;
-        while(fast.next!=end&&fast.next.next!=end){
+        while(fast != end && fast.next != end){   //找到中间的那个点，作为根结点
             slow = slow.next;
             fast = fast.next.next;
         }
@@ -37,3 +38,5 @@ public class Solution {
         return root;
     }
 }
+Time: o(n)
+Space: o(logn)  n代表结点数
