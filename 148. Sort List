@@ -8,40 +8,34 @@
  */
 public class Solution {
     public ListNode sortList(ListNode head) {
-        if(head == null){
-            return head;
-        }
-        if(head.next == null){
-            return head;
-        }
+        if(head == null || head.next == null) return head;
         ListNode pre = head;
         ListNode slow = head;
         ListNode fast = head;
-        while(fast!=null&&fast.next!=null){
-            pre=slow;
-            slow=slow.next;
-            fast=fast.next.next;
+        while(fast != null && fast.next != null){
+            pre = slow;
+            slow = slow.next;
+            fast = fast.next.next;
         }
-        pre.next=null;
+        pre.next = null;
         ListNode h1 = sortList(head);
         ListNode h2 = sortList(slow);
-        return merge(h1,h2);
+        return mergeSort(h1, h2);
     }
     
-    public ListNode merge(ListNode h1,ListNode h2){
-        if(h1==null){
-            return h2;
-        }
-        if(h2==null){
-            return h1;
-        }
-        if(h1.val<h2.val){
-            h1.next=merge(h1.next,h2);
+    public ListNode mergeSort(ListNode h1, ListNode h2){
+        if(h1 == null) return h2;
+        if(h2 == null) return h1;
+        if(h1.val < h2.val){
+            h1.next = mergeSort(h1.next, h2);
             return h1;
         }
         else{
-            h2.next=merge(h1,h2.next);
+            h2.next = mergeSort(h1, h2.next);
             return h2;
         }
     }
 }
+
+Time: o(nlogn)
+Space: o(logn)
