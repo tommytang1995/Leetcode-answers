@@ -8,25 +8,69 @@
  */
 public class Solution {
     public ListNode rotateRight(ListNode head, int k) {
-        if(head==null||head.next==null)return head;
+        if(head == null || head.next == null) return head;
+        int size = 0;
         ListNode last = head;
-        int len = 1;
-        while(last.next!=null){
-            len++;
-            last=last.next;
+        while(last.next != null){
+            size++;
+            last = last.next;
         }
-        
-        k=k%len;
-        if(k==0)return head;
-        ListNode right = head;
-        for(int i = 0 ; i < len-k-1 ; i++){
-            right=right.next;
+        size++;
+        k %= size;
+        ListNode pre = head;
+        for(int i = size - k; i > 1; i--){
+            pre = pre.next;
         }
-        ListNode temp = right.next;
-        right.next = null;
-        right = temp;
-        
-        last.next=head;
-        return right;
+        ListNode cur = pre.next;
+        if(cur != null){  
+            pre.next = null;
+            last.next = head;
+            return cur;
+        }
+        else{    //说明不用移，k==size
+            return head;
+        }
     }
 }
+Time: o(n)
+Space: o(1)
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        if(head == null || head.next == null) return head;
+        int size = 0;
+        ListNode last = head;
+        while(last.next != null){
+            size++;
+            last = last.next;
+        }
+        size++;
+        k %= size;
+        ListNode pre = head;
+        for(int i = size - k; i > 1; i--){
+            pre = pre.next;
+        }
+        ListNode cur = pre.next;
+        ListNode dummy = new ListNode(0);
+        ListNode newHead = dummy;
+        if(cur != null){
+            newHead.next = cur;
+            pre.next = last.next;
+            last.next = head;
+        }
+        else{
+            newHead.next = head;
+        }
+        return dummy.next;
+    }
+}
+Time: o(n)
+Space: o(n)
