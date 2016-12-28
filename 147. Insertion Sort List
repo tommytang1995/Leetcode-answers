@@ -27,5 +27,5 @@ public class Solution {
         return dummy.next;
     }
 }
-Time: o(n)
+Time: o(n^2)
 Space: o(n)
