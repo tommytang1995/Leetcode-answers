@@ -28,4 +28,4 @@ public class Solution {
     }
 }
 Time: o(n)
-Space: o(1)
+Space: o(n)
