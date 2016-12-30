@@ -30,3 +30,34 @@ public class Solution {
 }
 Time: o(n)
 Space: o(n)
+
+public class Solution {
+    public List<Integer> topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        List<Integer> res = new ArrayList<>();
+        for(int i = 0 ; i < nums.length ; i++){
+            if(map.containsKey(nums[i])){
+                map.put(nums[i], map.get(nums[i])+1);
+            }
+            else{
+                map.put(nums[i], 1);
+            }
+        }
+        PriorityQueue<Map.Entry<Integer, Integer>> pq = new PriorityQueue<>(
+            new Comparator<Map.Entry<Integer, Integer>>(){
+                @Override
+                public int compare(Map.Entry<Integer, Integer> a, Map.Entry<Integer, Integer> b){
+                    return b.getValue() - a.getValue();
+                }
+            }
+        );
+        pq.addAll(map.entrySet());
+        while(!pq.isEmpty() && res.size() < k){
+            Map.Entry<Integer, Integer> entry = pq.poll();
+            res.add(entry.getKey());
+        }
+        return res;
+    }
+}
+Time: o(nlogn)
+Space: o(n)
