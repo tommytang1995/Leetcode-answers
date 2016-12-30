@@ -1,0 +1,31 @@
+public class Solution {
+    public int kthSmallest(int[][] matrix, int k) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        PriorityQueue<Tuple> pq = new PriorityQueue<>();
+        for(int j = 0; j < n; j++) pq.offer(new Tuple(0, j, matrix[0][j]));
+        for(int i = 0; i < k-1; i++){
+            Tuple temp = pq.poll();
+            if(temp.x == m-1) continue;
+            pq.offer(new Tuple(temp.x+1, temp.y, matrix[temp.x+1][temp.y]));
+        }
+        return pq.poll().val;
+    }
+}
+
+class Tuple implements Comparable<Tuple> {
+    int x;
+    int y;
+    int val;
+    public Tuple(int x, int y, int val){
+        this.x = x;
+        this.y = y;
+        this.val = val;
+    }
+    @Override
+    public int compareTo(Tuple tuple){
+        return this.val - tuple.val;
+    }
+}
+Time: o(n+klogn)
+Space: o(n^2)
