@@ -1,37 +1,54 @@
 public class Solution {
-  
-  public int findKthLargest(int[] a, int k) {
-    int n = a.length;
-    int p = quickSelect(a, 0, n - 1, n - k + 1);
-    return a[p];
-  }
-  
-  // return the index of the kth smallest number
-  int quickSelect(int[] a, int lo, int hi, int k) {
-    // use quick sort's idea
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>(
+            new Comparator<Integer>(){
+                @Override
+                public int compare(Integer a, Integer b){
+                    return a.intValue() - b.intValue();
+                }
+            }
+        );
+        for(int i = 0; i < nums.length; i++){
+            pq.offer(nums[i]);
+            if(pq.size() > k){
+                pq.poll();
+            }
+        }
+        return pq.peek();
+    }
+}
+Time: o(nlogk)
+Space: o(k)
+
+public class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        int n = nums.length;
+        int p = quickSelect(nums, 0, n-1, n-k+1); //convert this problem to finding the n-k+1 smallest element which is totally equivalent
+        return nums[p];
+    }
+    public int quickSelect(int[] nums, int low, int high, int k){
+        int i = low;
+        int j = high;
+        int pivot = nums[high];
+         // use quick sort's idea
     // put nums that are <= pivot to the left
     // put nums that are  > pivot to the right
-    int i = lo, j = hi, pivot = a[hi];
-    while (i < j) {
-      if (a[i++] > pivot) swap(a, --i, --j);
+        while(i < j){
+            if(nums[i++] > pivot) swap(nums,--i,--j);
+        }
+        swap(nums,i,high); //now i==j and all elements after j(including j) must be larger than pivot
+        int m = i - low + 1; //number of elements that are smaller than pivot (including pivot itself)
+        if(m == k) return i;
+        else if(m > k) return quickSelect(nums,low,i-1,k);
+        else{
+            return quickSelect(nums,i+1,high,k-m);  //the reason why it's i+1 instead of i is because m-k has remove the ith element
+        }
     }
-    swap(a, i, hi);
-    
-    // count the nums that are <= pivot from lo
-    int m = i - lo + 1;
-    
-    // pivot is the one!
-    if (m == k)     return i;
-    // pivot is too big, so it must be on the left
-    else if (m > k) return quickSelect(a, lo, i - 1, k);
-    // pivot is too small, so it must be on the right
-    else            return quickSelect(a, i + 1, hi, k - m);
-  }
-  
-  void swap(int[] a, int i, int j) {
-    int tmp = a[i];
-    a[i] = a[j];
-    a[j] = tmp;
-  }
-
+    public void swap(int[] nums, int i, int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
 }
+Time: o(n)(o(n)+o(logn)) worst o(n^2) when finding the largest element choosing the first element as pivot in a sorted array
+Space: o(1)
