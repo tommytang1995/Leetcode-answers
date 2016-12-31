@@ -24,3 +24,24 @@ public class Solution {
 }
 Time: o(nlogk)
 Space: o(n)
+
+public class Solution {   
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int[] res = new int[nums.length-k+1];
+        if(nums == null || nums.length == 0 || k == 0) return new int[0];
+        Deque<Integer> dq = new LinkedList<>();
+        int idx = 0;
+        for(int i = 0; i < nums.length; i++){
+            while(!dq.isEmpty() && dq.peek() < i-k+1) dq.poll();
+            while(!dq.isEmpty() && nums[dq.peekLast()] < nums[i]) dq.pollLast(); 
+            //由于是要求deque的head一定要是这个window最大的数，所以不能从head开始比较，比如现在window是31，我们要将2加进来，则变成312,3被poll出去
+            //剩下12，然后下一个数假如是0，这个时候0<1所以不poll出去，然后加入到res的数组就是1了，然而这个区间120中，最大的数应该是2.也就是说这样会
+            //出现像是sorted了的情况。
+            dq.offer(i);
+            if(i >= k-1) res[idx++] = nums[dq.peek()];
+        }
+        return res;
+    }
+}
+Time: o(n)
+Space: o(k)
