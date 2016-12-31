@@ -1,16 +1,39 @@
 public class Solution {
     public int nthUglyNumber(int n) {
-        int factor2 = 0 ; 
-        int factor3 = 0 ;
-        int factor5 = 0 ;
-        int[] k = new int[n];
-        k[0]=1;
-        for(int i = 1 ; i < n ; i++){
-            k[i]=Math.min(k[factor2]*2,Math.min(k[factor3]*3,k[factor5]*5));
-            if(k[i]==k[factor2]*2)factor2++;
-            if(k[i]==k[factor3]*3)factor3++;
-            if(k[i]==k[factor5]*5)factor5++;
+        int factor2 = 0;
+        int factor3 = 0;
+        int factor5 = 0;
+        int[] ugly = new int[n];
+        ugly[0] = 1;
+        for(int i = 1; i < n; i++){
+            ugly[i] = Math.min(ugly[factor2]*2,Math.min(ugly[factor3]*3,ugly[factor5]*5));
+            if(ugly[i] == ugly[factor2]*2) factor2++;
+            if(ugly[i] == ugly[factor3]*3) factor3++;
+            if(ugly[i] == ugly[factor5]*5) factor5++;
         }
-        return k[n-1];
+        return ugly[n-1];
+    }
+}之所以不用考虑跳过重复的元素，是因为就算有两个重复，例如2*3和3*2，它们两个和另个数一起取了最小值，所以不会将重复的元素加进去。
+Time: o(n)
+Space: o(n)
+
+public class Solution {
+    public int nthUglyNumber(int n) {
+            if(n==1) return 1;
+    PriorityQueue<Long> q = new PriorityQueue<>();
+    q.add(1l);
+    
+    for(long i=1; i<n; i++) {
+        long tmp = q.poll();
+        while(!q.isEmpty() && q.peek() == tmp) q.poll();
+        
+        q.add(tmp*2);
+        q.add(tmp*3);
+        q.add(tmp*5);
+    }
+    return q.poll().intValue();
     }
 }
+注意可能超出int的范围，因为每次都要加3个数进去，也就是一共加了3n个数进去，这个跟上一种方法不同，因为上一个方法维持在n个数。
+Time: o(nlogn)
+Space: o(n)
