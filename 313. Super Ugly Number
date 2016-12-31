@@ -1,18 +1,51 @@
 public class Solution {
     public int nthSuperUglyNumber(int n, int[] primes) {
-    int [] res = new int[n];
-    res[0] = 1;
-    int [] cur = new int[primes.length];
-    
-    for(int i = 1; i < n; i++){
-        res[i] = Integer.MAX_VALUE;
-        for(int j = 0; j < primes.length; j++){
-            if (primes[j] * res[cur[j]] == res[i-1]) {
-                cur[j]++;
+        int[] res = new int[n];
+        int[] cur = new int[primes.length];  //represents the current position (in the res array) of every corresponding prime factor
+        res[0] = 1;
+        for(int i = 1; i < n; i++){
+            res[i] = Integer.MAX_VALUE;
+            for(int j = 0; j < primes.length; j++){
+                if(primes[j] * res[cur[j]] == res[i-1]) cur[j]++;
+                res[i] = Math.min(res[i], primes[j] * res[cur[j]]);
             }
-            res[i] = Math.min(res[i], primes[j]*res[cur[j]]);
+        }
+        return res[n-1];
+    }
+}
+Time: o(nk)
+Space: o(n+k)
+
+public class Solution {
+    public int nthSuperUglyNumber(int n, int[] primes) {
+        int[] res = new int[n];
+        res[0] = 1;
+        PriorityQueue<Num> pq = new PriorityQueue<>();
+        for(int i = 0; i < primes.length; i++) pq.offer(new Num(primes[i],1,primes[i])); //因为所有的prime都加进了数组，相当于已经进行了一次
+                                                                                         //运行。所以为1。
+        for(int i = 1; i < n; i++){
+            res[i] = pq.peek().val;
+            while(!pq.isEmpty() && pq.peek().val == res[i]){  //去掉重复的元素
+                Num temp = pq.poll();
+                pq.offer(new Num(temp.prime*res[temp.cur],temp.cur+1,temp.prime)); //第一部分代表该prime与数组元素形成的积，第二部分是prime在
+                                                                                   //数组中的位置，第三部分是prime本身。
+            }
+        }
+        return res[n-1];
+    }
+    class Num implements Comparable<Num>{
+        int val;
+        int cur;
+        int prime;
+        public Num(int val, int cur, int prime){
+            this.val = val;
+            this.cur = cur;
+            this.prime = prime;
+        }
+        public int compareTo(Num num){
+            return this.val - num.val;
         }
     }
-    return res[n-1];
 }
-}
+Time: o(nklogk)
+Space: o(n+k)
