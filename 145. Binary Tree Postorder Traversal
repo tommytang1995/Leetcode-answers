@@ -22,5 +22,5 @@ public class Solution {  preorder:root-left-right, change to:root-right-left, th
         return list;
     }
 }
-Time: o(n)
+Time: o(n^2) add(0,val)需要o(n)
 Space: o(n)
