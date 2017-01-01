@@ -11,19 +11,19 @@ public class Solution {
         while(index<s.length()){
             if(s.charAt(index)>='0'&&s.charAt(index)<='9'){
                 int num = 0;
-                while(s.charAt(index)>='0'&&s.charAt(index)<='9'){
+                while(s.charAt(index)>='0'&&s.charAt(index)<='9'){ 这就是为什么不用for循环
                     num = 10*num+(s.charAt(index)-'0');
                     index++;
                 }
                 count.push(num);
             }
-            else if(s.charAt(index)=='['){
+            else if(s.charAt(index)=='['){  说明一个新的string开始了，要把之前的保存进栈里
                 ch.push(res);
                 res = "";
                 index++;
             }
-            else if(s.charAt(index)==']'){
-                StringBuilder temp = new StringBuilder(ch.pop());
+            else if(s.charAt(index)==']'){  说明一个string结束了，要与上一个string开始拼接了
+                StringBuilder temp = new StringBuilder(ch.pop());  //这里用sb比用string要快得多
                 int times = count.pop();
                 for(int i = 0 ; i < times ; i++){
                     temp.append(res);
@@ -39,3 +39,5 @@ public class Solution {
         return res;
     }
 }
+Time: o(n)
+Space: o(n)
