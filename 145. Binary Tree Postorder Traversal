@@ -25,6 +25,24 @@ public class Solution {  preorder:root-left-right, change to:root-right-left, th
 Time: o(n^2) add(0,val)需要o(n)
 Space: o(n)
 
+public class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        LinkedList<Integer> list = new LinkedList<>();
+        if(root == null) return list;
+        Stack<TreeNode> stack= new Stack<>();
+        stack.push(root);
+        while(!stack.isEmpty()){
+            TreeNode temp = stack.pop();
+            list.addFirst(temp.val);
+            if(temp.left != null) stack.push(temp.left);
+            if(temp.right != null) stack.push(temp.right);
+        }
+        return list;
+    }
+}
+Time: o(n)
+Space: o(n)
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
