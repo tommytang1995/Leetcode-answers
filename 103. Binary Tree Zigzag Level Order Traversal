@@ -10,34 +10,44 @@
  
 *******************************************BFS of iterative and recursive version:*************************************************
 
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
 public class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> list = new ArrayList<>();
-        if(root==null)return list;
+        if (root == null) return list;
         Queue<TreeNode> queue = new LinkedList<>();
+        boolean bool = false;
         queue.offer(root);
-        
         while(!queue.isEmpty()){
             int size = queue.size();
-            List<Integer> li = new ArrayList<>();
-            for(int i = 0 ; i < size ; i++){
-                TreeNode temp = queue.poll();
-                if(temp.left!=null){
-                    queue.offer(temp.left);
+            List<Integer> temp = new ArrayList<>();
+            for(int i = 0; i < size; i++){
+                TreeNode node = queue.poll();
+                if(bool){
+                    temp.add(0, node.val);
                 }
-                if(temp.right!=null){
-                    queue.offer(temp.right);
+                else{
+                    temp.add(node.val);
                 }
-                li.add(temp.val);
+                if(node.left != null) queue.offer(node.left);
+                if(node.right != null) queue.offer(node.right);
             }
-            if(list.size()%2!=0){
-                 Collections.reverse(li);
-            }
-            list.add(li);
+            list.add(temp);
+            bool = !bool;
         }
         return list;
     }
 }
+Time: o(n^2)
+Space: o(n)
 
 public class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
@@ -65,3 +75,5 @@ public class Solution {
         helper(node.right,list,level+1);
     }
 }
+Time: o(n^2)
+Space: o(logn)
