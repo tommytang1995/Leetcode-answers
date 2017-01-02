@@ -4,7 +4,7 @@ public class Solution {
         Stack<Character> stack = new Stack<>();
         int i = 0;
         while(i<num.length()){
-            while(k>0&&!stack.isEmpty()&&stack.peek()>num.charAt(i)){
+            while(k>0&&!stack.isEmpty()&&stack.peek()>num.charAt(i)){  //要确保高位的digit越小越好，这样才能保证最小。最极端的例子：5432和2345.
                 stack.pop();
                 k--;
             }
@@ -20,11 +20,13 @@ public class Solution {
         //
         StringBuilder sb = new StringBuilder();
         while(!stack.isEmpty()){
-                sb.insert(0,stack.pop());
+            sb.append(stack.pop());
         }
-        while(sb.length()>1&&sb.charAt(0)=='0'){
-            sb.deleteCharAt(0);
+        while(sb.length() > 1 && sb.charAt(sb.length()-1) == '0'){
+            sb.deleteCharAt(sb.length()-1);
         }
-        return sb.toString();
+        return sb.reverse().toString();
     }
 }
+Time: o(n)
+Space: o(n)
