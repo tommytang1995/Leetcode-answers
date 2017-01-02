@@ -18,3 +18,65 @@ public class Solution {
         return false;
     }
 }
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if(p == null && q == null){
+			return true;
+		}
+		//structure
+		if(p == null || q == null){
+			return false;
+		}
+		//val
+		if(p.val != q.val){
+			return false;
+		}
+		
+		Stack<TreeNode> stk1 = new Stack<TreeNode>();
+		Stack<TreeNode> stk2 = new Stack<TreeNode>();
+		stk1.push(p);
+		stk2.push(q);
+		
+		while( !stk1.isEmpty() && !stk2.isEmpty() ){
+			TreeNode tn1 = stk1.pop();
+			TreeNode tn2 = stk2.pop();
+			
+			if(tn1.val != tn2.val){
+				return false;
+			}
+			//structure different
+			if(tn1.left == null && tn2.left != null){
+				return false;
+			}else if (tn1.left != null && tn2.left == null){
+				return false;
+			}else if (tn1.right == null && tn2.right != null){
+				return false;
+			}else if (tn1.right != null && tn2.right == null) {
+				return false;
+			}
+			
+			if(tn1.left != null && tn2.left != null){
+				stk1.push(tn1.left);
+				stk2.push(tn2.left);
+			}
+			
+			if(tn1.right != null && tn2.right != null){
+				stk1.push(tn1.right);
+				stk2.push(tn2.right);
+			}
+		}
+		
+		return true;
+        
+    }
+}
