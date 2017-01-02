@@ -1,0 +1,45 @@
+public class Solution {
+    public boolean find132pattern(int[] nums) {
+        if(nums == null || nums.length == 0) return false;
+        for(int i = 0; i < nums.length; i++){
+            int bigger = nums[i];
+            for(int j = i + 1; j < nums.length; j++){
+                if(nums[j] <= nums[i]) continue;
+                if(nums[j] >= bigger){
+                    bigger = nums[j];
+                }
+                else{
+                    return true;  //此时nums[j]<bigger且>nums[i]
+                }
+            }
+        }
+        return false;
+    }
+}
+Time: o(n^2)
+Space: o(1)
+
+public class Solution {
+    public boolean find132pattern(int[] nums) {
+        if(nums == null || nums.length < 3) return false;
+        Stack<Integer> stack = new Stack<>();
+        int min = Integer.MAX_VALUE;
+        for(int num : nums){
+            if(num <= min){
+                min = num;
+            }
+            else{
+                while(!stack.isEmpty()){
+                    if(stack.peek() >= num) break;
+                    stack.pop();
+                    if(stack.pop() > num) return true;
+                }
+                stack.push(num);  //stack中保存的是在num之前的最大值和最小值，并不停的拓宽这个范围
+                stack.push(min);
+            }
+        }
+        return false;
+    }
+}
+Time: o(n)
+Space: o(1)
