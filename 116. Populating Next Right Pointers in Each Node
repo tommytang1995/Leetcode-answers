@@ -1,47 +1,6 @@
-/**
- * Definition for binary tree with next pointer.
- * public class TreeLinkNode {
- *     int val;
- *     TreeLinkNode left, right, next;
- *     TreeLinkNode(int x) { val = x; }
- * }
- */
 public class Solution {
     public void connect(TreeLinkNode root) {
-        if(root==null){
-            return;
-        }
-        Queue<TreeLinkNode> queue = new LinkedList<>();
-        queue.offer(root);
-        TreeLinkNode pre = null;
-        while(!queue.isEmpty()){
-            int size = queue.size();
-            for(int i = 0 ; i < size ; i++){
-                TreeLinkNode temp = queue.poll();
-                if(temp.left!=null){
-                    queue.offer(temp.left);
-                }
-                if(temp.right!=null){
-                    queue.offer(temp.right);
-                }
-                if(i==0){              //when i==0, pre==null, so we have to assign the temp to the pre.
-                    pre=temp;
-                }
-                else{                  //when i!=0, pre is not equal to null, it can be the previous node of temp node.
-                    pre.next=temp;
-                    pre=temp;
-                } 
-                if(i==size-1){        //when i==size-1, this level has been finished, temp.next should be assigned to null.
-                    temp.next=null;
-                }
-            }
-        }
-    }
-}
-
-public class Solution {
-    public void connect(TreeLinkNode root) {
-        while(root!=null&&root.left!=null){
+        while(root!=null&&root.left!=null){ //当root!=null而root.left==null时，说明已经到最后一层，这一层已经被上一步连起来了。
             TreeLinkNode temp = root;
             while(temp!=null){               //this loop is traversing the level where temp is at and connect every node in the next level 
                 temp.left.next=temp.right;
@@ -50,5 +9,62 @@ public class Solution {
             }
             root=root.left;
         }
+    }
+}
+Time: o(n)
+Space: o(1)
+
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        if(root == null) return;
+        Queue<TreeLinkNode> queue = new LinkedList<>();
+        queue.offer(root);
+        TreeLinkNode pre = null;
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            for(int i = 0; i < size; i++){
+                TreeLinkNode cur = queue.poll();
+                if(cur.left != null) queue.offer(cur.left);
+                if(cur.right != null) queue.offer(cur.right);
+                if(i == 0) pre = cur;
+                else pre.next = cur; pre = cur;
+            }
+        }
+    }
+}
+
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        if(root == null) return;
+        Queue<TreeLinkNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while(!queue.isEmpty()){
+            TreeLinkNode temp = queue.poll();
+            int size = queue.size();
+            if(temp.left != null) queue.offer(temp.left);
+            if(temp.right != null) queue.offer(temp.right);
+            for(int i = 0; i < size; i++){
+                TreeLinkNode cur = queue.poll();
+                temp.next = cur;
+                if(cur.left != null) queue.offer(cur.left);
+                if(cur.right != null) queue.offer(cur.right);
+                temp = cur;
+            }
+            temp.next = null;
+        }
+    }
+}
+
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        if(root == null) return;
+        helper(root.left, root.right);
+    }
+    public void helper(TreeLinkNode left, TreeLinkNode right){
+        if(left == null || right == null) return;
+        left.next = right;
+        helper(left.left, left.right);
+        helper(left.right, right.left);
+        helper(right.left, right.right);
     }
 }
