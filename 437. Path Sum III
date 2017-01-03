@@ -8,43 +8,18 @@
  * }
  */
 public class Solution {
-    
     public int pathSum(TreeNode root, int sum) {
-        if(root==null){
-            return 0;
-        }
-        return findPath(root,sum)+pathSum(root.left,sum)+pathSum(root.right,sum);
+        if (root == null) return 0;
+         return helper(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);
     }
-    
-    public int findPath(TreeNode root, int sum){
+    public int helper(TreeNode root, int sum){
+        if(root == null) return 0;
         int count = 0;
-        if(root==null){
-            return count;
-        }
-        if(root.val==sum){
-            count++;
-        }
-        count+=findPath(root.left,sum-root.val)+findPath(root.right,sum-root.val);
+        if(sum == root.val) count++;
+        count += helper(root.left, sum - root.val);
+        count += helper(root.right, sum - root.val);
         return count;
     }
 }
-----------------------------------------------------------------------------------------------------------
-    public int pathSum(TreeNode root, int sum) {
-        HashMap<Integer, Integer> preSum = new HashMap();
-        preSum.put(0,1);
-        return helper(root, 0, sum, preSum);
-    }
-    
-    public int helper(TreeNode root, int sum, int target, HashMap<Integer, Integer> preSum) {
-        if (root == null) {
-            return 0;
-        }
-        
-        sum += root.val;
-        int res = preSum.getOrDefault(sum - target, 0);
-        preSum.put(sum, preSum.getOrDefault(sum, 0) + 1);
-        
-        res += helper(root.left, sum, target, preSum) + helper(root.right, sum, target, preSum);
-        preSum.put(sum, preSum.get(sum) - 1);
-        return res;
-    }
+Time: O(n^2) in worst case (no branching); O(nlogn) in best case (balanced tree).
+Space: O(n) due to recursion.
