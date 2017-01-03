@@ -39,3 +39,94 @@ public class Solution {
         return root;
     }
 }
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        if(nums == null || nums.length == 0) return null;
+        TreeNode root = new TreeNode(0);
+        Queue<TreeNode> node = new LinkedList<>();
+        Queue<Integer> left = new LinkedList<>(); //存的是对应node的左bound
+        Queue<Integer> right = new LinkedList<>(); //存的是对应node的右bound
+        node.offer(root);
+        left.offer(0);
+        right.offer(nums.length-1);
+        while(!node.isEmpty()){
+            TreeNode temp = node.poll();
+            int low = left.poll();
+            int high = right.poll();
+            int mid = low + (high - low) / 2;
+            temp.val = nums[mid];
+            if(low < mid){
+                temp.left = new TreeNode(0);
+                node.offer(temp.left);
+                left.offer(low);
+                right.offer(mid-1);
+            }
+            if(high > mid){
+                temp.right = new TreeNode(0);
+                node.offer(temp.right);
+                left.offer(mid+1);
+                right.offer(high);
+            }
+        }
+        return root;
+    }
+}
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    class Node{
+        int low;
+        int high;
+        TreeNode node;
+        public Node(int low, int high, TreeNode node){
+            this.low = low;
+            this.high = high;
+            this.node = node;
+        }
+    }
+    public TreeNode sortedArrayToBST(int[] nums) {
+        if(nums == null || nums.length == 0) return null;
+        Stack<Node> stack = new Stack<>();
+        TreeNode node = new TreeNode(nums[(nums.length-1) / 2]);
+        Node root = new Node(0, nums.length-1, node);
+        stack.push(root);
+        while(!stack.isEmpty()){
+            Node temp = stack.pop();
+            int left = temp.low;
+            int right = temp.high;
+            TreeNode cur = temp.node;
+            int mid = left + (right - left) / 2;
+            if(left < mid){
+                TreeNode leftChild = new TreeNode(nums[(left+mid-1)/2]);
+                cur.left = leftChild;
+                Node leftNode = new Node(left, mid-1, leftChild);
+                stack.push(leftNode);
+            }
+            if(right > mid){
+                TreeNode rightChild = new TreeNode(nums[(right+mid+1)/2]);
+                cur.right = rightChild;
+                Node rightNode = new Node(mid+1, right, rightChild);
+                stack.push(rightNode);
+            }
+        }
+        return node;
+    }
+}
