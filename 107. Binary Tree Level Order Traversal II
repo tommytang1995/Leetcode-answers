@@ -54,3 +54,23 @@ public List<List<Integer>> levelOrderBottom(TreeNode root) {
         backtrack(list,root.left,level+1);
         backtrack(list,root.right,level+1);
     }
+    
+public class Solution {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> list = new ArrayList<>();
+        if(root == null) return list;
+        helper(root, list, 0);
+        return list;
+    }
+    public void helper(TreeNode root, List<List<Integer>> list, int level){
+        if(root == null) return;
+        if(list.size() == level){
+            list.add(0, new ArrayList<>());  //注意这个！！！！！
+        }
+        helper(root.left, list, level + 1);
+        helper(root.right, list, level + 1);
+        list.get(list.size()-1-level).add(root.val);
+    }
+}
+Time: o(n)
+Space: o(logn)
