@@ -23,7 +23,8 @@ public class Solution {
         return helper(left.left,right.right)&&helper(left.right,right.left);
     }
 }
-
+Time: o(n)
+Space: o(logn)
 
 public class Solution {
     public boolean isSymmetric(TreeNode root) {
@@ -44,3 +45,5 @@ public class Solution {
         return true;
     }
 }
+Time: o(n)
+Space: o(logn)
