@@ -8,21 +8,21 @@
  * }
  */
 public class Solution {
+    private int sum = 0;
     public int sumNumbers(TreeNode root) {
-        if(root==null)return 0;
-        return helper(root,0);
+        if(root == null) return 0;
+        helper(root, 0);
+        return sum;
     }
-    
-    public int helper(TreeNode node, int num){
-        if(node==null)return 0;
-        if(node.left==null&&node.right==null){
-            num=num*10+node.val;
-            return num;
-        }
-        num=num*10+node.val;
-        return helper(node.left,num)+helper(node.right,num);
+    public void helper(TreeNode root, int num){
+        if(root == null) return;
+        if(root.left == null && root.right == null) {sum += 10*num + root.val; return;}
+        helper(root.left, 10*num + root.val);
+        helper(root.right, 10*num + root.val);
     }
 }
+Time: o(n)
+Space: o(logn)
 
 /**
  * Definition for a binary tree node.
@@ -60,3 +60,5 @@ public class Solution {
         return sum;
     }
 }
+Time: o(n)
+Space: o(logn)
