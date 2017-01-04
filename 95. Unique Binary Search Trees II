@@ -1,41 +1,27 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
 public class Solution {
     public List<TreeNode> generateTrees(int n) {
         if(n<=0)return new ArrayList<TreeNode>();
         return helper(1,n);
     }
-    
     public List<TreeNode> helper(int start, int end){
-        List<TreeNode> list = new ArrayList<>();
-        if(start>end){
-            list.add(null);
-            return list;
+        List<TreeNode> tree = new ArrayList<>();
+        if(start > end){
+            tree.add(null);
         }
-        if(start==end){
-            list.add(new TreeNode(start));
-            return list;
-        }
-        for(int i = start ; i <= end ; i++){
-            List<TreeNode> le = helper(start,i-1);
-            List<TreeNode> rg = helper(i+1,end);
-            
-            for(TreeNode lef : le){
-                for(TreeNode rig : rg){
-                    TreeNode temp = new TreeNode(i);
-                    temp.left = lef;
-                    temp.right = rig;
-                    list.add(temp);
+        for(int i = start; i <= end; i++){
+            List<TreeNode> leftChild = helper(start, i - 1);  //以i为root的左节点
+            List<TreeNode> rightChild = helper(i + 1, end);
+            for(TreeNode left : leftChild){   //左节点的所有组合方式
+                for(TreeNode right : rightChild){    //右节点的所有组合方式，将两者组合起来，是相乘的关系
+                    TreeNode root = new TreeNode(i);   //创建根节点
+                    root.left = left;
+                    root.right = right;
+                    tree.add(root);  //添加一种树的组合方式
                 }
             }
         }
-        return list;
+        return tree;
     }
 }
+T(n) = 2*(T(n-1) + T(n-2) + ... + T(1) + T(0)), T(n) should equal to O(2^n)
+Space: o(logn)
