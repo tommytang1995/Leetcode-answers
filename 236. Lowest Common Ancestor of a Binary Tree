@@ -21,29 +21,34 @@ public class Solution {
     }
 }
 
-public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        Map<TreeNode, TreeNode> parent = new HashMap<>();
-        Deque<TreeNode> stack = new ArrayDeque<>();
-        parent.put(root, null);
+public class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        Map<TreeNode, TreeNode> map = new HashMap<>();
+        Stack<TreeNode> stack = new Stack<>();
+        map.put(root, null);
         stack.push(root);
-
-        while (!parent.containsKey(p) || !parent.containsKey(q)) {
-            TreeNode node = stack.pop();
-            if (node.left != null) {
-                parent.put(node.left, node);
-                stack.push(node.left);
+        while(!map.containsKey(p) || !map.containsKey(q)){
+            TreeNode cur = stack.pop();
+            if(cur.left != null){
+                map.put(cur.left, cur);
+                stack.push(cur.left);
             }
-            if (node.right != null) {
-                parent.put(node.right, node);
-                stack.push(node.right);
+            if(cur.right != null){
+                map.put(cur.right, cur);
+                stack.push(cur.right);
             }
         }
         Set<TreeNode> ancestors = new HashSet<>();
-        while (p != null) {
+        while(p != null){
             ancestors.add(p);
-            p = parent.get(p);
+            p = map.get(p);
         }
-        while (!ancestors.contains(q))
-            q = parent.get(q);
+        while(!ancestors.contains(q)){  //如果q正好在p的ancestors中，说明它们的共同祖先就是q，如果不在，我们找q的祖先，看这个祖先是否在ancestors中
+                                        //如果这个祖先在的话，说明这个祖先就是共同的祖先。
+            q = map.get(q);
+        }
         return q;
     }
+}
+Time: o(n)
+Space: o(n)
