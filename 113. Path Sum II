@@ -30,6 +30,8 @@ public class Solution {
         temp.remove(temp.size()-1);
     }
 }
+Time: o(n)
+Space: o(logn)
 
 //用stack进行backtrack
 public class Solution {
@@ -51,3 +53,5 @@ public class Solution {
         return resultList;
     }
 }
+Time: o(n)
+Space: o(logn)
