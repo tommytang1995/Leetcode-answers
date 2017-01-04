@@ -26,3 +26,32 @@ public class Solution {
         if(node.right!=null)helper(list,node.right,s);
     }
 }
+Time: o(nlogn) 
+Space: o(logn)
+public class Solution {
+        public List<String> binaryTreePaths(TreeNode root) {
+        List<String> res = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        helper(res, root, sb);
+        return res;
+    }
+    
+    private void helper(List<String> res, TreeNode root, StringBuilder sb) {
+        if(root == null) {
+            return;
+        }
+        int len = sb.length();
+        sb.append(root.val);
+        if(root.left == null && root.right == null) {
+            res.add(sb.toString());
+        } 
+        sb.append("->");
+        helper(res, root.left, sb);
+        helper(res, root.right, sb);
+        sb.setLength(len);
+    }
+}
+Time: o(nlogn) 
+Space: o(logn)
+String is immutable, everytime you pass a string, it is a new object. Not the case for StringBuilder, 
+it keeps changing everytime you operator on it.
