@@ -1,24 +1,49 @@
 public class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> list = new ArrayList<>();
-        backtrack(list,new StringBuilder(),0,0,n);
+        if(n == 0) return list;
+        helper(list,"",0,0,n);
         return list;
     }
     
-    public void backtrack(List<String> list, StringBuilder sb, int open, int close, int num){
-        if(open==num&&close==num){
-            list.add(new StringBuilder(sb).toString());
+    public void helper(List<String> list, String str, int left, int right, int n){
+        if(left > n || right > n) return;
+        if(right > left) return;
+        if(left == n && right == n){
+            list.add(str);
             return;
         }
-        if(open<num){
-            sb.append("(");
-            backtrack(list,sb,open+1,close,num);
-            sb.setLength(sb.length()-1);
-        }
-        if(close<open){
-            sb.append(")");
-            backtrack(list,sb,open,close+1,num);
-            sb.setLength(sb.length()-1);
-        }
+        helper(list, str + "(", left + 1, right, n);
+        helper(list, str + ")", left, right + 1, n);
     }
 }
+Time: o(2^n)
+Space: o(n)
+
+public class Solution {
+    public List<String> generateParenthesis(int n) {
+     List<String> res = new ArrayList<>();
+     Stack<String> stack = new Stack<>();
+     Stack<Integer> rightNumber = new Stack<>();   //keep the number of ")"
+     stack.push("(");
+     rightNumber.push(0);
+     while(!stack.isEmpty()){
+         String cur = stack.pop();
+         int right = rightNumber.pop();
+         if(cur.length() - right < n){
+             stack.push(cur + "(");
+             rightNumber.push(right);
+         }
+         if(2 * right < cur.length()){
+             stack.push(cur + ")");
+             rightNumber.push(right+1);
+         }
+         if(cur.length() == 2 * n){
+             res.add(cur);
+         }
+     }
+     return res;
+   }
+}
+Time: o(2^n)
+Space: o(n)
