@@ -1,0 +1,19 @@
+public class Solution {
+    private int max = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        if(root == null) return 0;
+        helper(root);
+        return max;
+    }
+    
+    //return the bigger one between leftsubtree and rightsubtree plus current root value
+    public int helper(TreeNode root){
+        if(root == null) return 0;
+        int left = Math.max(helper(root.left), 0);   //to handle the negative situation
+        int right = Math.max(helper(root.right), 0);
+        max = Math.max(max, root.val + left + right);
+        return root.val + Math.max(left, right);
+    }
+}
+Time: o(n)
+Space: o(1)
