@@ -1,0 +1,19 @@
+public class Solution {
+    public boolean repeatedSubstringPattern(String str) {
+        for(int len = str.length() / 2; len >= 1; len--){
+            if(str % len == 0){
+                String temp = str.substring(0, len);
+                int i;
+                for(i = 1; i < m; i++){
+                    if(!str.substring(i*len,len+i*len).equals(temp)) return false;
+                }
+                if(i == m) return true;
+            }
+        }
+        return false;
+    }
+}
+The number of factors is always bounded by O(sqrt(n)). Factors come in pairs, 
+i.e., n = a * b. The smaller one of a and b must be no larger than sqrt(n); 
+otherwise, we have a > sqrt(n) and b > sqrt(n) and thus a * b > n. 
+Therefore, there are at most O(2sqrt(n)) = O(sqrt(n)) factors, and the worst case runtime for this algorithm is O(n^1.5).
