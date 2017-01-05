@@ -36,19 +36,25 @@ public class Solution {
  */
 public class Solution {
     public boolean isValidBST(TreeNode root) {
-        if(root==null)return true;
+        if(root == null) return true;
         Stack<TreeNode> stack = new Stack<>();
+        while(root != null){
+            stack.push(root);
+            root = root.left;
+        }
         TreeNode pre = null;
-        while(!stack.isEmpty()||root!=null){
-            while(root!=null){
-                stack.push(root);
-                root=root.left;
+        while(!stack.isEmpty()){
+            TreeNode cur = stack.pop();
+            if(pre != null && cur.val <= pre.val) return false;
+            pre = cur;
+            TreeNode right = cur.right;
+            while(right != null){
+                stack.push(right);
+                right = right.left;
             }
-            TreeNode temp = stack.pop();
-            if(pre!=null&&pre.val>=temp.val)return false;
-            pre=temp;
-            root=temp.right;
         }
         return true;
     }
 }
+Time: o(n)
+Space: o(logn)
