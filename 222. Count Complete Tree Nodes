@@ -41,3 +41,4 @@ public class Solution {
         return depth;
     }
 }
+ I have O(log(n)) steps. Finding a height costs O(log(n)). So overall O(log(n)^2).
