@@ -46,7 +46,7 @@ public class Solution {
         queue.offer("");
         for(int i = 0; i < digits.length(); i++){
             char[] letters = map.get(digits.charAt(i)-'0').toCharArray();
-            while(queue.peek().length() == i){
+            while(queue.peek().length() == i){       //说明上一层的还没抛完
                 String temp = queue.poll();
                 for(int j = 0; j < letters.length; j++){
                     queue.offer(temp + letters[j]);
