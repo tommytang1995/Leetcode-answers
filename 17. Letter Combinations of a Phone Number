@@ -23,7 +23,7 @@ public class Solution {
         for(int i = 0; i < letters.length(); i++){
             sb.append(letters.charAt(i));
             helper(digits, level+1, list, sb);
-            sb.setLength(sb.length()-1);
+            sb.setLength(sb.length()-1);   //注意这个！！！！如果用的是string就不需要！！！！
         }
     }
 }
