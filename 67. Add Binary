@@ -1,0 +1,19 @@
+public class Solution {
+    public String addBinary(String a, String b) {
+        int lenA = a.length();
+        int lenB = b.length();
+        StringBuilder sb = new StringBuilder();
+        int carry = 0;
+        for(int i=lenA-1,j=lenB-1;i>=0||j>=0;i--,j--){
+            int sum = carry;
+            if(i>=0)sum += Integer.parseInt(a.substring(i,i+1));
+            if(j>=0)sum += Integer.parseInt(b.substring(j,j+1));
+            sb.append(sum%2);
+            carry = sum/2;
+        }
+        if(carry != 0) sb.append(String.valueOf(carry));
+        return sb.reverse().toString();
+    }
+}
+Time: o(n) n is the maximum length of a and b, sb.reverse() takes o(n) 
+Space: o(n)
