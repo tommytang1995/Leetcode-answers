@@ -1,0 +1,26 @@
+public class Solution {
+    public int lengthOfLastWord(String s) {
+        if(s == null || s.length() == 0) return 0;
+        String[] ch = s.split(" ");
+        return ch.length == 0 ? 0 : ch[ch.length-1].length();
+    }
+}
+Time: o(n)
+Space: o(n)
+
+public class Solution {
+    public int lengthOfLastWord(String s) {
+        if(s == null || s.length() == 0) return 0;
+        int last = s.length() - 1;
+        int count = 0;
+        for(int i = last; i >= 0 && s.charAt(i) == ' '; i--){  //防止后面还有空格或者整个字符串只有空格的情况
+            last--;
+        }
+        for(int i = last; i >= 0 && s.charAt(i) != ' '; i--){
+            count++;
+        }
+        return count;
+    }
+}
+Time: o(n)
+Space: o(1)
