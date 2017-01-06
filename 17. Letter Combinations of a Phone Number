@@ -1,19 +1,31 @@
 public class Solution {
-    private static final String[] keys = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    private Map<Integer, String> map = new HashMap<>();
     public List<String> letterCombinations(String digits) {
         List<String> list = new ArrayList<>();
-        if(digits.length()==0)return list; 
-        backtrack("",digits,list,0);
+        if(digits == null || digits.length() == 0) return list;
+        map.put(2,"abc");
+        map.put(3,"def");
+        map.put(4,"ghi");
+        map.put(5,"jkl");
+        map.put(6,"mno");
+        map.put(7,"pqrs");
+        map.put(8,"tuv");
+        map.put(9,"wxyz");
+        helper(digits, 0, list, new StringBuilder());
         return list;
     }
-    public void backtrack(String prefix,String digits,List<String> list,int offset){
-        if(prefix.length()==digits.length()){
-            list.add(prefix);
+    public void helper(String digits, int level, List<String> list, StringBuilder sb){
+        if(sb.length() == digits.length()){
+            list.add(sb.toString());
             return;
         }
-        String letters = keys[digits.charAt(offset)-'0'];
-        for(int i = 0 ; i < letters.length() ; i++){
-            backtrack(prefix+letters.charAt(i),digits,list,offset+1);
+        String letters = map.get(digits.charAt(level) - '0');
+        for(int i = 0; i < letters.length(); i++){
+            sb.append(letters.charAt(i));
+            helper(digits, level+1, list, sb);
+            sb.setLength(sb.length()-1);
         }
     }
 }
+Time: o(3.5^n)
+Space: o(n)
