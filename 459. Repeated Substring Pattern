@@ -1,11 +1,12 @@
 public class Solution {
     public boolean repeatedSubstringPattern(String str) {
         for(int len = str.length() / 2; len >= 1; len--){
-            if(str % len == 0){
+            if(str.length() % len == 0){
                 String temp = str.substring(0, len);
                 int i;
+                int m = str.length() / len;
                 for(i = 1; i < m; i++){
-                    if(!str.substring(i*len,len+i*len).equals(temp)) return false;
+                    if(!temp.equals(str.substring(i*len,len+i*len))) break;
                 }
                 if(i == m) return true;
             }
