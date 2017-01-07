@@ -1,0 +1,44 @@
+public class Solution {
+    class Trie{
+            Trie[] children;
+            public Trie(){
+                children = new Trie[2];
+            }
+        }
+    public int findMaximumXOR(int[] nums) {
+        if(nums == null || nums.length == 0) return 0;
+        Trie root = new Trie();
+        for(int num : nums){
+            Trie curNode = root;
+            for(int i = 31; i >= 0; i--){
+                int curBit = (num >>> i) & 1;
+                if(curNode.children[curBit] == null){
+                    curNode.children[curBit] = new Trie();
+                }
+                curNode = curNode.children[curBit];
+            }
+        }
+        int max = Integer.MIN_VALUE;
+        for(int num : nums){
+            Trie curNode = root;
+            int curSum = 0;
+            for(int i = 31; i >= 0; i--){
+                int curBit = (num >>> i) & 1;
+                if(curNode.children[curBit^1] != null){
+                    curSum += (1 << i);
+                    curNode = curNode.children[curBit^1];
+                }
+                else{
+                    curNode = curNode.children[curBit];
+                }
+                if (curSum < max && max - curSum >= (1 << i) - 1) {  //意思就是，就算从i位置开始，所有的bit异或后都是1，和还是小于max，就不用再进行下去了，因为已经达到不到最大值了。
+                    break;
+                }
+            }
+            max = Math.max(max, curSum);
+        }
+        return max;
+    }
+}
+Time: o(n)
+Space: o(n)
