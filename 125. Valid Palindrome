@@ -1,0 +1,21 @@
+public class Solution {
+    public boolean isPalindrome(String s) {
+        if(s == null || s.length() == 0) return true;
+        s = s.trim();
+        s = s.toLowerCase();
+        int start = 0;
+        int end = s.length()-1;
+        while(start < end){
+            if((s.charAt(start) < '0' || s.charAt(start) > '9') && (s.charAt(start) < 97 || s.charAt(start) > 122)){
+                start++;
+            }
+            else if((s.charAt(end) < '0' || s.charAt(end) > '9') && (s.charAt(end) < 97 || s.charAt(end) > 122)){
+                end--;
+            }
+            else if(s.charAt(start++) != s.charAt(end--)){  //注意是用else if
+                return false;
+            }
+        }
+        return true;
+    }
+}
