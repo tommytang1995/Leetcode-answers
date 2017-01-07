@@ -27,3 +27,26 @@ public class Solution {
 }
 Time: o(3^4) 4段地址，每段三种可能
 Space: o(3^4)
+
+
+public class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        List<String> list = new ArrayList<>();
+        if(s == null || s.length() == 0) return list;
+        helper(s,0,"",list,0);
+        return list;
+    }
+    
+    public void helper(String s, int idx, String sb, List<String> list, int count){ //idx代表这一小段地址的起点
+        if(count > 4) return;
+        if(count == 4 && idx == s.length()){  //代表遍历结束且正好分成四小段，正确
+            list.add(sb);
+        }
+        for(int i = 1; i < 4; i++){
+            if(idx + i > s.length()) break; //表示超出字符串的范围
+            String temp = s.substring(idx,idx+i);  
+            if((temp.length() > 1 && temp.charAt(0) == '0') || i == 3 && Integer.parseInt(temp) > 255) continue;
+            helper(s,idx+i,sb+temp+(count==3?"":"."),list,count+1);  //当count=3的时候，说明加进去的是第四段地址，就不用加"."
+        }
+    }
+}
