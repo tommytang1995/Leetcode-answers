@@ -19,3 +19,42 @@ public class Solution {
 有点难理解，基本思路就是，j是最大字符串的起点，i则是终点。一旦i位置上的字符之前出现过，那么j就要移到这个字符的右边，当然j只能往前移，所以要取较大的值。
 这是为了避免包含其他重复字符的情况。比如adbccba这个字符串，当i指到第二个c的时候，j就移到了第一个c的旁边，是第二个c的位置。然后i到了第二个b，如果不取
 较大值，将会导致j倒退到第一个b的右边，就是第一个c的位置。那么从j到i这个字符串会包括两个c。这是不对的。
+
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if(s == null || s.length() == 0) return 0;
+        char[] ch = s.toCharArray();
+        int i = 0;
+        int j = 1;
+        int len = 1;
+        while(j < ch.length){
+                if(s.substring(i,j).indexOf(ch[j]) >= 0){
+                    i = i + s.substring(i,j).indexOf(ch[j]) + 1;
+                }
+                len = Math.max(j- i + 1, len);
+                j++;
+        }
+        return len;
+    }
+}
+Time: o(n^2)
+Space: o(n)
+
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if(s == null || s.length() == 0) return 0;
+        char[] ch = s.toCharArray();
+        int len = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        for(int i = 0, j = 0; i < ch.length; i++){
+            if(map.containsKey(ch[i])){
+                j = Math.max(map.get(ch[i])+1,j);
+            }
+            map.put(ch[i],i);
+            len = Math.max(len, i - j + 1);
+        }
+        return len;
+}
+}
+Time: o(n)
+Space: o(n)
