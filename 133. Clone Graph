@@ -1,0 +1,43 @@
+/**
+ * Definition for undirected graph.
+ * class UndirectedGraphNode {
+ *     int label;
+ *     List<UndirectedGraphNode> neighbors;
+ *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
+ * };
+ */
+public class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if(node == null) return node;
+        List<UndirectedGraphNode> list = getNode(node);
+        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
+        for(UndirectedGraphNode nod : list){
+            map.put(nod, new UndirectedGraphNode(nod.label));
+        }
+        for(UndirectedGraphNode nod : list){
+            UndirectedGraphNode cloneNode = map.get(nod);
+            for(UndirectedGraphNode neigh : nod.neighbors){
+                cloneNode.neighbors.add(map.get(neigh));
+            }
+        }
+        return map.get(node);
+    }
+    public ArrayList<UndirectedGraphNode> getNode(UndirectedGraphNode node){
+        Queue<UndirectedGraphNode> queue = new LinkedList<>();
+        Set<UndirectedGraphNode> set = new HashSet<>();
+        queue.offer(node);
+        set.add(node);
+        while(!queue.isEmpty()){
+            UndirectedGraphNode temp = queue.poll();
+            for(UndirectedGraphNode neigh : temp.neighbors){
+                if(!set.contains(neigh)){
+                    set.add(neigh);
+                    queue.offer(neigh);
+                }
+            }
+        }
+        return new ArrayList<>(set);
+    }
+}
+Time: o(m+n) m: number of nodes, n: number of edges 
+Space : o(m) 
