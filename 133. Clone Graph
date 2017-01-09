@@ -41,3 +41,30 @@ public class Solution {
 }
 Time: o(m+n) m: number of nodes, n: number of edges 
 Space : o(m) 
+
+/**
+ * Definition for undirected graph.
+ * class UndirectedGraphNode {
+ *     int label;
+ *     List<UndirectedGraphNode> neighbors;
+ *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
+ * };
+ */
+public class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        Map<Integer, UndirectedGraphNode> map = new HashMap<>();
+        return helper(map, node);
+    }
+    public UndirectedGraphNode helper(Map<Integer, UndirectedGraphNode> map, UndirectedGraphNode node){
+        if(node == null) return node;
+        if(map.containsKey(node.label)){
+            return map.get(node.label);
+        }
+        UndirectedGraphNode cloneNode = new UndirectedGraphNode(node.label);
+        map.put(node.label, cloneNode);
+        for(UndirectedGraphNode neigh : node.neighbors){
+            cloneNode.neighbors.add(helper(map, neigh));
+        }
+        return cloneNode;
+    }
+}
