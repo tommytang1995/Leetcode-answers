@@ -1,0 +1,17 @@
+public class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices == null || prices.length < 2) return 0;
+        int maxProfit1 = 0; 
+	    int maxProfit2 = 0; 
+	    int lowestBuyPrices1 = Integer.MAX_VALUE;
+	    int lowestBuyPrices2 = Integer.MAX_VALUE;
+	   
+	    for(int p:prices){
+	    	lowestBuyPrices1 = Math.min(lowestBuyPrices1, p);
+	    	maxProfit1 = Math.max(maxProfit1, p - lowestBuyPrices1);
+	    	lowestBuyPrices2 = Math.min(lowestBuyPrices2, p - maxProfit1);
+	    	maxProfit2 = Math.max(maxProfit2, p - lowestBuyPrices2);
+	    }
+	    return maxProfit2;
+    }
+}
