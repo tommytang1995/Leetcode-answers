@@ -15,3 +15,22 @@ public class Solution {
 	    return maxProfit2;
     }
 }
+
+public class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices == null || prices.length < 2) return 0;
+        int n = prices.length;
+        int[][] dp = new int[3][n];
+	   
+	    for(int i = 1; i <= 2; i++){
+	        int tmpMax = -prices[0];
+	        for(int j = 1; j < n; j++){
+	            dp[i][j] = Math.max(dp[i][j-1], tmpMax + prices[j]);
+	            //DP: t(i,j) is the max profit for up to i transactions by time j 
+	            tmpMax = Math.max(tmpMax, dp[i-1][j-1] - prices[j]);
+	            //tmpMax means the maximum profit of just doing at most i-1 transactions, using at most first j-1 prices, and buying the stock at price[j] - this is used for the next loop.
+	        }
+	    }
+	    return dp[2][n-1];
+    }
+}
