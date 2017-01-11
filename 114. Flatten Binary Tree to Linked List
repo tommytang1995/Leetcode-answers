@@ -31,15 +31,15 @@ Space: o(1)
 public class Solution {
     public void flatten(TreeNode root) {
         if(root == null) return;
-        TreeNode left = root.left;
-        TreeNode right = root.right;
         flatten(root.left);
         flatten(root.right);
-        root.right = left;
+        TreeNode temp = root.right;
+        root.right = root.left;
         root.left = null;
-        TreeNode cur = root;
-        while(root.right != null) root = root.right;
-        root.right = right;
+        while(root.right != null){
+            root = root.right;
+        }
+        root.right = temp;
     }
 }
 Time: o(n)
