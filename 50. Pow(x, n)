@@ -1,19 +1,21 @@
 public class Solution {
     public double myPow(double x, int n) {
-        if(n==0)return 1;
-        if(n<0){
-            if(n==Integer.MIN_VALUE){
-                n++;
-                if(x<0){
-                x=-x;                    
-                }
-
-            }
-            n = -n;
-            x = 1/x;
+        if(n < 0){
+            return 1.0/pow(x, Math.abs(n));
         }
-        return n%2==0?myPow(x*x,n/2):x*myPow(x*x,n/2);
+        else{
+            return pow(x, n);
+        }
+    }
+    public double pow(double x, int n){
+        if(n == 0) return 1;
+        double y = pow(x, n/2);
+        if(n % 2 == 0){
+            return y * y;
+        }
+        else{
+            return y * y * x;
+        }
     }
 }
 
-https://discuss.leetcode.com/topic/21837/5-different-choices-when-talk-with-interviewers/4
