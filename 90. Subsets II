@@ -18,3 +18,26 @@ public class Solution {
 }
 
 Time: o(2^n)
+
+public class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> list = new ArrayList<>();
+        if(nums == null || nums.length == 0) return list;
+        list.add(new ArrayList<>());
+        Arrays.sort(nums);
+        int begin = 0;
+        for(int i = 0; i < nums.length; i++){
+            if(i == 0 || nums[i] != nums[i-1]){
+                begin = 0;
+            }
+            int size = list.size();
+            for(int j = begin; j < size; j++){
+                List<Integer> temp = new ArrayList<>(list.get(j));
+                temp.add(nums[i]);
+                list.add(temp);
+            }
+            begin = size;
+        }
+        return list;
+    }
+}
