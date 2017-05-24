@@ -16,3 +16,26 @@ public class Solution {
 Many of the movement problems can be done like this.
 Time complexity: o(n)
 Space complexity: o(1)
+
+public class Solution {
+    public void moveZeroes(int[] nums) {
+        if(nums == null || nums.length == 0){
+            return;
+        }
+        int left = 0;
+        int right = 0;
+        while(right < nums.length){
+            if(nums[right] == 0){
+                right++;
+            }
+            else{
+                nums[left] = nums[right];
+                left++;
+                right++;
+            }
+        }
+        for(int i = left; i < nums.length; i++){
+            nums[i] = 0;
+        }
+    }
+}
