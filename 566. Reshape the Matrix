@@ -1,0 +1,20 @@
+public class Solution {
+    public int[][] matrixReshape(int[][] nums, int r, int c) {
+        if(nums == null || nums.length == 0 || r <= 0 || c <= 0){
+            return nums;
+        }
+        int rows = nums.length;
+        int cols = nums[0].length;
+        if(rows * cols != r * c){
+            return nums;
+        }
+        int[][] result = new int[r][c];
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                int temp = cols * i + j;
+                result[temp / c][temp % c] = nums[i][j];
+            }
+        }
+        return result;
+    }
+}
