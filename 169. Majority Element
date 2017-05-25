@@ -7,3 +7,24 @@ public class Solution {
 
 Time complexity: quick sort,o(nlogn) 
 Space complexity: o(1)
+
+public class Solution {
+    public int majorityElement(int[] nums) {
+        int res = 0;
+        int count = 0;
+        for(Integer num : nums){
+            if(count == 0){
+                res = num;
+            }
+            else if(num != res){
+                count--;
+            }
+            else{
+                count++;
+            }
+        }
+        return res;
+    }
+}
+Time complexity: o(n) 
+Space complexity: o(1)
