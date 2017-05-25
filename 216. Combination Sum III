@@ -22,3 +22,24 @@ public List<List<Integer>> combinationSum3(int k, int n) {
 
 Time: o(9^k)
 Space: o(9^k)
+
+public class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> list = new ArrayList<>();
+        if(k == 0) return list;
+        backtrack(list, new ArrayList<>(), 0, 1, k, n);
+        return list;
+    }
+
+    public void backtrack(List<List<Integer>> list, List<Integer> temp, int sum, int level, int k, int n){
+        if(sum == n && temp.size() == k){
+            list.add(new ArrayList<>(temp));
+            return;
+        }
+        for(int i = level; i <= 9; i++){
+            temp.add(i);
+            backtrack(list, temp, sum + i, i + 1, k, n);
+            temp.remove(temp.size()-1);
+        }
+    }
+}
