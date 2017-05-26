@@ -15,3 +15,26 @@ public class Solution {
         return sofar;
 }
 }
+
+Another version of this:
+public class Solution {
+    public int maxProfit(int[] prices) {
+        int maxSoFar = 0;
+        int maxRes = 0;
+        for(int i = 0; i < prices.length - 1; i++){
+            maxRes = Math.max(0, maxRes + prices[i + 1] - prices[i]);
+            maxSoFar = Math.max(maxRes, maxSoFar);
+        }
+        return maxSoFar;
+    }
+}
+
+if the problem statement straightly gives the differences instead of prices, the solution is:
+        int current = 0;
+        int sofar = 0;
+        for(int i = 0 ; i < diff.length ; i++){
+            current = Math.max(0,current+diff[i]);
+            sofar = Math.max(current,sofar);
+        }
+        return sofar;
+        
