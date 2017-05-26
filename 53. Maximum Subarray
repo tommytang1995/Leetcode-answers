@@ -12,3 +12,4 @@ public class Solution {
 Time: o(n)
 Space: o(1)
 
+Remember to compare this proble to Best time to buy and sell I.
