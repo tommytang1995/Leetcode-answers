@@ -37,3 +37,36 @@ public class Solution {
 
 Time: o(n^2)
 Space: o(n^2)
+
+public class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] res = new int[n][n];
+        if(n < 1) return res;
+        int rowBegin = 0;
+        int rowEnd = n - 1;
+        int colBegin = 0;
+        int colEnd = n - 1;
+        int number = 1;
+        while(number <= n * n){
+            for(int i = colBegin; i <= colEnd; i++){
+                res[rowBegin][i] = number++;
+            }
+            rowBegin++;
+            for(int i = rowBegin; i <= rowEnd; i++){
+                res[i][colEnd] = number++;
+            }
+            colEnd--;
+            for(int i = colEnd; i >= colBegin; i--){
+                res[rowEnd][i] = number++;
+            }
+            rowEnd--;
+            for(int i = rowEnd; i >= rowBegin; i--){
+                res[i][colBegin] = number++;
+            }
+            colBegin++;
+        }
+        return res;
+    }
+}
+
+Just remember the order top right bottom left.
