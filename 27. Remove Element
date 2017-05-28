@@ -28,3 +28,24 @@ public class Solution {
 
 Time: o(n)
 Space: o(1)
+
+public class Solution {
+    public int removeElement(int[] nums, int val) {
+        int left = 0;
+        int right = nums.length - 1;
+        while(left <= right){
+            while(left < nums.length && nums[left] != val){
+                left++;
+            }
+            while(right >= 0 && nums[right] == val){
+                right--;
+            }
+            if(left < right){
+                int temp = nums[right];
+                nums[right] = nums[left];
+                nums[left] = temp;
+            }
+        }
+        return left;
+    }
+}
