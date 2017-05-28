@@ -43,6 +43,8 @@ public class Solution {      //第二种方法，用low表示最后一个0的位
                 nums[i] = nums[high];
                 nums[high] = 2;
                 high--;   //后面的都是2，所以向前进。这里i不+1的原因是，可能调到i位置的正好是0，如果+1了，就错过了。
+                //Because before the index i, the array has been sorted, which means that the element before is either 0 or 1, and there is no need to swap them first(the second swap will never be executed). But when we swap the element with the last, change may happen(index element may become 0) , and we need to swap the index element to the front
+                example: 01120
             }
             else{
                 i++;   //如果是1，不用管，往前走。
