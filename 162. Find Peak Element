@@ -4,7 +4,9 @@ public class Solution {
         int end = nums.length - 1;
         while(start < end){
             int mid = start + (end - start) / 2;
-            if(nums[mid] < nums[mid+1]){
+            if(nums[mid] < nums[mid+1]){ //You don't have to ensure that mid + 1 is beyond the length of nums because only when mid is 
+                                         //the last element of nums this can happen. However, at that time, left is equal to right and the
+                                         //loop will stop.
                 start = mid + 1;
             }
             else{
