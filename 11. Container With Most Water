@@ -14,7 +14,9 @@ public class Solution {
             max = Math.max(max, (right - left) * Math.min(height[left],height[right]));
             if(height[left] < height[right]){
                 int k = left;
-                while(k < right && height[k] <= height[left])k++;   //To find the next possible larger area
+                while(k < right && height[k] <= height[left])k++;   //To find the next possible larger area. Now right - left gets smaller,
+                                                                    //only when height[left] gets larger, the entire area is possible to be
+                                                                    larger.
                 left = k;
             }
             else{
