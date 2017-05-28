@@ -3,7 +3,7 @@ public class Solution {
         if(nums==null||nums.length==0)return 0;
         int p = 2;
         for(int i = 2; i < nums.length; i++){
-            if(nums[i] > nums[p-2]){
+            if(nums[i] > nums[p-2]){ //cannot be nums[i-2]. For example 111223, if you use nums[i-2], the second 2 will not be added.
                 nums[p++] = nums[i];
             }
         }
