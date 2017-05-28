@@ -25,3 +25,22 @@ public class Solution {
 }
 }
 Time: o(n)
+
+public class Solution {
+    public List<Integer> getRow(int rowIndex) {
+        List<List<Integer>> list = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        temp.add(1);
+        list.add(temp);
+        for(int i = 1; i <= rowIndex; i++){
+            temp = new ArrayList<>();
+            temp.add(1);
+            for(int j = 1; j < i; j++){
+                temp.add(list.get(i - 1).get(j- 1) + list.get(i - 1).get(j));
+            }
+            temp.add(1);
+            list.add(temp);
+        }
+        return list.get(rowIndex);
+    }
+}
