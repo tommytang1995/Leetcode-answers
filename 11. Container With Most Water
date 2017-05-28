@@ -6,27 +6,19 @@ The same reason for if(height[right] < height[left])
 
 public class Solution {
     public int maxArea(int[] height) {
-        int left = 0;
-        int right = height.length - 1;
-        int max = 0;
-        
-        while(left < right){
-            max = Math.max(max, (right - left) * Math.min(height[left],height[right]));
-            if(height[left] < height[right]){
-                int k = left;
-                while(k < right && height[k] <= height[left])k++;   //To find the next possible larger area. Now right - left gets smaller,
-                                                                    //only when height[left] gets larger, the entire area is possible to be
-                                                                    larger.
-                left = k;
-            }
-            else{
-                int k = right;
-                while(k > left && height[k] <= height[right])k--;   //To find the next possible larger area
-                right = k;
-            }
-        }
-        
-        return max;
+        int left = 0, right = height.length - 1;
+	int maxArea = 0;
+
+	while (left < right) {
+		maxArea = Math.max(maxArea, Math.min(height[left], height[right])
+				* (right - left));
+		if (height[left] < height[right])
+			left++;
+		else
+			right--;
+	}
+
+	return maxArea;
     }
 }
 
