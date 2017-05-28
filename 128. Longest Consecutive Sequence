@@ -7,6 +7,7 @@ public class Solution {
             int best = 0;
             for(int n : set) {
                 if(!set.contains(n - 1)) {  // only check for one direction, look for the start of the other independent sequence
+                                            // make sure n is the smallest element in one possible consecutive sequence.
                     int m = n + 1;
                     while(set.contains(m)) {
                         m++;
