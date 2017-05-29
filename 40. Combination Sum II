@@ -6,7 +6,7 @@ public class Solution {
         return list;
     }
     public void backtrack(List<List<Integer>> list,List<Integer> ha,int[] candidates, int target,int level,int sum){
-        if(sum==target && !list.containsAll(ha)){
+        if(sum==target){
             list.add(new ArrayList<>(ha));
             return;
         }
@@ -20,4 +20,32 @@ public class Solution {
             ha.remove(ha.size()-1);
         }
     }
+}
+---------------------------------------------------------------------------------------------------------------------------
+public class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> list = new ArrayList<>();
+        if(candidates == null || candidates.length == 0){
+            return list;
+        }
+        Arrays.sort(candidates);
+        backtrack(list, new ArrayList<>(), candidates, 0, target, 0);
+        return list;
+    }
+    
+    public void backtrack(List<List<Integer>> list, List<Integer> temp, int[] candidates, int sum, int target, int level){
+        if(sum == target && !list.contains(temp)){
+            list.add(new ArrayList<>(temp));
+            return;
+        }
+        if(sum > target){
+            return;
+        }
+        for(int i = level; i < candidates.length; i++){
+            temp.add(candidates[i]);
+            backtrack(list, temp, candidates, sum + candidates[i], target, i + 1);
+            temp.remove(temp.size() - 1);
+        }
+    }
+    
 }
