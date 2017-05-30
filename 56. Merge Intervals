@@ -1,0 +1,61 @@
+public class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        Collections.sort(intervals,new Comparator<Interval>() {
+           public int compare(Interval i1, Interval i2) {
+                return i1.start - i2.start;       
+           } 
+        });
+        
+        int i = 0;
+        while(i < intervals.size()-1) {
+            Interval current = intervals.get(i);
+            Interval next = intervals.get(i+1);
+            if(next.start <= current.end) {
+                int max = Math.max(next.end, current.end);
+                current.end = max;
+                intervals.remove(i+1);
+            } else {
+                i++;
+            }
+        }
+        return intervals;
+    }
+}
+
+     public List<Interval> merge(List<Interval> intervals) {
+        Stack<Interval> stack = new Stack();
+        Collections.sort(intervals, (a,b) -> a.start - b.start);
+        for(Interval it: intervals){
+            if(stack.isEmpty() || it.start > stack.peek().end) stack.push(it);
+            else{
+                stack.peek().end = Math.max(it.end, stack.peek().end);
+            }
+        }
+        return new ArrayList(stack);
+    }
+   
+public List<Interval> merge(List<Interval> intervals) {
+    if (intervals.size() <= 1)
+        return intervals;
+    
+    // Sort by ascending starting point using an anonymous Comparator
+    intervals.sort((i1, i2) -> Integer.compare(i1.start, i2.start));
+    
+    List<Interval> result = new LinkedList<Interval>();
+    int start = intervals.get(0).start;
+    int end = intervals.get(0).end;
+    
+    for (Interval interval : intervals) {
+        if (interval.start <= end) // Overlapping intervals, move the end if needed
+            end = Math.max(end, interval.end);
+        else {                     // Disjoint intervals, add the previous one and reset bounds
+            result.add(new Interval(start, end));
+            start = interval.start;
+            end = interval.end;
+        }
+    }
+    
+    // Add the last interval
+    result.add(new Interval(start, end));
+    return result;
+}
