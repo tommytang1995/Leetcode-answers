@@ -14,7 +14,7 @@ public class Solution {
 
 public class Solution {
     public int minSubArrayLen(int s, int[] nums) {
-        int sum = 0;
+T        int sum = 0;
         int from = 0;
         int window = nums.length + 1;
         int i = 0;
@@ -35,36 +35,33 @@ Space: o(1)
 
 public class Solution {
     public int minSubArrayLen(int s, int[] nums) {
-        int sum = 0;
-        int from = 0;
-        int window = nums.length + 1;
-        int[] sums = new int[nums.length];   //把每个元素之前的所有元素（包括此元素）之和存起来，这个数组是递增的，所以可用binary search
-        for(int i = 0; i < nums.length; i++){
-            if(i == 0){
-                sums[i] = 0 + nums[i];
+        if(nums == null || nums.length == 0){
+            return 0;
+        }
+        int left = 1;
+        int right = nums.length;
+        int min = 0;
+        while(left <= right){    //try every possible size and see if there exists a windown sum with a certain size satisfies conditions
+            int mid = left + (right - left) / 2;
+            if(windowExists(mid, s, nums)){
+                right = mid - 1;
+                min = mid;
             }
             else{
-                sums[i] = sums[i-1] + nums[i];
+                left= mid + 1;
             }
         }
-        for(int i = 0; i < nums.length; i++){  //找到这个window的end，以此判断window的长度
-            from = i;  //从每个元素开始找
-            int to = nums.length-1;   //直到最后一个元素
-            int temp = (from == 0 ? 0 : sums[from - 1]);  //减去该window以前的和，从而判断与s的大小关系
-            while(from <= to){
-                int mid = from + (to - from) / 2;
-                if(sums[mid] - temp >= s){  //若大于或等于，试着向左移动end
-                    to = mid - 1;
-                }
-                else{  //若小于，向右移动start
-                    from = mid + 1;
-                }
-            }
-            if(from == nums.length)break;  //超出界限，返回，从i开始说明不存在此种window
-            window = Math.min(window, from - i + 1);
+        return min;
+    }
+    
+    public boolean windowExists(int size, int s, int[] nums){
+        int sum = 0;
+        for(int i = 0; i < nums.length; i++){
+            if(i == size) sum -= nums[i - size];
+            sum += nums[i];
+            if(sum >= s) return true;
         }
-        return window == nums.length + 1 ? 0 : window;
+        return false;
     }
 }
 Time: o(nlogn)
-Space: o(n)
