@@ -1,0 +1,31 @@
+public class Solution {
+    public int findPairs(int[] nums, int k) {
+        if (nums == null || nums.length == 0 || k < 0)   return 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        int res = 0;
+        for(int num : nums){
+            if(!map.containsKey(num)){
+                map.put(num, 1);
+            }
+            else{
+                map.put(num, map.get(num) + 1);
+            }
+        }
+        for(Map.Entry<Integer, Integer> entry : map.entrySet()){
+            if(k == 0){
+                if(entry.getValue() >= 2){
+                    res++;
+                }
+            }
+            else{
+                if(map.containsKey(entry.getKey() + k)){ //only + k no - k so that we can avoid duplicate pairs.
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+}
+
+Time: o(n)
+Space: o(n)
