@@ -11,3 +11,23 @@ public class Solution {
 
 Time: o(n)
 Space: o(1)
+
+public class Solution {
+    public boolean canJump(int[] nums) {
+        if(nums == null || nums.length == 0){
+            return true;
+        }
+        int last = nums.length - 1;
+        for(int i = nums.length - 2; i >= 0; i--){
+            if(i + nums[i] >= last) last = i;
+        }
+        return last == 0;
+    }
+}
+
+when you are at index i, you can jump to index i + nums[i]
+so backwardly, the first goal is jumping to the index, target == len(nums) - 1
+if you find a index i, s.t. i + nums[i] >= len(nums) - 1, which means that as long as we can somehow greedily find a index j, s.t. j + nums[j] >= i, then we can sure we can jump from j to i.
+So we simply change target to i, and continuously doing backward!!
+And in the end, since we are in the index 0 at the begining, and we keep updating our goal to i,
+which means that if we (somehow) can jump to 0, which we already did, then we must be able to jump to len(nums) - 1!!
