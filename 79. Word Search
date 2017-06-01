@@ -33,5 +33,5 @@ public class Solution {
     }
 }
 
-Time: o(m*n*(4^k))
-Space: o(1)
+Time: o(m*m*n*n)
+Space: o(4mn)
