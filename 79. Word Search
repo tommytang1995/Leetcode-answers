@@ -1,4 +1,4 @@
-public class Solution {
+  public class Solution {
     public boolean exist(char[][] board, String word) {
         if(word==null||word.length()==0){
             return true;
@@ -33,5 +33,5 @@ public class Solution {
     }
 }
 
-Time: o(m*m*n*n)
-Space: o(4mn)
+Time: o(m*m*n*n) //we have O(mn) for each for loop, then we search the whole elements again, which is O(mn) in total it is O(m^2n^2) time complexity
+Space: o(4mn) //the space complexity is O(4mn) if the function call stack is taken into account. In each cell, we recursively call its 4 four neighbors and there are mn cells in total
