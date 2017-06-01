@@ -1,4 +1,4 @@
-public class Solution {
+ public class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> list = new ArrayList<>();
         if(matrix==null||matrix.length==0||matrix[0].length==0)return list;
@@ -18,7 +18,7 @@ public class Solution {
                 list.add(matrix[i][colEnd]);
             }
             colEnd--;
-            if(rowStart>rowEnd || colStart>colEnd)break;   //avoid duplicates!!!!!remember!!!!!
+            if(rowStart>rowEnd || colStart>colEnd)break;   //avoid duplicates!!!!!remember!!!!! For example, [[2,3]] -> [2,3,2]
             for(int i = colEnd; i >= colStart; i--){
                 list.add(matrix[rowEnd][i]);
             }
