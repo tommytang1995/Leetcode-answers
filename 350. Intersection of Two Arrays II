@@ -1,0 +1,58 @@
+public class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int p1 = 0;
+        int p2 = 0;
+        List<Integer> list = new ArrayList<>();
+        while(p1 < nums1.length && p2 < nums2.length){
+            if(nums1[p1] == nums2[p2]){
+                list.add(nums1[p1]);
+                p1++;
+                p2++;
+            }
+            else if(nums1[p1] < nums2[p2]){
+                p1++;
+            }
+            else{
+                p2++;
+            }
+        }
+        int[] res = new int[list.size()];
+        for(int i = 0; i < res.length; i++){
+            res[i] = list.get(i);
+        }
+        return res;
+    }
+}
+T: o(nlogn)
+S: o(n)
+
+public class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        Map<Integer, Integer> map1 = new HashMap<>();
+        Map<Integer, Integer> map2 = new HashMap<>();
+        List<Integer> list = new ArrayList<>();
+        for(int num : nums1){
+            map1.put(num, map1.getOrDefault(num, 0) + 1);
+        }
+        for(int num : nums2){
+            map2.put(num, map2.getOrDefault(num, 0) + 1);
+        }
+        for(Map.Entry<Integer, Integer> entry : map1.entrySet()){
+            if(map2.containsKey(entry.getKey())){
+                int times = Math.min(entry.getValue(), map2.get(entry.getKey()));
+                for(int i = 0; i < times; i++){
+                    list.add(entry.getKey());
+                }
+            }
+        }
+        int[] res = new int[list.size()];
+        for(int i = 0; i < res.length; i++){
+            res[i] = list.get(i);
+        }
+        return res;
+    }
+}
+T: o(m+n)
+S: o(m+n)
