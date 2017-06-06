@@ -1,0 +1,18 @@
+public class Solution {
+    public int findLHS(int[] nums) {
+        Map<Long, Integer> map = new HashMap<>();
+        int res = 0;
+        for(long num : nums){
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        for(long num : nums){
+            if(map.containsKey(num + 1)){
+                res = Math.max(res, map.get(num) + map.get(num + 1));
+            }
+        }
+        return res;
+    }
+}
+The reason why we are using long instead of integer is that we want to handle such a case: 
+findLHS(new int[]{-2147483648 , 2147483647});
+//2147483647 + 1 = -2147483648 , and we don't want that.
