@@ -1,0 +1,29 @@
+public class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        Set<Character> row;
+        Set<Character> col;
+        Set<Character> cube;
+        for(int i = 0; i < board.length; i++){
+            row = new HashSet<>();
+            col = new HashSet<>();
+            cube = new HashSet<>();
+            for(int j = 0; j < board[i].length; j++){
+                if(board[i][j] != '.' && !row.add(board[i][j])){
+                    return false;
+                }
+                if(board[j][i] != '.' && !col.add(board[j][i])){
+                    return false;
+                }
+                int rowOffSet = 3 * (i / 3);
+                int colOffSet = 3 * (i % 3);
+                if(board[rowOffSet + j / 3][colOffSet + j % 3] != '.' && !cube.add(board[rowOffSet + j / 3][colOffSet + j % 3])){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+
+Time: o(1)
+Space: o(1)
