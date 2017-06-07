@@ -1,0 +1,19 @@
+public class Solution {
+    public boolean wordPattern(String pattern, String str) {
+        String[] strs = str.split(" ");
+        char[] chars = pattern.toCharArray();
+        if(strs.length != chars.length){
+            return false;
+        }
+        Map<Character, Integer> map1 = new HashMap<>();
+        Map<String, Integer> map2 = new HashMap<>();
+        for(Integer i = 0; i < strs.length; i++){
+            if(map2.put(strs[i], i) != map1.put(chars[i], i)){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+The same idea with 205. Isomorphic Strings 
