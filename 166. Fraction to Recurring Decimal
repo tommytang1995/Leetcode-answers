@@ -1,36 +1,25 @@
 public class Solution {
     public String fractionToDecimal(int numerator, int denominator) {
-        if(numerator==0)return "0";
-        if(denominator==0)return null;
-        StringBuilder sb = new StringBuilder();
-        sb.append(((numerator > 0) ^ (denominator > 0)) ? "-" : "");
-        
+        StringBuilder result = new StringBuilder();
+        String sign = (numerator < 0 == denominator < 0 || numerator == 0) ? "" : "-";
         long num = Math.abs((long)numerator);
         long den = Math.abs((long)denominator);
-        
-        sb.append(num/den);
-        num %= den;
-        
-        if(num == 0)return sb.toString();
-        
-        sb.append(".");
-        HashMap<Long, Integer> map = new HashMap<>();
-        map.put(num, sb.length());
-        
-        while(num!=0){
-            num *= 10;
-            sb.append(num / den);
-            num %= den;
-            Integer index = map.get(num);
-            if(index != null){
-                sb.insert(index, "(");
-                sb.append(")");
-                break;
-            }
-            else{
-                map.put(num, sb.length());
-            }
+        result.append(sign);
+        result.append(num / den);
+        long remain = num % den;
+        if(remain == 0){
+            return result.toString();
         }
-        return sb.toString();
+        result.append(".");
+        Map<Long, Integer> map = new HashMap<>();
+        while(!map.containsKey(remain)){
+            map.put(remain, result.length());
+            result.append(10 * remain / den);
+            remain = 10 * remain % den;
+        }
+        int index = map.get(remain);
+        result.insert(index, "(");
+        result.append(")");
+        return result.toString().replace("(0)", ""); //if we don't have the replace statement, the result for 1/5 will be 0.2(0)
     }
 }
