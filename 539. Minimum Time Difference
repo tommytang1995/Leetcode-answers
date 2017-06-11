@@ -1,0 +1,28 @@
+public class Solution {
+    public int findMinDifference(List<String> timePoints) {
+        boolean[] array = new boolean[24 * 60];
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for(String st : timePoints){
+            String[] time = st.split(":");
+            if(array[Integer.valueOf(time[0]) * 60 + Integer.valueOf(time[1])]) return 0; //There two or more same times
+            array[Integer.valueOf(time[0]) * 60 + Integer.valueOf(time[1])] = true;
+        }
+        int pre = -1;
+        int res = Integer.MAX_VALUE;
+        for(int i = 0; i < 24 * 60; i++){
+            if(array[i] == true){
+                min = Math.min(min, i);
+                max = Math.max(max, i);
+                if(pre == -1){
+                    pre = i;
+                }
+                else{
+                    res = Math.min(res, i - pre);
+                    pre = i;
+                }
+            }
+        }
+        return Math.min(res, 24 * 60 + min - max);
+    }
+}
