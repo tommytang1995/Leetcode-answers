@@ -25,3 +25,31 @@ public class Solution {
 }
 Time: o(n)
 Space: o(n)
+
+public class Solution {
+    public String reverseVowels(String s) {
+        char[] array = s.toCharArray();
+        int left = 0;
+        int right = s.length() - 1;
+        while(left < right){
+            if("aeiouAEIOU".indexOf(array[left]) != -1 && "aeiouAEIOU".indexOf(array[right]) != -1){
+                char temp = array[left];
+                array[left] = array[right];
+                array[right] = temp;
+                left++;
+                right--;
+            }
+            else if("aeiouAEIOU".indexOf(array[left]) != -1){
+                right--;
+            }
+            else if("aeiouAEIOU".indexOf(array[right]) != -1){
+                left++;
+            }
+            else{
+                left++;
+                right--;
+            }
+        }
+        return new String(array);
+    }
+}
