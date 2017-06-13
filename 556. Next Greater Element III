@@ -1,0 +1,42 @@
+public class Solution {
+    public int nextGreaterElement(int n) {
+        String s = String.valueOf(n);
+        char[] ch = s.toCharArray();
+        int index1 = -1;
+        int i = ch.length - 2;
+        for( ; i >= 0; i--){
+            if(ch[i] < ch[i + 1]){
+                index1 = i;
+                break;
+            }
+        }
+        if(index1 == -1) return -1;
+        int index2 = -1;
+        i = ch.length - 1;
+        for( ; i > index1; i--){
+            if(ch[i] > ch[index1]){
+                index2 = i;
+                break;
+            }
+        }
+        swap(ch, index1, index2);
+        reverse(ch, index1 + 1, ch.length - 1);
+        return Long.valueOf(new String(ch)) > Integer.MAX_VALUE ? -1 : Integer.valueOf(new String(ch));
+    }
+    
+    public void swap(char[] ch, int left, int right){
+        char temp = ch[left];
+        ch[left] = ch[right];
+        ch[right] = temp;
+    }
+    
+    public void reverse(char[] ch, int left, int right){
+        while(left < right){
+            char temp = ch[left];
+            ch[left] = ch[right];
+            ch[right] = temp;
+            left++;
+            right--;
+        }
+    }
+}
