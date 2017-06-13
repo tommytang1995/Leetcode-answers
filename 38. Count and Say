@@ -28,3 +28,35 @@ public class Solution {
 }
 Time: o(n^n)
 Space: o(n)
+
+public class Solution {
+    public String countAndSay(int n) {
+        StringBuilder res = new StringBuilder();
+        int count = 1;
+        res.append("1");
+        n--;
+        while(n > 0){
+            count = 1;
+            int i = 1;
+            char say = res.charAt(0);
+            String s = res.toString();
+            res = new StringBuilder();
+            while(i < s.length()){
+                if(s.charAt(i) == say){
+                    count++;
+                }
+                else{
+                    res.append(count);
+                    res.append(say);
+                    say = s.charAt(i);
+                    count = 1;
+                }
+                i++;
+            }
+            res.append(count);
+            res.append(say);
+            n--;
+        }
+        return res.toString();
+    }
+}
