@@ -35,3 +35,44 @@ public class Solution {
 }
 Time: o(n)
 Space: o(n)
+
+public class Solution {
+    public int calculate(String s) {
+        if(s == null || s.length() == 0){
+            return 0;
+        }
+        s = s.trim().replaceAll(" +", ""); //very important!!!!!!
+        int i = 0;
+        int res = 0;
+        int preVal = 0;
+        char sign = '+';
+        int val = 0;
+        while(i < s.length()){
+            int curVal = 0;
+            while(i < s.length() && (s.charAt(i) >= '0' && s.charAt(i) <= '9')){
+                curVal = 10 * curVal + (s.charAt(i) - '0');
+                i++;
+            }
+            if(sign == '+'){
+                res += preVal;
+                preVal = curVal;
+            }
+            else if(sign == '-'){
+                res += preVal;
+                preVal = -curVal;
+            }
+            else if(sign == '*'){
+                preVal *= curVal;
+            }
+            else if(sign == '/'){
+                preVal /= curVal;
+            }
+            if(i < s.length()){
+                sign = s.charAt(i);
+                i++;
+            }
+        }
+        res += preVal;
+        return res;
+    }
+}
