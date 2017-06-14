@@ -10,7 +10,7 @@ public class Solution {
             if(Character.isDigit(ch)){
                 num = 10 * num + (ch - '0');
             }
-            if(!Character.isDigit(ch) && ch != ' ' || i == s.length() - 1){  //判断现在这个是不是符号
+            if(!Character.isDigit(ch) && ch != ' ' || i == s.length() - 1){  //判断现在这个是不是符号，注意一定不能写else if，否则最后一个数字没用
                 if(sign == '+'){   //判断上一个符号是什么
                     stack.push(num);
                 }
