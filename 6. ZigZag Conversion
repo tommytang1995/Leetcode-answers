@@ -1,0 +1,22 @@
+public class Solution {
+    public String convert(String s, int numRows) {
+        if(s == null || s.length() == 0 || numRows <= 1 || s.length() < numRows) return s;
+        StringBuilder[] sb = new StringBuilder[numRows];
+        int index = 0;
+        for(int i = 0; i < sb.length; i++){
+            sb[i] = new StringBuilder();
+        }
+        while(index < s.length()){
+            for(int i = 0; i < numRows && index < s.length(); i++){
+                sb[i].append(s.charAt(index++));
+            }
+            for(int i = numRows - 2; i >= 1 && index < s.length(); i--){
+                sb[i].append(s.charAt(index++));
+            }
+        } 
+        for(int i = 1; i < sb.length; i++){
+            sb[0].append(sb[i]);
+        }
+        return sb[0].toString();
+    }
+}
