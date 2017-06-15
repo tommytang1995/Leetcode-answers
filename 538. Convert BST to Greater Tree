@@ -1,0 +1,62 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ 
+//Basically, it is a reversed version of Inorder tree traversal, which goes from right to left. 
+//In the same time, we add up each node's val and make the current sum as the node's val.
+public class Solution {
+    public TreeNode convertBST(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        int sum = 0;
+        TreeNode node = root;
+        while(node != null){
+            stack.push(node);
+            node = node.right;
+        }
+        while(!stack.isEmpty()){
+            TreeNode temp = stack.pop();
+            sum += temp.val;
+            temp.val = sum;
+            TreeNode left = temp.left;
+            while(left != null){
+                stack.push(left);
+                left = left.right;
+            }
+        }
+        return root;
+    }
+}
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode convertBST(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        int sum = 0;
+        TreeNode node = root;
+        while(node != null || !stack.isEmpty()){
+            while(node != null){
+                stack.push(node);
+                node = node.right;
+            }
+            TreeNode temp = stack.pop();
+            sum += temp.val;
+            temp.val = sum;
+            node = temp.left;
+        }
+        return root;
+    }
+}
