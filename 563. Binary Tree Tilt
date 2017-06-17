@@ -1,0 +1,53 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    int res = 0;
+    public int findTilt(TreeNode root) {
+        if(root == null) return 0;
+        sum(root);
+        return res;
+    }
+    
+    public int sum(TreeNode root){
+        if(root == null) return 0;
+        int left = sum(root.left);
+        int right = sum(root.right);
+        res += Math.abs(left - right);
+        return root.val + left + right;
+    }
+}
+
+//The solution is very slow but without global variable
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int findTilt(TreeNode root) {
+        if(root == null) return 0;
+        if(root.left == null && root.right == null) return 0;
+        int left = sum(root.left);
+        int right = sum(root.right);
+        int res = 0;
+        res += Math.abs(left - right);
+        res += findTilt(root.left) + findTilt(root.right);
+        return res;
+    }
+    
+    public int sum(TreeNode root){
+        if(root == null) return 0;
+        return root.val + sum(root.left) + sum(root.right);
+    }
+}
