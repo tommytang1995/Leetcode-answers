@@ -23,3 +23,28 @@ public class Solution {
 }
 Time: O(n^2) in worst case (no branching); O(nlogn) in best case (balanced tree).
 Space: O(n) due to recursion.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int pathSum(TreeNode root, int sum) {
+        if(root == null) return 0;
+        return backtrack(root, sum, 0) + pathSum(root.left, sum) + pathSum(root.right, sum);
+    }
+    
+    public int backtrack(TreeNode root, int sum, int num){
+        if(root == null) return 0;
+        int count = 0;
+        if(num + root.val == sum) {count++;}
+        count += backtrack(root.left, sum, num + root.val);
+        count += backtrack(root.right, sum, num + root.val);
+        return count;
+    }
+}
