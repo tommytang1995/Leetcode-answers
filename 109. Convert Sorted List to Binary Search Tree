@@ -1,3 +1,4 @@
+
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -40,3 +41,48 @@ public class Solution {
 }
 Time: o(n)
 Space: o(logn)  n代表结点数
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    ListNode node;
+    public TreeNode sortedListToBST(ListNode head) {
+        if(head == null) return null;
+        int size = 0;
+        ListNode temp = head;
+        node = head;
+        while(temp != null){
+            size++;
+            temp = temp.next;
+        }
+        return inorder(0, size - 1);
+    }
+    public TreeNode inorder(int start, int end){
+        if(start > end){
+            return null;
+        }
+        int mid = start + (end - start) / 2;
+        TreeNode left = inorder(start, mid - 1);
+        TreeNode root = new TreeNode(node.val);
+        root.left = left;
+        node = node.next;
+        TreeNode right = inorder(mid + 1, end);
+        root.right = right;
+        return root;
+    }
+}
