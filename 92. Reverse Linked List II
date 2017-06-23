@@ -1,4 +1,4 @@
-/**
+ /**
  * Definition for singly-linked list.
  * public class ListNode {
  *     int val;
@@ -15,7 +15,7 @@ public class Solution {
         ListNode pre = dummy;
         ListNode cur = head;
         int pos = 1;
-        while(pos < m){
+        while(pos < m){   //cannot write pos++
             pre = cur;
             cur = cur.next;
             pos++;
