@@ -27,3 +27,29 @@ public class Solution {
 }
 Time: o(n)
 Space: o(1)
+
+public class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if(head == null) return null;
+        int size = 0;
+        ListNode temp = head;
+        while(temp != null){
+            size++;
+            temp = temp.next;
+        }
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        temp = dummy;
+        int i = 0;
+        while(temp.next != null){
+            if(i + n == size){
+                ListNode next = temp.next.next;
+                temp.next = next;
+                break;
+            }
+            temp = temp.next;
+            i++;
+        }
+        return dummy.next;
+    }
+}
