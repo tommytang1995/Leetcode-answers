@@ -81,7 +81,9 @@ public class Solution {
         if(head == null) return null;
         int size = 0;
         ListNode cur = head;
+        ListNode last = null;
         while(cur != null){
+            if(cur.next == null) last = cur;
             cur = cur.next;
             size++;
         }
@@ -96,11 +98,6 @@ public class Solution {
             i++;
         }
         ListNode pre = cur;
-        while(i < size){
-            cur = cur.next;
-            i++;
-        }
-        ListNode last = cur;
         dummy.next = pre.next;
         pre.next = null;
         last.next = head;
