@@ -22,7 +22,8 @@ public class Solution {
             pre = pre.next;
         }
         ListNode cur = pre.next;
-        if(cur != null){  
+
+if(cur != null){  
             pre.next = null;
             last.next = head;
             return cur;
@@ -74,3 +75,35 @@ public class Solution {
 }
 Time: o(n)
 Space: o(n)
+
+public class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        if(head == null) return null;
+        int size = 0;
+        ListNode cur = head;
+        while(cur != null){
+            cur = cur.next;
+            size++;
+        }
+        k %= size;
+        if(k == 0) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        cur = dummy;
+        int i = 0;
+        while(i < size - k){
+            cur = cur.next;
+            i++;
+        }
+        ListNode pre = cur;
+        while(i < size){
+            cur = cur.next;
+            i++;
+        }
+        ListNode last = cur;
+        dummy.next = pre.next;
+        pre.next = null;
+        last.next = head;
+        return dummy.next;
+    }
+}
