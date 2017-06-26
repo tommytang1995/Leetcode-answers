@@ -1,0 +1,45 @@
+//bottom to top solution
+public class Solution {
+    public int longestPalindromeSubseq(String s) {
+        if(s == null || s.length() == 0) return 0;
+        if(s.length() == 1) return 1;
+        return helper(s, 0, s.length() - 1, new Integer[s.length()][s.length()]);
+    }
+    
+    public int helper(String s, int left, int right, Integer[][] array){
+        if(array[left][right] != null){
+            return array[left][right];
+        }
+        if(left > right) return 0;
+        if(left == right) return 1;
+        if(s.charAt(left) == s.charAt(right)){
+            array[left][right] = helper(s, left + 1, right - 1, array) + 2;
+        }
+        else{
+            array[left][right] = Math.max(helper(s, left + 1, right, array), helper(s, left, right - 1, array));
+        }
+        return array[left][right];
+    }
+}
+
+
+//a top to bottom solution
+
+public class Solution {
+    public int longestPalindromeSubseq(String s) {
+        int[][] dp = new int[s.length()][s.length()]; //dp[i][j] means the maximum length of substring(i, j)
+        for(int i = s.length() - 1; i >= 0; i--){ //why reverse? because dp[i][j] depends on dp[i+1][j-1], so we have to calculate 
+                                                  //dp[i+1] first.
+            dp[i][i] = 1;
+            for(int j = i + 1; j < s.length(); j++){
+                if(s.charAt(i) == s.charAt(j)){
+                    dp[i][j] = dp[i + 1][j - 1] + 2;
+                }
+                else{
+                    dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[0][s.length() - 1];
+    }
+}
