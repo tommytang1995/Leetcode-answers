@@ -26,3 +26,29 @@ public class Solution {
         return count;
     }
 }
+
+public class Solution {
+    public int combinationSum4(int[] nums, int target) {
+        if (nums == null || nums.length == 0 || target <= 0) {
+            return 0;
+        }
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        map.put(0, 1);  //DON'T FORGET THIS!!!!!!!!!!!!!
+        helper(nums, target, map);
+        return map.get(target);
+    }
+    
+    public int helper(int[] nums, int sum, Map<Integer, Integer> map){
+        if(nums == null || nums.length == 0 || sum < 0) return 0;
+        if(map.containsKey(sum)) return map.get(sum);
+        int num = 0;
+        for(int i = 0; i < nums.length; i++){
+            if(map.containsKey(sum - nums[i])) num += map.get(sum - nums[i]);
+            else{
+                num += helper(nums, sum - nums[i], map);
+            }
+        }
+        map.put(sum, num);
+        return num;
+    }
+}
