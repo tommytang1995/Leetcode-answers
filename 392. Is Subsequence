@@ -15,3 +15,46 @@ public class Solution {
         return false;
     }
 }
+
+public class Solution {
+    public boolean isSubsequence(String s, String t) {
+        if(s == null || s.length() == 0) return true;
+        if(t == null) return false;
+        if(s.length() > t.length()) return false;
+        Map<Character, List<Integer>> map = new HashMap<>();
+        for(int i = 0; i < t.length(); i++){
+            if(!map.containsKey(t.charAt(i))){
+                List<Integer> list = new ArrayList<>();
+                map.put(t.charAt(i), list);
+            }
+            map.get(t.charAt(i)).add(i);
+        }
+        int prev = -1;
+        for(int i = 0; i < s.length(); i++){
+            if(!map.containsKey(s.charAt(i))){
+                return false;
+            }
+            List<Integer> temp = map.get(s.charAt(i));
+            int index = binarySearch(prev, temp);
+            if(index == -1) return false;
+            prev = index + 1;
+        }
+        return true;
+    }
+    
+    public int binarySearch(int prev, List<Integer> list){
+        int start = 0;
+        int end = list.size() - 1;
+        while(start <= end){
+            int mid = start + (end - start) / 2;
+            if(list.get(mid) < prev){
+                start = mid + 1;
+            }
+            else{
+                end = mid - 1;
+            }
+        }
+        return start == list.size() ? -1 : list.get(start);
+        
+    }
+}
