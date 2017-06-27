@@ -1,4 +1,5 @@
- public class Solution {
+
+public class Solution {
     public int maxProfit(int[] prices) {
         if(prices.length<2)return 0;
         int[] diff = new int[prices.length-1];
@@ -10,6 +11,8 @@
         int sofar = 0;
         for(int i = 0 ; i < diff.length ; i++){
             current = Math.max(diff[i],current+diff[i]); //or current = Math.max(0,current+diff[i]);
+            // cannot be max(cur, cur+d[i]) because if cur + d[i] < cur and we just keep cur, we are choosing intentionally where d[i] > 0
+            // while this question is asking for the max sum of a subarray and if we do that, we are not choosing subarray but subsequence
             sofar = Math.max(current,sofar);
         }
         return sofar;
