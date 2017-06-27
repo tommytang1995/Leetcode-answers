@@ -1,0 +1,12 @@
+public class Solution {
+    public int rob(int[] nums) {
+        int rob = 0;
+        int notRob = 0;
+        for(int num : nums){
+            int temp = rob;
+            rob = Math.max(rob, notRob + num);
+            notRob = temp;
+        }
+        return Math.max(rob, notRob);
+    }
+}
