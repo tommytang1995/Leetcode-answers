@@ -5,7 +5,7 @@ public class Solution {
         for(int num : nums){
             int temp = rob;
             rob = Math.max(rob, notRob + num);
-            notRob = temp;
+            notRob = Math.max(temp, notRob);
         }
         return Math.max(rob, notRob);
     }
