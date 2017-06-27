@@ -1,0 +1,48 @@
+public class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        Map<String, Integer> map = new HashMap<>();
+        return helper(nums, S, map, 0, 0);
+    }
+    
+    public int helper(int[] nums, int S, Map<String, Integer> map, int index, int sum){
+        String str = index + "->" + sum;
+        if(map.containsKey(str)){
+            return map.get(str);
+        }
+        if(index == nums.length){
+            if(sum == S){
+                return 1;
+            }
+            else return 0;
+        }
+        int cur = nums[index];
+        int positive = helper(nums, S, map, index + 1, sum + cur);
+        int negative = helper(nums, S, map, index + 1, sum - cur);
+        map.put(str, positive + negative);
+        return positive + negative;
+    }
+}
+
+//sum means the result from 0 to index - 1. When the res from 0 to index - 1 is fixed, then the res from index to nums.length - 1 is fixed,
+too. Because these two res should sum to S.
+
+public class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        int sum = 0;
+        for(int num : nums){
+            sum += num;
+        }
+        return sum < S || (sum + S) % 2 != 0 ? 0 : subSum(nums, (sum + S) / 2); 
+    }
+    
+    public int subSum(int[] nums, int target){
+        int[] dp = new int[target + 1];
+        dp[0] = 1;
+        for(int num : nums){
+            for(int i = target; i >= num; i--){ //cannot begin from front to the end because some part will be added many times
+                dp[i] += dp[i - num];
+            }
+        }
+        return dp[target];
+    }
+}
