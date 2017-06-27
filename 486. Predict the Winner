@@ -1,48 +1,40 @@
 public class Solution {
-    public int findTargetSumWays(int[] nums, int S) {
-        Map<String, Integer> map = new HashMap<>();
-        return helper(nums, S, map, 0, 0);
+    public boolean PredictTheWinner(int[] nums) {
+        if(nums == null || nums.length == 0) return false;
+        if(nums.length == 1) return true;
+        if(nums.length == 2 && nums[0] > nums[1]) return true;
+        return helper(nums, 0, nums.length - 1, new Integer[nums.length - 1][nums.length - 1]) >= 0;
     }
     
-    public int helper(int[] nums, int S, Map<String, Integer> map, int index, int sum){
-        String str = index + "->" + sum;
-        if(map.containsKey(str)){
-            return map.get(str);
+    public int helper(int[] nums, int start, int end, Integer[][] dp){
+        if(dp[start][end] != null){
+            return dp[start][end];
         }
-        if(index == nums.length){
-            if(sum == S){
-                return 1;
-            }
-            else return 0;
+        if(start == end){
+            dp[start][end] = nums[start];
         }
-        int cur = nums[index];
-        int positive = helper(nums, S, map, index + 1, sum + cur);
-        int negative = helper(nums, S, map, index + 1, sum - cur);
-        map.put(str, positive + negative);
-        return positive + negative;
+        else{
+            dp[start][end] = Math.max((nums[start] - helper(nums, start + 1, end, dp)), nums[end] - helper(nums, start, end - 1, dp));
+        }
+        return dp[start][end];
     }
 }
 
-//sum means the result from 0 to index - 1. When the res from 0 to index - 1 is fixed, then the res from index to nums.length - 1 is fixed,
-too. Because these two res should sum to S.
+//The goal is the sum of player1 should be larger than or equal to the one of player2. 
+//Time: o(n^2)
+
+//for player1, every time he choose nums[i], his sum will be added by nums[i]. And every time player2 choose nums[j], his sum will be substracted
+//by nums[i].
 
 public class Solution {
-    public int findTargetSumWays(int[] nums, int S) {
-        int sum = 0;
-        for(int num : nums){
-            sum += num;
-        }
-        return sum < S || (sum + S) % 2 != 0 ? 0 : subSum(nums, (sum + S) / 2); 
-    }
-    
-    public int subSum(int[] nums, int target){
-        int[] dp = new int[target + 1];
-        dp[0] = 1;
-        for(int num : nums){
-            for(int i = target; i >= num; i--){ //cannot begin from front to the end because some part will be added many times
-                dp[i] += dp[i - num];
+    public boolean PredictTheWinner(int[] nums) {
+        int[][] dp = new int[nums.length][nums.length];
+        for(int i = 0; i < nums.length; i++) dp[i][i] = nums[i];
+        for(int i = nums.length - 1; i >= 0; i--){
+            for(int j = i + 1; j < nums.length; j++){
+                dp[i][j] = Math.max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j - 1]);
             }
         }
-        return dp[target];
-    }
+        return dp[0][nums.length - 1] >= 0;
+   }
 }
