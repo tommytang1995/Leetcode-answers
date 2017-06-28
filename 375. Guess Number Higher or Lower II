@@ -1,15 +1,18 @@
 public class Solution {
     public int getMoneyAmount(int n) {
-        int[][] ha = new int[n+2][n+2];
-        for(int l = 1 ; l < n ; l++){
-            for(int i = 1 ; i <= n - l ; i++){
-                int j = i + l;
-                ha[i][j]=Integer.MAX_VALUE;
-                for(int k = i ; k <= j ; k++){
-                    ha[i][j] = Math.min(ha[i][j],k + Math.max(ha[i][k-1],ha[k+1][j]));
-                }
-            }
+        int[][] dp = new int[n + 1][n + 1];
+        return helper(dp, 1, n);
+    }
+    
+    public int helper(int[][] dp, int start, int end){
+        if(start >= end) return 0;
+        if(dp[start][end] != 0) return dp[start][end];
+        int res = Integer.MAX_VALUE;
+        for(int i = start; i <= end; i++){
+            int temp = i + Math.max(helper(dp, start, i - 1), helper(dp, i + 1, end));
+            res = Math.min(res, temp);
         }
-        return ha[1][n];
+        dp[start][end] = res;
+        return res;
     }
 }
