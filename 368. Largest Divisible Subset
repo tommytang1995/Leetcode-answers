@@ -1,3 +1,4 @@
+
 1. Sort
 2. Find the length of longest subset
 3. Record the largest element of it.
@@ -36,4 +37,32 @@ public static List<Integer> largestDivisibleSubset(int[] nums) {
         }
     }
     return res;
+}
+
+public class Solution {
+    public List<Integer> largestDivisibleSubset(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        Arrays.sort(nums);
+        int[] length = new int[nums.length];
+        int[] parent = new int[nums.length];
+        int maxLength = 0;
+        int index = 0;
+        for(int i = nums.length - 1; i >= 0; i--){
+            for(int j = i; j < nums.length; j++){
+                if(nums[j] % nums[i] == 0 && length[i] < length[j] + 1){
+                    length[i] = length[j] + 1;
+                    parent[i] = j;
+                    if(length[i] > maxLength){
+                        maxLength = length[i];
+                        index = i;
+                    }
+                }
+            }
+        }
+        for(int i = 0; i < maxLength; i++){
+            list.add(nums[index]);
+            index = parent[index];
+        }
+        return list;
+    }
 }
