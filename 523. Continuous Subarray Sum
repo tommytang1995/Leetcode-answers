@@ -1,0 +1,47 @@
+public class Solution {
+    public boolean checkSubarraySum(int[] nums, int k) {
+        int[] sums = new int[nums.length];
+        sums[0] = nums[0];
+        for(int i = 1; i < nums.length; i++){
+            sums[i] = nums[i] + sums[i - 1];
+        }
+        for(int i = 0; i < nums.length; i++){
+            for(int j = i - 1; j >= 0; j--){
+                if(helper(sums, k, j, i)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean helper(int[] sums, int k, int start, int end){
+        if(k == 0) return sums[end] == 0;
+        if(start == 0) return sums[end] % k == 0;
+        return (sums[end] - sums[start - 1]) % k == 0;
+    }
+}
+
+//To solve problems related to a subsum(i, j) under some constraints, it would be very good to consider map and sum(0, j) - sum(0, i)
+public class Solution {
+    public boolean checkSubarraySum(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+        int runningSum = 0;
+        for(int i = 0; i < nums.length; i++){
+            runningSum += nums[i];
+            if(k != 0) runningSum %= k;
+            if(map.containsKey(runningSum)){
+                if(i - map.get(runningSum) > 1){
+                    return true;
+                }
+            }
+            else{
+                map.put(runningSum, i);
+            }
+        }
+        return false;
+    }
+}
+(a+(n*x))%x is same as (a%x)
+For e.g. in case of the array [23,2,6,4,7] the running sum is [23,25,31,35,42] and the reminders are [5,1,1,5,0]. We got reminder 5 at index 0 and at index 3. That means, in between these two indexes we must have added a number which is multiple of the k. Hope this clarifies your doubt :)
