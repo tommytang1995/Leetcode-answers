@@ -1,0 +1,15 @@
+public class Solution {
+    public int[][] reconstructQueue(int[][] people) {
+        Arrays.sort(people, new Comparator<int[]>(){
+            @Override
+            public int compare(int[] a, int[] b){
+                return a[0] == b[0] ? a[1] - b[1] : b[0] - a[0];
+            }
+        });
+        List<int[]> res = new LinkedList<>(); //Inserting a value in a specified position with a linkedlist is much faster than arraylist
+        for(int[] array : people){
+            res.add(array[1], array);
+        }
+        return res.toArray(new int[people.length][]);
+    }
+}
