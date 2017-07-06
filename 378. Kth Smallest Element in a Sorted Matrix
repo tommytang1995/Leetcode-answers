@@ -1,30 +1,24 @@
 public class Solution {
     public int kthSmallest(int[][] matrix, int k) {
-        int m = matrix.length;
-        int n = matrix[0].length;
-        PriorityQueue<Tuple> pq = new PriorityQueue<>();
-        for(int j = 0; j < n; j++) pq.offer(new Tuple(0, j, matrix[0][j]));
-        for(int i = 0; i < k-1; i++){
-            Tuple temp = pq.poll();
-            if(temp.x == m-1) continue;
-            pq.offer(new Tuple(temp.x+1, temp.y, matrix[temp.x+1][temp.y]));
+        PriorityQueue<int[]> pq = new PriorityQueue<>(
+         new Comparator<int[]>(){
+              @Override
+              public int compare(int[] a, int[] b){
+                  return matrix[a[0]][a[1]] - matrix[b[0]][b[1]];
+              }
+          }
+        );
+        for(int i = 0; i < matrix.length; i++){
+            int[] temp = {0, i};
+            pq.offer(temp);
         }
-        return pq.poll().val;
-    }
-}
-
-class Tuple implements Comparable<Tuple> {
-    int x;
-    int y;
-    int val;
-    public Tuple(int x, int y, int val){
-        this.x = x;
-        this.y = y;
-        this.val = val;
-    }
-    @Override
-    public int compareTo(Tuple tuple){
-        return this.val - tuple.val;
+        for(int i = 0; i < k - 1; i++){
+            int[] temp = pq.poll();
+            if(temp[0] == matrix.length - 1) continue;
+            pq.offer(new int[]{temp[0] + 1, temp[1]});
+        }
+        int[] temp = pq.poll();
+        return matrix[temp[0]][temp[1]];
     }
 }
 Time: o(n+klogn)
@@ -32,27 +26,20 @@ Space: o(n^2)
 
 public class Solution {
     public int kthSmallest(int[][] matrix, int k) {
-        int n = matrix.length;
-        int low = matrix[0][0];
-        int high = matrix[n-1][n-1];
-        while(low < high){
-            int mid = low + (high - low) / 2;
+        int start = matrix[0][0];
+        int end = matrix[matrix.length - 1][matrix.length - 1] + 1;
+        while(start < end){
+            int mid = start + (end - start) / 2;
             int count = 0;
-            int j = n;
-            for(int[] row : matrix){
-                while(j >= 1 && row[j-1] > mid){
-                    j--;
-                }
-                count += j;
+            int j = matrix[0].length - 1;
+            for(int i = 0; i < matrix.length; i++){
+                while(j >= 0 && matrix[i][j] > mid) j--;
+                count += j + 1;
             }
-            if(count < k){
-                low = mid + 1;
-            }
-            else{
-                high = mid;
-            }
+            if(count < k) start = mid + 1;
+            else end = mid;
         }
-        return low;
+        return start;
     }
 }
 Time: o(nlogn)
