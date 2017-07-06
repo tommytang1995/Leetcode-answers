@@ -1,10 +1,13 @@
-public class Solution {
+
+ public class Solution {
     public String removeKdigits(String num, int k) {
         if(k==num.length())return "0";
         Stack<Character> stack = new Stack<>();
         int i = 0;
         while(i<num.length()){
             while(k>0&&!stack.isEmpty()&&stack.peek()>num.charAt(i)){  //要确保高位的digit越小越好，这样才能保证最小。最极端的例子：5432和2345.
+                                                                       //try to replace the peak element(larger than its right neighbor) with
+                                                                       //a smaller value which is the right neighbor.
                 stack.pop();
                 k--;
             }
