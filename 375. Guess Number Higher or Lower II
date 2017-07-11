@@ -1,11 +1,11 @@
-public class Solution {
+ public class Solution {
     public int getMoneyAmount(int n) {
         int[][] dp = new int[n + 1][n + 1];
         return helper(dp, 1, n);
     }
     
     public int helper(int[][] dp, int start, int end){
-        if(start >= end) return 0;
+        if(start >= end) return 0; //当start==end, 一猜就对，不需要付钱
         if(dp[start][end] != 0) return dp[start][end];
         int res = Integer.MAX_VALUE;
         for(int i = start; i <= end; i++){
