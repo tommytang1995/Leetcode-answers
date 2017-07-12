@@ -45,7 +45,8 @@ public class Solution {
         for(int i = 1; i < 4; i++){
             if(idx + i > s.length()) break; //表示超出字符串的范围
             String temp = s.substring(idx,idx+i);  
-            if((temp.length() > 1 && temp.charAt(0) == '0') || i == 3 && Integer.parseInt(temp) > 255) continue;
+            if(Integer.parseInt(temp) > 255) break;
+            if((temp.length() > 1 && temp.charAt(0) == '0')) continue;
             helper(s,idx+i,sb+temp+(count==3?"":"."),list,count+1);  //当count=3的时候，说明加进去的是第四段地址，就不用加"."
         }
     }
