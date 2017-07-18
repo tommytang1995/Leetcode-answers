@@ -1,0 +1,48 @@
+public class Solution {
+    // you need treat n as an unsigned value
+    public int reverseBits(int n) {
+        int res = 0;
+        for(int i = 0; i < 32; i++){
+            res += n & 1;
+            n = n >>> 1;
+            if(i < 31){
+                res = res << 1;
+            }
+        }
+        return res;
+    }
+}
+
+//How to optimize if this function is called multiple times? We can divide an int into 4 bytes, and reverse each byte then combine into 
+//an int. For each byte, we can use cache to improve performance.
+public class Solution {
+    // you need treat n as an unsigned value
+    Map<Byte, Integer> map = new HashMap<>();
+    public int reverseBits(int n) {
+        byte[] bytes = new byte[4];
+        for(int i = 0; i < 4; i++){
+            bytes[i] = (byte)((n >>> 8*i) & 255);
+        }
+        int res = 0;
+        for(int i = 0; i < 4; i++){
+            res += reverseByte(bytes[i]);
+            if(i < 3){
+                res = res << 8;
+            }
+        }
+        return res;
+    }
+    
+    public int reverseByte(byte n){
+        if(map.containsKey(n)) return map.get(n);
+        int value = 0;
+        for(int i = 0; i < 8; i++){
+            value += (n >>> i) & 1;
+            if(i < 7){
+                value = value << 1;
+            }
+        }
+        map.put(n, value);
+        return value;
+    }
+}
