@@ -1,11 +1,15 @@
 public class Solution {
     public int rangeBitwiseAnd(int m, int n) {
-        int moveFactor = 1;
-        while(m!=n){
+        int step = 0;
+        while(m != n){
             m = m >> 1;
             n = n >> 1;
-            moveFactor = moveFactor << 1;
+            step++;
         }
-        return m*moveFactor;
+        return m << step;
     }
 }
+
+//when m != n, the last digit of the 'and' result is definitely 0. We count the number of 0 and shift m and n until m == n. If m == n, then
+//all numbers in this range have the same prefix as the present m. Now we know how many 0s should be after the present m. Add them after m
+//and we get the result.
