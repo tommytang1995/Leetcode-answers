@@ -1,0 +1,26 @@
+public class Solution {
+    public String fractionAddition(String expression) {
+        String[] tokens = expression.split("(?=[+-])");
+        int[] numerators = new int[tokens.length];
+        int[] denominators = new int[tokens.length];
+        for(int i = 0; i < tokens.length; i++){
+            numerators[i] = Integer.valueOf(tokens[i].split("/")[0]);
+            denominators[i] = Integer.valueOf(tokens[i].split("/")[1]);
+        }
+        int numerator = 0;
+        int denominator = 1;
+        for(int i = 0; i < tokens.length; i++){
+            denominator *= denominators[i];
+        }
+        for(int i = 0; i < tokens.length; i++){
+            numerator += numerators[i] * (denominator / denominators[i]);
+        }
+        int gcd = Math.abs(gcd(denominator, numerator));
+        return numerator / gcd + "/" + denominator / gcd;
+    }
+    
+    public int gcd(int x, int y){
+        if(y == 0) return x;
+        return gcd(y, x % y);
+    }
+}
