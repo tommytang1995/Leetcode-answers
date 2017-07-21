@@ -18,6 +18,30 @@ Space: o(n+k)
 
 public class Solution {
     public int nthSuperUglyNumber(int n, int[] primes) {
+        if(n < 1) return 0;
+        int[] primeIndex = new int[primes.length];
+        int[] res = new int[n];
+        res[0] = 1;
+        for(int i = 1; i < n; i++){
+            res[i] = Integer.MAX_VALUE;
+            int min = 0;
+            for(int j = 0; j < primeIndex.length; j++){
+                if(res[i] > res[primeIndex[j]] * primes[j]){
+                    res[i] = res[primeIndex[j]] * primes[j];
+                    min = j;
+                }
+                else if(res[i] == res[primeIndex[j]] * primes[j]){
+                    primeIndex[j]++;
+                }
+            }
+            primeIndex[min]++;
+        }
+        return res[n - 1];
+    }
+}
+
+public class Solution {
+    public int nthSuperUglyNumber(int n, int[] primes) {
         int[] res = new int[n];
         res[0] = 1;
         PriorityQueue<Num> pq = new PriorityQueue<>();
