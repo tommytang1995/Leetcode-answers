@@ -1,0 +1,17 @@
+public class Solution {
+    public int trailingZeroes(int n) {
+        int res = 0;
+        while(n >= 5){
+            res += n / 5; 
+            n /= 5;
+        }
+        return res;
+    }
+}
+
+// n/x means between 1 to n the number of the multipliers of x.
+// The multiplier of 2 is always more than that of 5, so we only need to count the number of 5 between 1 to n.
+// The multiplier of 5 contributes one 0, that of 25 contributes two 0s, .....
+// So first we count the number of multipliers of 5, some of among which are the multipliers of 25, or 125...
+// Then we count the number of multipliers of 25, one 0 has been added during the last step.
+// Then we count the nubmer of multipliers of 125, two 0s has been added during the last step.
