@@ -1,0 +1,12 @@
+public class Solution {
+    public boolean isPalindrome(int x) {
+        if(x < 0) return false;
+        if(x != 0 && x % 10 == 0) return false; //一定要有这一步否则10会是正确的
+        int reverseHalf = 0;
+        while(x > reverseHalf){
+            reverseHalf = 10 * reverseHalf + x % 10;
+            x /= 10;
+        }
+        return x == reverseHalf || x == reverseHalf / 10;
+    }
+}
