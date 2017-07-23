@@ -1,0 +1,34 @@
+
+public class Solution {
+    public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        int leftSide = Math.max(A, E);
+        int rightSide = Math.max(leftSide, Math.min(C, G));
+        int bottomSide = Math.max(B, F);
+        int topSide = Math.max(bottomSide, Math.min(D, H));
+        return (C - A) * (D - B) + (G - E) * (H - F) - (rightSide - leftSide) * (topSide - bottomSide);
+    }
+}
+
+public class Solution {
+    public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        int rightSide = Math.min(C, G);
+        int leftSide = Math.min(rightSide, Math.max(A, E));
+        int topSide = Math.min(D, H);
+        int bottomSide = Math.min(topSide, Math.max(B, F));
+        return (C - A) * (D - B) + (G - E) * (H - F) - (rightSide - leftSide) * (topSide - bottomSide);
+    }
+}
+
+public class Solution {
+    public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        int rightSide = Math.min(C, G);
+        int leftSide = Math.max(A, E);
+        int topSide = Math.min(D, H);
+        int bottomSide = Math.max(B, F);
+        int overlap = 0;
+        if(rightSide > leftSide && topSide > bottomSide){
+            overlap = (rightSide - leftSide) * (topSide - bottomSide);
+        }
+        return (C - A) * (D - B) + (G - E) * (H - F) - overlap;
+    }
+}
