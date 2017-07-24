@@ -3,11 +3,11 @@ public int divide(int dividend, int divisor) {
     if(divisor==0||dividend==Integer.MIN_VALUE&&divisor==-1) return Integer.MAX_VALUE;
     long res=0;
     int sign=(dividend<0)^(divisor<0)?-1:1;
-    long dvd=Math.abs((long)dividend);
+    long dvd=Math.abs((long)dividend);  //(long) has to be inside, otherwise overflow.
     long dvs=Math.abs((long)divisor);
     while(dvs<=dvd){
         long temp=dvs,count=1;
-        while(dvd>=temp){
+        while(dvd>=temp){  // try to substract as many as divisor as possible instead of one once
             temp<<=1;count<<=1;
         }
         temp>>=1;
