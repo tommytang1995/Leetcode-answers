@@ -1,3 +1,4 @@
+
 public class Solution {
     public String optimalDivision(int[] nums) {
         StringBuilder res = new StringBuilder();
@@ -17,3 +18,49 @@ public class Solution {
 X1/X2/X3/../Xn will always be equal to (X1/X2) * Y, no matter how you place parentheses. i.e no matter how you place parentheses, X1 always
 goes to the numerator and X2 always goes to the denominator. Hence you just need to maximize Y. And Y is maximized when it is equal to 
 X3 *..*Xn. So the answer is always X1/(X2/X3/../Xn) = (X1 *X3 *..*Xn)/X2
+
+public class Solution {
+    public String optimalDivision(int[] nums) {
+        Map<String, Pair> map = new HashMap<>();
+        return helper(map, nums, 0, nums.length - 1).maxStr;
+    }
+    
+    public Pair helper(Map<String, Pair> map, int[] nums, int start, int end){
+        String key = start + " " + end;
+        if(map.containsKey(key)) return map.get(key);
+        if(start == end) return new Pair(nums[start], "" + nums[start], nums[start], "" + nums[start]);
+        Pair pair = new Pair(0, "", 0, "");
+        for(int i = start; i < end; i++){
+            Pair left = helper(map, nums, start, i);
+            Pair right = helper(map, nums, i + 1, end);
+            double min = (double)left.min / (double)right.max;
+            String minStr = left.minStr + "/" + (i + 1 == end ? right.maxStr : "(" + right.maxStr + ")");
+            double max = (double)left.max / (double)right.min;
+            String maxStr = left.maxStr + "/" + (i + 1 == end ? right.minStr : "(" + right.minStr + ")");
+            if(pair.min == 0 || min < pair.min){
+                pair.min = min;
+                pair.minStr = minStr;
+            }
+            if(max > pair.max){
+                pair.max = max;
+                pair.maxStr = maxStr;
+            }
+        }
+        map.put(key, pair);
+        return pair;
+    }
+    
+    class Pair{
+        double min;
+        String minStr;
+        double max;
+        String maxStr;
+        
+        public Pair(double min, String minStr, double max, String maxStr){
+            this.min = min;
+            this.minStr = minStr;
+            this.max = max;
+            this.maxStr = maxStr;
+        }
+    }
+}
