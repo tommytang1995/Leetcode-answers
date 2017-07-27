@@ -21,3 +21,22 @@ b - a will be a constant value, given specific b and a. Thus there will be no di
 In this problem, we set two boundaries, saying i and j, and we move the i and j to do the computation.
 
 Hope it helps.
+
+/*
+Intuitive solution might be making all the numbers the same as average.
+However that does not always work 
+[1,0,0,8,6]. average is 3, the total cost of making every number 3 is 16
+However if we were to make every number 1, cost is 14.
+
+Make every number the medium, instead of average would generate the smallest cost
+*/
+
+public class Solution {
+    public int minMoves2(int[] nums) {
+        int sum = 0;
+        Arrays.sort(nums);
+        int medium = nums[nums.length / 2];
+        for(int n : nums) sum += Math.abs(n - medium);
+        return sum;
+    }
+}````
