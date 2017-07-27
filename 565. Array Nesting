@@ -1,0 +1,22 @@
+public class Solution {
+    public int arrayNesting(int[] nums) {
+        int res = 0;
+        for(int i = 0; i < nums.length; i++){
+            int size = 0;
+            for(int j = i; nums[j] >= 0; size++){
+                int temp = nums[j];
+                nums[j] = -1;
+                j = temp;
+            }
+            res = Math.max(size, res);
+        }
+        return res;
+    }
+}
+
+This is my opinion. Like some iteration scan '5-4-3'(not this example), which means nums[3] == 5.
+Because items in array are special and nums[5] == 4 & nums[4] == 3, we can conclude 'nums[some digits not 3] == 5' or 'nums[some digits 
+not 5] == 4' is not possible.
+There is no possible to scan like '1-2-5-4-3' in other iteration. So if we scan digits like ‘5’, '4', '3', that iteration must start with 
+'3' or '4' or '5' and stay in this cycle(maybe '4-3-5' or '3-4-5' or '5-4-3'). Obviously, the length of this iteration wouldn't exceed 3. 
+So it's no need to scan them repeatedly.
