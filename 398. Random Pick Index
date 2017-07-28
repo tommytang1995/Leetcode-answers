@@ -16,7 +16,7 @@ public class Solution {
                     res = i;
                 }
                 else{
-                    if(random.nextInt(count) == 0) res = i;
+                    if(random.nextInt(count) == 0) res = i;  // or == count - 1
                 }
             }
         }
