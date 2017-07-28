@@ -1,0 +1,28 @@
+public class Solution {
+    public int[] findDiagonalOrder(int[][] matrix) {
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return new int[0];
+        int m = matrix.length;
+        int n = matrix[0].length;
+        List<Integer> list = new ArrayList<>();
+        int longest = m - 1 + n - 1;
+        boolean reverse = true;
+        for(int i = 0; i <= longest; i++){
+            int cur = list.size();
+            for(int j = 0 ; j <= i && j < m; j++){
+                if(i - j >= n) continue;
+                if(!reverse){
+                    list.add(matrix[j][i - j]);
+                }
+                else{
+                    list.add(cur, matrix[j][i - j]);
+                }
+            }
+            reverse = !reverse;
+        }
+        int[] res = new int[list.size()];
+        for(int i = 0; i < list.size(); i++){
+            res[i] = list.get(i);
+        }
+        return res;
+    }
+}
