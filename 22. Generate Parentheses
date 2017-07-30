@@ -47,3 +47,33 @@ public class Solution {
 }
 Time: o(2^n)
 Space: o(n)
+
+public class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> list = new ArrayList<>();
+        helper(list, new StringBuilder(), n, 0, 0);
+        return list;
+    }
+    
+    public void helper(List<String> list, StringBuilder sb, int n, int left, int right){
+        if(left > n || right > left){
+            return;
+        }
+        if(left == n && left == right){
+            list.add(sb.toString());
+            return;
+        }
+        if(left < n){
+            int len = sb.length();
+            sb.append("(");
+            helper(list, sb, n, left + 1, right);
+            sb.setLength(len);
+        }
+        if(right < left){
+            int len = sb.length();
+            sb.append(")");
+            helper(list, sb, n, left, right + 1);
+            sb.setLength(len);
+        }
+    }
+}
