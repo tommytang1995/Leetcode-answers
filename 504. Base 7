@@ -1,0 +1,13 @@
+public class Solution {
+    public String convertToBase7(int num) {
+        if(num == 0) return "0";
+        String sign = num > 0 ? "" : "-";
+        String res = "";
+        num = Math.abs(num);
+        while(num != 0){
+            res = num % 7 + res;
+            num /= 7;
+        }
+        return sign + res;
+    }
+}
