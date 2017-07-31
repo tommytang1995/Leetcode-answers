@@ -46,3 +46,20 @@ public class Solution {
         return dp[target];
     }
 }
+
+public class Solution {
+    int count = 0;
+    public int findTargetSumWays(int[] nums, int S) {
+        helper(nums, S, 0, 0);
+        return count;
+    }
+    
+    public void helper(int[] nums, int S, int sum, int index){
+        if(index == nums.length){
+            if(sum == S)count++;
+            return;
+        }
+        helper(nums, S, sum + nums[index], index + 1);
+        helper(nums, S, sum - nums[index], index + 1);
+    }
+}
