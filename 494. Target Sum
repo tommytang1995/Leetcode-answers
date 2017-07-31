@@ -25,6 +25,9 @@ public class Solution {
 
 //sum means the result from 0 to index - 1. When the res from 0 to index - 1 is fixed, then the res from index to nums.length - 1 is fixed,
 too. Because these two res should sum to S.
+                  sum(P) - sum(N) = target
+sum(P) + sum(N) + sum(P) - sum(N) = target + sum(P) + sum(N)
+                       2 * sum(P) = target + sum(nums)
 
 public class Solution {
     public int findTargetSumWays(int[] nums, int S) {
