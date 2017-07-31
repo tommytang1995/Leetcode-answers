@@ -77,3 +77,5 @@ public class Solution {
         return 1 + countNodes(n.left) + countNodes(n.right);
     }
 }
+Nice short code, but I think your code is O(n), not O(lgn), because you have to count at least half of the nodes before you get the right answer.
+n-number of nodes in the tree.
