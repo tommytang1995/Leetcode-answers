@@ -50,3 +50,27 @@ public class Solution {
         }
     }
 }
+
+public class Solution {
+    public String reverseStr(String s, int k) {
+        StringBuilder sb = new StringBuilder();
+        if(s.length() < k) sb.append(reverse(s));
+        else if(s.length() >= k && s.length() < 2 * k) sb.append(reverse(s.substring(0, k)) + s.substring(k));
+        else{
+            sb.append(reverse(s.substring(0, k)) + s.substring(k, 2 * k) + reverseStr(s.substring(2 * k), k));
+        }
+        return sb.toString();
+    }
+    
+    public String reverse(String s){
+        char[] array = s.toCharArray();
+        int start = 0;
+        int end = s.length() - 1;
+        while(start < end){
+            char temp = array[start];
+            array[start++] = array[end];
+            array[end--] = temp;
+        }
+        return new String(array);
+    }
+}
