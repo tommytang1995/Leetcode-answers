@@ -1,0 +1,21 @@
+public class Solution {
+    public String findLongestWord(String s, List<String> d) {
+        String res = "";
+        for(String str : d){
+            int i = 0;
+            for(int j = 0; j < s.length(); j++){
+                if(i < str.length() && s.charAt(j) == str.charAt(i)){
+                    i++;
+                } 
+            }
+            if(i == str.length() && str.length() >= res.length()){
+                if(str.length() > res.length() || str.compareTo(res) < 0){
+                    res = str;
+                }
+            }
+        }
+        return res;
+    }
+}
+//The longset subsequence of s in d
+//We sort the input dictionary by longest length and lexicography. Then, we iterate through the dictionary exactly once. In the process, the first dictionary word in the sorted dictionary which appears as a subsequence in the input string s must be the desired solution.
