@@ -1,19 +1,19 @@
 public class Solution {
     public int findDuplicate(int[] nums) {
-        int start = 0;
-        int end = nums.length-1;
+        int start = 1;
+        int end = nums.length - 1;
         while(start < end){
             int mid = start + (end - start) / 2;
             int count = 0;
             for(int i = 0; i < nums.length; i++){
-                if(nums[i] <= mid){    
+                if(nums[i] <= mid){
                     count++;
                 }
             }
-            if(count > mid){   //说明[1,mid]中有多于mid个数，说明有一个数肯定是重复的，在左侧
+            if(count > mid){
                 end = mid;
             }
-            else{   //反之右侧
+            else{
                 start = mid + 1;
             }
         }
