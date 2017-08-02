@@ -1,0 +1,35 @@
+public class Solution {
+    public int shoppingOffers(List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
+        Map<List<Integer>, Integer> map = new HashMap<>();
+        List<Integer> allZeros = new ArrayList<>();
+        for(int i = 0; i < needs.size(); i++){
+            allZeros.add(0);
+        }
+        map.put(allZeros, 0);
+        return helper(price, special, needs, map);
+    }
+    
+    public int helper(List<Integer> price, List<List<Integer>> special, List<Integer> needs, Map<List<Integer>, Integer> map){
+            if(map.containsKey(needs)) return map.get(needs);
+            int res = Integer.MAX_VALUE;
+            for(List<Integer> offer : special){
+                boolean valid = true;
+                List<Integer> copy = new ArrayList<>(needs);
+                for(int i = 0; i < copy.size(); i++){
+                    copy.set(i, copy.get(i) - offer.get(i));
+                    if(copy.get(i) < 0){
+                        valid = false;
+                        break;
+                    }
+                }
+                if(valid) res = Math.min(res, offer.get(copy.size()) + helper(price, special, copy, map));
+            }
+            int nonOffer = 0;
+            for(int i = 0; i < needs.size(); i++){
+                nonOffer += needs.get(i) * price.get(i);
+            }
+            res = Math.min(res, nonOffer);
+            map.put(needs, res);
+            return res;
+    }
+}
