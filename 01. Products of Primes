@@ -1,0 +1,23 @@
+public class PrimeProducts {. from: 1point3acres.com/bbs 
+    public static ArrayList<Integer> findPrimeProducts(int[] arr) {
+        ArrayList<Integer> res = new ArrayList<>();
+        dfs(res, 1, arr, 0);
+        return res;
+    }
+
+    //recursion: 1. base case 2. how to split original problem
+    private static void dfs(ArrayList<Integer> res, int product, int[] arr, int pos) {
+        if (product != 1) {
+            res.add(product);
+        }. From 1point 3acres bbs
+
+        for (int i = pos; i < arr.length; i++) {
+            product *= arr[i];
+            dfs(res, product, arr, i+1);
+            product /= arr[i];
+        }
+    public static void main(String[] args) {
+        ArrayList<Integer> res = findPrimeProducts(new int[]{2,3,5});
+        System.out.println(res);
+    }
+}
