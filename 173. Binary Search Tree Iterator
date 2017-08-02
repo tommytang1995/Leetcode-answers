@@ -1,14 +1,4 @@
 
-/**
- * Definition for binary tree
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-
 public class BSTIterator {
     
     Stack<TreeNode> stack = new Stack<>();
@@ -46,16 +36,6 @@ public class BSTIterator {
 next and hasNext(): Time: o(1)
                     Space: o(h)
 
-/**
- * Definition for binary tree
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-
 public class BSTIterator {
     Stack<TreeNode> stack = new Stack<>();
     Queue<Integer> queue= new LinkedList<>();
@@ -83,8 +63,30 @@ public class BSTIterator {
     }
 }
 
-/**
- * Your BSTIterator will be called like this:
- * BSTIterator i = new BSTIterator(root);
- * while (i.hasNext()) v[f()] = i.next();
- */
+public class BSTIterator {
+    
+    Stack<TreeNode> stack;
+    TreeNode node;
+
+    public BSTIterator(TreeNode root) {
+        stack = new Stack<>();
+        node = root;
+    }
+
+    /** @return whether we have a next smallest number */
+    public boolean hasNext() {
+        while(node != null){
+            stack.push(node);
+            node = node.left;
+        }
+        if(stack.isEmpty()) return false;
+        TreeNode temp = stack.peek();
+        node = temp.right;
+        return true;
+    }
+
+    /** @return the next smallest number */
+    public int next() {
+        return stack.pop().val;
+    }
+}
