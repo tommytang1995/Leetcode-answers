@@ -1,0 +1,37 @@
+public class Solution {
+    public double findMaxAverage(int[] nums, int k) {
+        double max = (double) Integer.MIN_VALUE;
+        int count = 0;
+        double runningSum = 0;
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0; i < nums.length; i++) {
+            if(count < k) {
+                runningSum += nums[i];
+                list.add(nums[i]);
+                count++;
+            }
+            if(count == k) {
+                max = Math.max(max, runningSum / k);
+                count--;
+                runningSum -= list.get(0);
+                list.remove(0);
+            }
+        }
+        return max;
+    }
+}
+
+public class Solution {
+    public double findMaxAverage(int[] nums, int k) {
+        double sum = 0;
+        for(int i = 0; i < k; i++) {
+            sum += nums[i];
+        }
+        double maxSum = sum;
+        for(int i = 0, j = k; j < nums.length; i++, j++) {
+            sum = sum - nums[i] + nums[j];
+            maxSum = Math.max(maxSum, sum);
+        }
+        return maxSum / k;
+    }
+}
