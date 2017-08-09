@@ -1,3 +1,4 @@
+
 public class Solution {
     public String reverseVowels(String s) {
         char[] ch = s.toCharArray();
@@ -49,6 +50,31 @@ public class Solution {
                 left++;
                 right--;
             }
+        }
+        return new String(array);
+    }
+}
+
+public class Solution {
+    public String reverseVowels(String s) {
+        char[] array = s.toCharArray();
+        int left = 0;
+        int right = array.length - 1;
+        while(left < right) {
+            if("aeiou".indexOf(array[left]) == -1 && "AEIOU".indexOf(array[left]) == -1) {
+                left++;
+            }
+            else if("aeiou".indexOf(array[right]) == -1 && "AEIOU".indexOf(array[right]) == -1) {
+                right--;
+            }
+            else{
+                char temp = array[left];
+                array[left] = array[right];
+                array[right] = temp;
+                left++;
+                right--;
+            }
+            
         }
         return new String(array);
     }
