@@ -74,3 +74,51 @@ public class Solution {
     }
 }
 //can be applied to any trees
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int[] findMode(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        Integer prev = null;
+        int cur = 1;
+        int res = 0;
+        while(root != null || !stack.isEmpty()) {
+            while(root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            TreeNode temp = stack.pop();
+            if(prev != null) {
+                if(temp.val == prev) {
+                    cur++;
+                }
+                else{
+                    cur = 1;
+                }
+            }
+            if(cur >= res) {
+                if(cur > res) {
+                    list = new ArrayList<>();
+                    res = cur;
+                }
+                list.add(temp.val);
+            }
+            prev = temp.val;
+            root = temp.right;
+        }
+        int[] array = new int[list.size()];
+        for(int i = 0; i < list.size(); i++) {
+            array[i] = list.get(i);
+        }
+        return array;
+    }
+}
