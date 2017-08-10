@@ -1,32 +1,49 @@
-each element is pushed and popped exactly twice, giving an amortized time complexity for push and popping O(1)
-class MyQueue {
-    // Push element x to the back of queue.
-    Stack<Integer> input = new Stack<>();
-    Stack<Integer> output = new Stack<>();
+public class MyQueue {
+
+    /** Initialize your data structure here. */
+    Stack<Integer> input;
+    Stack<Integer> output;
+    public MyQueue() {
+        input = new Stack<>();
+        output = new Stack<>();
+    }
+    
+    /** Push element x to the back of queue. */
     public void push(int x) {
         input.push(x);
     }
-
-    // Removes the element from in front of queue.
-    public void pop() {
-        peek();
+    
+    /** Removes the element from in front of queue and returns that element. */
+    public int pop() {
+        int res = peek();
         output.pop();
+        return res;
     }
-
-    // Get the front element.
+    
+    /** Get the front element. */
     public int peek() {
-        if(output.isEmpty()){
-            while(!input.isEmpty()){
+        if(!output.isEmpty()) {
+            return output.peek();
+        }
+        else{
+            while(!input.isEmpty()) {
                 output.push(input.pop());
             }
         }
         return output.peek();
     }
-
-    // Return whether the queue is empty.
+    
+    /** Returns whether the queue is empty. */
     public boolean empty() {
         return input.isEmpty() && output.isEmpty();
     }
 }
-Time: o(n)
-Space: o(n)
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue obj = new MyQueue();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.peek();
+ * boolean param_4 = obj.empty();
+ */
