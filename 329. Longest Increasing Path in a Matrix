@@ -32,3 +32,41 @@ public class Solution {
         return max;
     }
 }
+
+public class Solution {
+    int[][] temp = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+    public int longestIncreasingPath(int[][] matrix) {
+        if(matrix == null || matrix.length == 0) {
+            return 0;
+        }
+        int res = 0;
+        Integer[][] dp = new Integer[matrix.length][matrix[0].length];
+        for(int i = 0; i < matrix.length; i++) {
+            for(int j = 0; j < matrix[0].length; j++) {
+                res = Math.max(res, helper(dp, matrix, i, j, null));
+            }
+        }
+        return res;
+    }
+    
+    public int helper(Integer[][] dp, int[][] matrix, int i, int j, Integer prev) {
+        if(i < 0 || i > matrix.length - 1 || j < 0 || j > matrix[0].length - 1) {
+            return 0;
+        }
+        if(prev != null && prev >= matrix[i][j]) {
+            return 0;
+        }
+        if(dp[i][j] != null) {
+            return dp[i][j];
+        }
+        int max = 1;
+        for(int[] pair : temp) {
+            int x = i + pair[0];
+            int y = j + pair[1];
+            int len = 1 + helper(dp, matrix, x, y, matrix[i][j]);
+            max = Math.max(len, max);
+        }
+        dp[i][j] = max;
+        return max;
+    }
+}
