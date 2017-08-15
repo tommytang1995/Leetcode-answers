@@ -1,0 +1,31 @@
+This is obliviously a greedy algorithm problem. Each senate R must ban its next closest senate D who is from another party, or else D will 
+ban its next senate from R's party.
+The idea is to use two queues to save the index of each senate from R's and D's parties, respectively. During each round, we delete the 
+banned senate's index; and plus the remainning senate's index with n(the length of the input string senate), then move it to the back of 
+its respective queue.
+public class Solution {
+    public String predictPartyVictory(String senate) {
+        Queue<Integer> rq = new LinkedList<>();
+        Queue<Integer> dq = new LinkedList<>();
+        char[] chars = senate.toCharArray();
+        for(int i = 0; i < chars.length; i++) {
+            if(chars[i] == 'R') {
+                rq.offer(i);
+            }
+            else {
+                dq.offer(i);
+            }
+        }
+        while(!rq.isEmpty() && !dq.isEmpty()) {
+            int rIndex = rq.poll();
+            int dIndex = dq.poll();
+            if(rIndex < dIndex) {
+                rq.offer(rIndex + senate.length());
+            }
+            else{
+                dq.offer(dIndex + senate.length());
+            }
+        }
+        return rq.size() == 0 ? "Dire" : "Radiant";
+    }
+}
