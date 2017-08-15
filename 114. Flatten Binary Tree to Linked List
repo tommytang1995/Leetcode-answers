@@ -27,6 +27,26 @@ public class Solution {
 Time: o(n)
 Space: o(1)
 
+public class Solution {
+    public void flatten(TreeNode root) {
+        if(root == null) {
+            return;
+        }
+        flatten(root.left);
+        flatten(root.right);
+        TreeNode cur = root;
+        if(cur.left != null) {
+            TreeNode temp = cur.left;
+            while(temp.right != null) {
+                temp = temp.right;
+            }
+            temp.right = root.right;
+            root.right = root.left;
+            root.left = null;
+        }
+    }
+}
+
 重点是递归dfs，先把左子树放到根节点的右边，再找这颗子树的最右点，找到后把根节点的右子树接到这个点上。
 public class Solution {
     public void flatten(TreeNode root) {
