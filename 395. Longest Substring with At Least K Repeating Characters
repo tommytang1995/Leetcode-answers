@@ -1,0 +1,21 @@
+public class Solution {
+    public int longestSubstring(String s, int k) {
+        return helper(s, k, 0, s.length());
+    }
+    
+    public int helper(String s, int k, int start, int end) {
+        if(end - start < k) {
+            return 0;
+        }
+        int[] letters = new int[26];
+        for(int i = start; i < end ; i++) {
+            letters[s.charAt(i) - 'a']++;
+        }
+        for(int i = start; i < end; i++) {
+            if(letters[s.charAt(i) - 'a'] < k) {
+                return Math.max(helper(s, k, start, i), helper(s, k, i + 1, end));
+            }
+        }
+        return end - start;
+    }
+}
