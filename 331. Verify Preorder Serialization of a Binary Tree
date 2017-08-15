@@ -17,7 +17,8 @@ public boolean isValidSerialization_PostOrder(String postorder) {
 		diff--;
 		if (!node.equals("#")) diff += 2;
 		// Post-Order traversal fail criteria
-		if (diff > 0) return false;
+
+if (diff > 0) return false;
 	}
 	return diff == 0;
 }
@@ -26,7 +27,8 @@ public boolean isValidSerialization_InOrder(String inorder) {
 	String[] nodes = inorder.split(",");
 	int diff = 1;
 	for (String node : nodes) {
-		diff--;
+
+diff--;
 		if (!node.equals("#")) diff += 2;
 		// In-Order traversal fail criteria
 		if (diff > 1) return false;
@@ -36,7 +38,8 @@ public boolean isValidSerialization_InOrder(String inorder) {
 
 public class Solution {
     public boolean isValidSerialization(String preorder) {
-        String[] nodes = preorder.split(",");
+
+String[] nodes = preorder.split(",");
         int leaves = 0;
         int nonleaves = 0;
         int i = 0;
@@ -65,3 +68,30 @@ public class Solution {
         return degree == 0;
     }
 }
+
+public class Solution {
+    public boolean isValidSerialization(String preorder) {
+        String[] tokens = preorder.split(",");
+        Stack<String> stack = new Stack<>();
+        for(int i = 0; i < tokens.length; i++) {
+            String curr = tokens[i];
+            if(curr.equals("#")) {
+                while(!stack.isEmpty() && stack.peek().equals("#")) {
+                    stack.pop();
+                    if(stack.isEmpty()) {
+                        return false;
+                    }
+                    stack.pop();
+                }
+            }
+            stack.push(curr);
+        }
+        return stack.size() == 1 && stack.peek().equals("#");
+    }
+}
+when you iterate through the preorder traversal string, for each char:
+case 1: you see a number c, means you begin to expand a new tree rooted with c, you push it to stack
+case 2.1: you see a #, while top of stack is a number, you know this # is a left null child, put it there as a mark for next coming node k to know it is being the right child.
+case 2.2: you see a #, while top of stack is #, you know you meet this # as right null child, you now cancel the sub tree (rooted as t, for example) with these two-# children. But wait, after the cancellation, you continue to check top of stack is whether # or a number:
+---- if a number, say u, you know you just cancelled a node t which is left child of u. You need to leave a # mark to the top of stack. So that the next node know it is a right child.
+---- if a #, you know you just cancelled a tree whose root, t, is the right child of u. So you continue to cancel sub tree of u, and the process goes on and on.
