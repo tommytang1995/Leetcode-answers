@@ -1,3 +1,4 @@
+
 public class Solution {
     public int trailingZeroes(int n) {
         int res = 0;
@@ -15,3 +16,10 @@ public class Solution {
 // So first we count the number of multipliers of 5, some of among which are the multipliers of 25, or 125...
 // Then we count the number of multipliers of 25, one 0 has been added during the last step.
 // Then we count the nubmer of multipliers of 125, two 0s has been added during the last step.
+
+We just count the number of 5 in Equation 1.
+Multiple of 5 provides one 5, multiple of 25 provides two 5 and so on.
+Note the duplication: multiple of 25 is also multiple of 5, so multiple of 25 only provides one extra 5.
+Here is the basic solution:
+return n/5 + n/25 + n/125 + n/625 + n/3125+...;
+
