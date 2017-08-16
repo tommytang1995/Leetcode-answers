@@ -20,6 +20,9 @@ public class Solution {
     }
 }
 
+numbers[secret.charAt(i)-'0'] is negative only if this character appeared in the guess more times then in the secret which means that 
+this character in the secret can be matched with one of the previous characters in the guest. I hope this explanation makes sense.
+
 public class Solution {
     public String getHint(String secret, String guess) {
         int[] countS = new int[10];
