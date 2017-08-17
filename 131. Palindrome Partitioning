@@ -1,27 +1,37 @@
 public class Solution {
     public List<List<String>> partition(String s) {
         List<List<String>> list = new ArrayList<>();
-        backtrack(s,list,new ArrayList<>(),0);
+        if(s == null || s.length() == 0) {
+            return list;
+        }
+        helper(s, list, new ArrayList<>(), 0);
         return list;
     }
-    public void backtrack(String s,List<List<String>> list,List<String> ha,int level){
-        if(level==s.length()){
-            list.add(new ArrayList<>(ha));
+    
+    public void helper(String s, List<List<String>> list, List<String> temp, int index) {
+        if(index == s.length()) {
+            list.add(new ArrayList<>(temp));
             return;
         }
-        for(int i = level ; i < s.length() ; i++){
-            if(isPalin(s,level,i)){
-                ha.add(s.substring(level,i+1));
-                backtrack(s,list,ha,i+1);
-                ha.remove(ha.size()-1);
+        for(int i = index; i < s.length(); i++) {
+            String str = s.substring(index, i + 1);
+            if(valid(str)) {
+                temp.add(str);
+                helper(s, list, temp, i + 1);
+                temp.remove(temp.size() - 1);
             }
         }
     }
-    public boolean isPalin(String s,int start,int end){
-        while(start<end){
-            if(s.charAt(start++)!=s.charAt(end--)){
+    
+    public boolean valid(String s) {
+        int start = 0;
+        int end = s.length() - 1;
+        while(start < end) {
+            if(s.charAt(start) != s.charAt(end)) {
                 return false;
             }
+            start++;
+            end--;
         }
         return true;
     }
