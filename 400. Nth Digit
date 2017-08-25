@@ -19,3 +19,6 @@ public class Solution {
 
 Time: O(lgn)
 
+1. Find the length of the number where the digit is in
+2. Find the number where the digit is in
+3. Find the digit
