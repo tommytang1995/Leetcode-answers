@@ -34,3 +34,35 @@ public class Solution {
 }
 Time: o(n)
 Space: o(1)
+
+class Solution {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode cur = dummy;
+        int count = 0;
+        ListNode prev = null;
+        while(cur != null) {
+            if(count < m - 1) {
+                cur = cur.next;
+                count++;
+            }
+            else {
+                ListNode begin = cur;
+                ListNode first = cur.next;
+                cur = cur.next;
+                count++;
+                while(count++ <= n) {
+                    ListNode next = cur.next;
+                    cur.next = prev;
+                    prev = cur;
+                    cur = next;
+                }
+                begin.next = prev;
+                first.next = cur;
+                break;
+            }
+        }
+        return dummy.next;
+    }
+}
