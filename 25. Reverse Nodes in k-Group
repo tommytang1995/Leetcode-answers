@@ -47,3 +47,41 @@ public class Solution {
         return head;
     }
 }
+
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        ListNode dummy = new ListNode(0);
+        ListNode begin = dummy;
+        dummy.next = head;
+        int i = 0;
+        while(head != null) {
+            i++;
+            if(i % k == 0) {
+                begin = reverse(begin, head.next);
+                head = begin.next;
+            }
+            else{
+                head = head.next;
+            }
+        }
+        return dummy.next;
+    }
+    
+    public ListNode reverse(ListNode begin, ListNode end) {
+        ListNode cur = begin.next;
+        ListNode first = begin.next;
+        ListNode prev = null;
+        while(cur != end) {
+            ListNode next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+        begin.next = prev;
+        first.next = end;
+        return first;
+    }
+}
