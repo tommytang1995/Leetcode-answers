@@ -1,21 +1,21 @@
 public class Solution {
     public int findNthDigit(int n) {
         int start = 1;
-        long len = 9; //一定要是long型，为了防止overflow
-        int count = 1;
+        long count = 9; //一定要是long型，为了防止overflow
+        int len = 1;
 
-        while(n > len*count){
-            n -= len*count;
-            len *= 10;
-            count += 1;
+        while(n > len * count) {
+            n -= len * count;
+            len++;
+            count *= 10;
             start *= 10;
         }
         
-        start += (n-1)/count; //n代表的是第n位，我们要看得是第n位的前面所有的n-1位，看这n-1位能组成多少个有着count位的数。
+        start += (n-1) / len; //n代表的是第n位，我们要看得是第n位的前面所有的n-1位，看这n-1位能组成多少个有着count位的数。
         String s = Integer.toString(start);
-        return Character.getNumericValue(s.charAt((n-1)%count));
+        return Character.getNumericValue(s.charAt((n-1) % len));
     }
 }
 
-Time: O(logn)
+Time: O(lgn)
 
