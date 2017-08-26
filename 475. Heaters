@@ -15,3 +15,5 @@ class Solution {
 }
 
 Based on 2 pointers, the idea is to find the nearest heater for each house, by comparing the next heater with the current heater.
+sorting of houses O(nlogn) and heaters O(mlogm), and the main part of this algorithm with two pointer is O(n + m), you can think of each 
+element in houses and heaters are visited once.
