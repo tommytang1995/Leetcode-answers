@@ -1,27 +1,23 @@
-public class Solution {
+class Solution {
     public String removeDuplicateLetters(String s) {
-        int[] letter = new int[26];   //count the number of every letter
-        boolean[] visited = new boolean[26];  //determine whether the character is in the sb or not
-        StringBuilder sb = new StringBuilder();  //result
-        for(char ch : s.toCharArray()){
-            letter[ch-'a']++;
+        StringBuilder sb = new StringBuilder();
+        int[] letters = new int[26];
+        boolean[] visited = new boolean[26];
+        for(int i = 0; i < s.length(); i++) {
+            letters[s.charAt(i) - 'a']++;
         }
-        for(char ch : s.toCharArray()){
-            int idx = ch - 'a';
-            letter[idx]--;
-            if(visited[idx] == true){
-                continue;
+        for(int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            letters[ch - 'a']--;
+            if(!visited[ch - 'a']) {
+                while(sb.length() > 0 && sb.charAt(sb.length() - 1) > ch && letters[sb.charAt(sb.length() - 1) - 'a'] > 0) {
+                    visited[sb.charAt(sb.length() - 1) - 'a'] = false;
+                    sb.deleteCharAt(sb.length() - 1);
+                }
+                sb.append(ch);
+                visited[ch - 'a'] = true;
             }
-            while(sb.length()>0 && sb.charAt(sb.length()-1) > ch && letter[sb.charAt(sb.length()-1)-'a'] != 0){
-                visited[sb.charAt(sb.length()-1)-'a'] = false;
-                sb.deleteCharAt(sb.length()-1);
-            }
-            sb.append(ch);
-            visited[ch-'a'] = true;
         }
         return sb.toString();
     }
 }
-Time: o(n)
-Space: o(n)
-
