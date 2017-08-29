@@ -1,3 +1,4 @@
+
 public class Solution {
     public int maxProfit(int[] prices) {
         if(prices == null || prices.length < 2) return 0;
@@ -34,3 +35,35 @@ public class Solution {
 	    return dp[2][n-1];
     }
 }
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices == null || prices.length == 0) {
+            return 0;
+        }
+        int[][] dp = new int[3][prices.length];
+        for(int i = 1; i <= 2; i++) {
+            int tmpMax = dp[i - 1][0] - prices[0];
+            for(int j = 1; j < prices.length; j++) {
+                dp[i][j] = Math.max(dp[i][j - 1], prices[j] + tmpMax);
+                tmpMax = Math.max(tmpMax, dp[i - 1][j] - prices[j]);
+            }
+        }
+        return dp[2][prices.length - 1];
+    }
+}
+
+public class Solution {
+    public int maxProfit(int[] prices) {
+        int hold1 = Integer.MIN_VALUE, hold2 = Integer.MIN_VALUE;
+        int release1 = 0, release2 = 0;
+        for(int i:prices){                              // Assume we only have 0 money at first
+            release2 = Math.max(release2, hold2+i);     // The maximum if we've just sold 2nd stock so far.
+            hold2    = Math.max(hold2,    release1-i);  // The maximum if we've just buy  2nd stock so far.
+            release1 = Math.max(release1, hold1+i);     // The maximum if we've just sold 1nd stock so far.
+            hold1    = Math.max(hold1,    -i);          // The maximum if we've just buy  1st stock so far. 
+        }
+        return release2; ///Since release1 is initiated as 0, so release2 will always higher than release1.
+    }
+}
+Why the order is reversed? Because we have to make sure that the hold2 we use in release2 comes from the last loop and the same for hold2, release1.
