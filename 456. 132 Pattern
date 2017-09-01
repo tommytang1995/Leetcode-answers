@@ -30,7 +30,8 @@ public class Solution {
             }
             else{
                 while(!stack.isEmpty()){
-                    if(stack.peek() >= num) break;
+                    if(stack.peek() >= num) break; //The min before this stack.peek() is even greater than stack.peek() so there is point
+                                                   //to go on.
                     stack.pop();
                     if(stack.pop() > num) return true;
                 }
