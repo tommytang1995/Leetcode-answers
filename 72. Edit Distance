@@ -23,3 +23,9 @@ public class Solution {
         return dp[word1.length()][word2.length()];
     }
 }
+
+(a) if we replaced c with d: f[i][j] = f[i-1][j-1] + 1;
+
+(b) if we added d after c: f[i][j] = f[i][j-1] + 1;
+
+(c) if we deleted c: f[i][j] = f[i-1][j] + 1;
