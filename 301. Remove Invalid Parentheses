@@ -44,3 +44,40 @@ On the first level, there's only one string which is the input string s, let's s
 Finally we have this formula:
 
 T(n) = n x C(n, n) + (n-1) x C(n, n-1) + ... + 1 x C(n, 1) = n x 2^(n-1).
+
+
+class Solution {
+    public List<String> removeInvalidParentheses(String s) {
+        List<String> list = new ArrayList<>();
+        helper(s, list, 0, 0, new char[]{'(', ')'});
+        return list;
+    }
+    
+    public void helper(String s, List<String> list, int ii, int jj, char[] array) {
+        for(int i = ii, count = 0; i < s.length(); i++) {
+            if(s.charAt(i) == array[0]) {
+                count++;
+            }
+            else if(s.charAt(i) == array[1]) {
+                count--;
+            }
+            if(count >= 0) {
+                continue; 
+            }
+            for(int j = jj; j <= i; j++) {
+                if(s.charAt(j) == array[1] && (j == jj || s.charAt(j - 1) != array[1])) {
+                    helper(s.substring(0, j) + s.substring(j + 1), list, i, j, array);
+                }
+            }
+            return; //we have found the legal substring of (0, i), so no need to do more things.
+        }
+        //If count >= 0 all the time, we can reach this step. This means redundant ')'s have been removed.
+        String reversed = new StringBuilder(s).reverse().toString();
+        if(array[0] == '(') {
+            helper(reversed, list, 0, 0, new char[]{')', '('});
+        }
+        else {
+            list.add(reversed);
+        }
+    }
+}
