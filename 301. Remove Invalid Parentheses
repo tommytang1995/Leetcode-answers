@@ -10,7 +10,7 @@ public class Solution {
             s = queue.poll();
             if(isValid(s)){
                 list.add(s);
-                found = true;
+                found = true; // once we find a valid result, we don't need to remove any other parentheses any more. So we keep continue
             }
             if(found){continue;}
             for(int i = 0; i < s.length(); i++){
