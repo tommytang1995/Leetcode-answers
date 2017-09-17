@@ -1,0 +1,19 @@
+class Solution {
+    public int findMaximizedCapital(int k, int W, int[] Profits, int[] Capital) {
+        PriorityQueue<int[]> pq1 = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
+        PriorityQueue<int[]> pq2 = new PriorityQueue<>((a, b) -> (b[1] - a[1]));
+        for(int i = 0; i < Profits.length; i++) {
+            pq1.offer(new int[]{Capital[i], Profits[i]});
+        }
+        for(int i = 0; i < k; i++) {
+            while(!pq1.isEmpty() && pq1.peek()[0] <= W) {
+                pq2.offer(pq1.poll());
+            }
+            if(pq2.isEmpty()) {
+                break;
+            }
+            W += pq2.poll()[1];
+        }
+        return W;
+    }
+}
