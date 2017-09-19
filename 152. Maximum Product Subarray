@@ -1,4 +1,4 @@
-public class Solution {
+ public class Solution {
     public int maxProduct(int[] nums) {
         if(nums == null || nums.length == 0){
             return 0;
@@ -36,7 +36,7 @@ public class Solution {
                 minSofar = Math.min(nums[i]*minSofar,nums[i]);
             }
             else{
-                int temp = maxSofar;
+                int temp = maxSofar;  //作用跟上一个解法中设置的minPre和maxPre一样，为了避免错误迭代
                 maxSofar = Math.max(nums[i]*minSofar,nums[i]);
                 minSofar = Math.min(nums[i]*temp,nums[i]);
             }
