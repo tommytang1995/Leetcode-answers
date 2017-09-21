@@ -8,35 +8,25 @@
  */
 public class Solution {
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-        if(node == null) return node;
-        List<UndirectedGraphNode> list = getNode(node);
-        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
-        for(UndirectedGraphNode nod : list){
-            map.put(nod, new UndirectedGraphNode(nod.label));
+        if(node == null) {
+            return null;
         }
-        for(UndirectedGraphNode nod : list){
-            UndirectedGraphNode cloneNode = map.get(nod);
-            for(UndirectedGraphNode neigh : nod.neighbors){
-                cloneNode.neighbors.add(map.get(neigh));
-            }
-        }
-        return map.get(node);
-    }
-    public ArrayList<UndirectedGraphNode> getNode(UndirectedGraphNode node){
+        UndirectedGraphNode newNode = new UndirectedGraphNode(node.label);
+        Map<Integer, UndirectedGraphNode> map = new HashMap<>();
+        map.put(node.label, newNode);
         Queue<UndirectedGraphNode> queue = new LinkedList<>();
-        Set<UndirectedGraphNode> set = new HashSet<>();
         queue.offer(node);
-        set.add(node);
-        while(!queue.isEmpty()){
+        while(!queue.isEmpty()) {
             UndirectedGraphNode temp = queue.poll();
-            for(UndirectedGraphNode neigh : temp.neighbors){
-                if(!set.contains(neigh)){
-                    set.add(neigh);
+            for(UndirectedGraphNode neigh : temp.neighbors) {
+                if(!map.containsKey(neigh.label)) {
+                    map.put(neigh.label, new UndirectedGraphNode(neigh.label));
                     queue.offer(neigh);
                 }
+                map.get(temp.label).neighbors.add(map.get(neigh.label));
             }
         }
-        return new ArrayList<>(set);
+        return newNode;
     }
 }
 Time: o(m+n) m: number of nodes, n: number of edges 
