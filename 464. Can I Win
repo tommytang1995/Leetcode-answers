@@ -1,25 +1,31 @@
- public class Solution {
+class Solution {
     public boolean canIWin(int maxChoosableInteger, int desiredTotal) {
-        if(desiredTotal <= 0) return true;
-        if((1 + maxChoosableInteger) * maxChoosableInteger / 2 < desiredTotal) return false;
+        if(desiredTotal <= 0) {
+            return true;
+        }
+        if((1 + maxChoosableInteger) * maxChoosableInteger / 2 < desiredTotal) {
+            return false;
+        }
         return helper(desiredTotal, new int[maxChoosableInteger], new HashMap<>());
     }
     
-    public boolean helper(int sum, int[] states, HashMap<String, Boolean> map){
-        String state = Arrays.toString(states);
-        if(map.containsKey(state)) return map.get(state);
-        for(int i = 0; i < states.length; i++){
-            if(states[i] == 0){
-                states[i] = 1;
-                if(sum <= i + 1 || !helper(sum - (i + 1), states, map)){ //why i + 1? Because i starts from 0.
-                    map.put(state, true);
-                    states[i] = 0;
+    public boolean helper(int sum, int[] used, Map<String, Boolean> map) {
+        String curr = Arrays.toString(used);
+        if(map.containsKey(curr)) {
+            return map.get(curr);
+        }
+        for(int i = 0; i < used.length; i++) {
+            if(used[i] == 0) {
+                used[i] = 1;
+                if(sum <= i + 1 || !helper(sum - i - 1, used, map)) {
+                    map.put(curr, true);
+                    used[i] = 0;
                     return true;
                 }
-                states[i] = 0;
+                used[i] = 0;
             }
         }
-        map.put(state, false);
+        map.put(curr, false);
         return false;
     }
 }
