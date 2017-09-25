@@ -1,0 +1,66 @@
+ To find the maximum ,we can enumerate how digits we should get from nums1 , we suppose it is i.
+So , the digits from nums2 is K - i.
+And we can use a stack to get the get maximum number(x digits) from one array.
+OK, Once we choose two maximum subarray , we should combine it to the answer.
+It is just like merger sort, but we should pay attention to the case: the two digital are equal.
+we should find the digits behind it to judge which digital we should choose now.
+In other words,we should judge which subarry is bigger than the other.
+That's all.
+ class Solution 
+    public int[] maxNumber(int[] nums1, int[] nums2, int k) {
+        int get_from_1 = Math.min(nums1.length, k); //The maximum number of number from nums1
+        int[] ans = new int[k];
+        for(int i = Math.max(0, k - nums2.length); i <= get_from_1; i++) { //The minimum number of number from nums1
+            int[] res1 = new int[i];
+            int[] res2 = new int[k - i];
+            int[] res = new int[k];
+            helper(res1, nums1, i);
+            helper(res2, nums2, k - i);
+            int pos1 = 0;
+            int pos2 = 0;
+            int pos = 0;
+            while(pos1 < res1.length && pos2 < res2.length) {
+                if(compare(res1, res2, pos1, pos2)) {
+                    res[pos++] = res1[pos1++];
+                }
+                else {
+                    res[pos++] = res2[pos2++];
+                }
+            }
+            while(pos1 < res1.length) {
+                res[pos++] = res1[pos1++];
+            }
+            while(pos2 < res2.length) {
+                res[pos++] = res2[pos2++];
+            }
+            if(!compare(ans, res, 0, 0)) {
+                ans = res;
+            }
+        }
+        return ans;
+    }
+    
+    public boolean compare(int[] a1, int[] a2, int i, int j) {
+        while(i < a1.length && j < a2.length) {
+            if(a1[i] > a2[j]) return true;
+            else if(a1[i] < a2[j]) return false;
+            i++;
+            j++;
+        }
+        return i != a1.length; //如果i没有遍历完a1，说明a1 > a2 and a1.length > a2.length
+       
+    }
+    
+    public void helper(int[] res, int[] nums, int k) {
+        int len = 0;
+        for(int i = 0; i < nums.length; i++) {
+            while(len > 0 && len + nums.length - i > k && res[len - 1] < nums[i]) { //len + nums.length - i
+                                                                      //代表的如果删了这个数还有没有可能再凑齐k个数
+                len--;
+            }
+            if(len < k) {
+                res[len++] = nums[i];
+            }
+        }
+    }
+}
