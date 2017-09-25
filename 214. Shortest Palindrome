@@ -1,0 +1,16 @@
+class Solution {
+    public String shortestPalindrome(String s) {
+        int i = 0;
+        for(int j = s.length() - 1; j >= 0; j--) {
+            if(s.charAt(i) == s.charAt(j)) {
+                i++;
+            }
+        }
+        if(i == s.length()) {
+            return s;
+        }
+        String prefix = s.substring(i);
+        return new StringBuilder(prefix).reverse().toString() + shortestPalindrome(s.substring(0, i)) + prefix;
+    }
+}
+Time: o(n)
