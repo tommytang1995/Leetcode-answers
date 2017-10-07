@@ -10,9 +10,7 @@ class Solution {
         TrieNode root = buildTree(words);
         for(int i = 0; i < board.length; i++) {
             for(int j = 0; j < board[0].length; j++) {
-                for(String word : words) {
-                    helper(board, i, j, root, list);
-                }
+                helper(board, i, j, root, list);
             }
         }
         return list;
@@ -52,4 +50,3 @@ class Solution {
         return root;
     }
 }
-
