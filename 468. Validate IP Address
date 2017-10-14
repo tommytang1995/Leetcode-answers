@@ -1,0 +1,90 @@
+class Solution {
+    public String validIPAddress(String IP) {
+        if(validV4(IP)) {
+            return "IPv4";
+        }
+        else if(validV6(IP)) {
+            return "IPv6";
+        }
+        else {
+            return "Neither";
+        }
+    }
+    
+    public boolean validV4(String num) {
+        if(num == null || num.length() == 0) {
+            return false;
+        }
+        if(num.charAt(0) == '.' || num.charAt(num.length() - 1) == '.') {
+            return false;
+        }
+        String[] strs = num.split("\\.");
+        if(strs.length != 4) {
+            return false;
+        }
+        for(String str : strs) {
+            if(!validV4Tokens(str)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean validV4Tokens(String num) {
+        if(num.length() == 0 || num.length() > 3) {
+            return false;
+        }
+        if(!isNumber(num)) {
+            return false;
+        }
+        if(num.length() == 0 || (num.length() > 1 && num.charAt(0) == '0') || Integer.valueOf(num) < 0 || Integer.valueOf(num) > 255) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean validV6(String num) {
+        if(num == null || num.length() == 0) {
+            return false;
+        }
+        if(num.charAt(0) == ':' || num.charAt(num.length() - 1) == ':') {
+            return false;
+        }
+        String[] strs = num.split(":");
+        if(strs.length != 8) {
+            return false;
+        }
+        for(String str : strs) {
+            if(!validV6Tokens(str)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean validV6Tokens(String num) {
+        if(num.length() == 0 || num.length() > 4) {
+            return false;
+        }
+        char[] array = num.toCharArray();
+        for(char ch : array) {
+            boolean isDigit = ch >= '0' && ch <= '9';
+            boolean isLowerCase = ch >= 'a' && ch <= 'f';
+            boolean isHigherCase = ch >= 'A' && ch <= 'F';
+            if(!(isDigit || isLowerCase || isHigherCase)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean isNumber(String num) {
+        char[] array = num.toCharArray();
+        for(char ch : array) {
+            if(!(ch >= '0' && ch <= '9')) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
