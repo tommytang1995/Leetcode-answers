@@ -1,32 +1,32 @@
-public class Solution {
+class Solution {
     public boolean isMatch(String s, String p) {
-        int sp = 0;
-        int pp = 0;
-        int star = -1;
-        int match = 0;
-        while(sp < s.length()){
-            if(pp < p.length() && (s.charAt(sp) == p.charAt(pp) || p.charAt(pp) == '?')){
-                sp++;
-                pp++;
+        int starIndex = -1;
+        int matchSoFar = 0;
+        int i = 0;
+        int j = 0;
+        while(i < s.length()) {
+            if(j < p.length() && (p.charAt(j) == '?' || p.charAt(j) == s.charAt(i))) {
+                i++;
+                j++;
             }
-            else if(pp < p.length() && p.charAt(pp) == '*'){
-                star = pp;
-                match = sp;
-                pp++;
+            else if(j < p.length() && p.charAt(j) == '*') {
+                starIndex = j;  //记录下这个星号的位置，以防如果不匹配，要回到这个星号
+                matchSoFar = i; //记录下当前match的substring的最后一个元素的位置
+                j++; //找到下个不是星号的位置
             }
-            else if(star != -1){
-                pp = star + 1;
-                match++;
-                sp = match;
+            else if(starIndex != -1) {
+                j = starIndex + 1;  //回到原星号位置的后一个位置
+                matchSoFar++;  //此星号要比原来多match一个元素
+                i = matchSoFar; //matchSoFar之前的都是match的，所以从这点开始比
             }
-            else{
-                return false;
+            else {
+                return false;  //p的指针已经到底的情况
             }
         }
-        while(pp < p.length() && p.charAt(pp) == '*'){
-            pp++;
+        while(j < p.length() && p.charAt(j) == '*') {
+            j++;
         }
-        return pp == p.length();
+        return j == p.length();
     }
 }
 Time: o(s * p)
