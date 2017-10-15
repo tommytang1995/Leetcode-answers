@@ -53,9 +53,39 @@ public boolean isMatch_2d_method(String s, String p) {
 			if (p.charAt(j-1)!='*') {
 				dp[i][j] = dp[i-1][j-1] && (s.charAt(i-1)==p.charAt(j-1) || p.charAt(j-1)=='?');
 			} else {
-				dp[i][j] = dp[i-1][j] || dp[i][j-1];
+				dp[i][j] = dp[i-1][j] || dp[i][j-1]; //dp[i-1][j] is to deal with such cases like "aa" and "*"
+								     //dp[i][j - 1] is to mean that this '*' replaces with empty string  
 			}
 		}
 	}
 	return dp[m][n];
 }
+
+class Solution {
+    public boolean isMatch(String s, String p) {
+        return helper(s, p, 0, 0);
+    }
+    
+    public boolean helper(String s, String p, int i, int j) {
+        if(j == p.length()) {
+            return i == s.length();
+        }
+        if(p.charAt(j) == '*') {
+            while(j < p.length() && p.charAt(j) == '*') {
+                j++;
+            }
+            while(i < s.length()) {
+                if(helper(s, p, i, j)) {
+                    return true;
+                }
+                i++;
+            }
+            return helper(s, p, i, j); //保证通过此类情况:"aa", "*"，如果没有这一行，就会返回错误的结果
+        }
+        else if(i < s.length() && (p.charAt(j) == '?' || p.charAt(j) == s.charAt(i))) {
+            return helper(s, p, i + 1, j + 1);
+        }
+        return false;
+    }
+}
+http://shmilyaw-hotmail-com.iteye.com/blog/2154716
