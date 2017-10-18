@@ -28,10 +28,10 @@ class Solution {
                     minStart = left;
                     minEnd = right;
                 }
-                letters[s.charAt(left) - 'A']++;
-                if(letters[s.charAt(left) - 'A'] > 0) {
+                if(letters[s.charAt(left) - 'A'] >= 0) {
                     count++;
                 }
+                letters[s.charAt(left) - 'A']++;
                 left++;
             }
         }
