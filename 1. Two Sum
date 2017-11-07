@@ -2,8 +2,7 @@ public class Solution {
     public int[] twoSum(int[] nums, int target) { //不能用必须要排序的二分法，序号会乱。
         int[] res = {-1,-1};
         Map<Integer, Integer> map = new HashMap<>();
-        map.put(nums[0],0);
-        for(int i = 1; i < nums.length; i++){
+        for(int i = 0; i < nums.length; i++){
             if(map.containsKey(target-nums[i])){
                 res[0] = map.get(target-nums[i]);
                 res[1] = i;
