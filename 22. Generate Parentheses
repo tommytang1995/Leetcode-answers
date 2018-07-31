@@ -77,3 +77,32 @@ public class Solution {
         }
     }
 }
+
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> list = new ArrayList<>();
+        if(n <= 0) {
+            return list;
+        }
+        Queue<Integer> leftNumber = new LinkedList<>();
+        Queue<String> resQ = new LinkedList<>();
+        leftNumber.offer(1);
+        resQ.offer("(");
+        while(!resQ.isEmpty()) {
+            String temp = resQ.poll();
+            int left = leftNumber.poll();
+            if(left < n) {
+                resQ.offer(temp + "(");
+                leftNumber.offer(left + 1);
+            }
+            if(temp.length() - left < left) {
+                resQ.offer(temp + ")");
+                leftNumber.offer(left);
+            }
+            if(temp.length() == n * 2) {
+                list.add(temp);
+            }
+        }
+        return list;
+    }
+}
