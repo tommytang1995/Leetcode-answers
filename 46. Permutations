@@ -44,3 +44,4 @@ public List<List<Integer>> permute(int[] num) {
     }
     return res;
 }
+O(n!*n)
