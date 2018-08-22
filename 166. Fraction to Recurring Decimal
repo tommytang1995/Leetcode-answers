@@ -23,3 +23,41 @@ public class Solution {
         return result.toString().replace("(0)", ""); //if we don't have the replace statement, the result for 1/5 will be 0.2(0)
     }
 }
+
+class Solution {
+    public String fractionToDecimal(int numerator, int denominator) {
+        if(denominator == 0) {
+            return "";
+        }
+        if(numerator == 0) {
+            return "0";
+        }
+        if(numerator == denominator) {
+            return "1";
+        }
+        String sign = "";
+        if(!((numerator > 0 && denominator > 0) || (numerator < 0 && denominator < 0))) {
+            sign = "-";
+        }
+        long num = Math.abs((long)numerator);
+        long den = Math.abs((long)denominator);
+        StringBuilder res = new StringBuilder();
+        res.append(sign);
+        res.append(num / den);
+        long remain = num % den;
+        if(remain == 0){
+            return res.toString();
+        }
+        res.append(".");
+        Map<Long, Integer> map = new HashMap<>();
+        while(!map.containsKey(remain)) {
+            map.put(remain, res.length());
+            res.append(10 * remain / den);
+            remain = 10 * remain % den;
+        }
+        int index = map.get(remain);
+        res.insert(index, "(");
+        res.append(")");
+        return res.toString().replace("(0)", "");
+    }
+}
