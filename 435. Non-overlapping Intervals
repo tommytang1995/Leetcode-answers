@@ -15,7 +15,7 @@ public class Solution {
         Arrays.sort(intervals, new Comparator<Interval>(){
             @Override
             public int compare(Interval a, Interval b){
-                return a.end - b.end;
+                return a.end - b.end; //why sort by end? e.g. [ [1,4], [2,3], [3,4] ], the interval with early start might be very long and incompatible with many intervals. But if we choose the interval that ends early, we'll have more space left to accommodate more intervals. Hope it helps.
             }
         });
         int end = intervals[0].end;
