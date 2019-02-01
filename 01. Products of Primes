@@ -21,3 +21,5 @@ public class PrimeProducts {. from: 1point3acres.com/bbs
         System.out.println(res);
     }
 }
+
+///////
